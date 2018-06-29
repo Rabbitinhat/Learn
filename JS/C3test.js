@@ -2,7 +2,7 @@
  * @Author: chyon71 
  * @Date: 2018-06-28 15:40:03 
  * @Last Modified by: chyon71
- * @Last Modified time: 2018-06-28 17:26:21
+ * @Last Modified time: 2018-06-29 12:54:23
  */
 var message1 = "hi";
 var message2;
@@ -117,4 +117,6 @@ console.log(result);
 console.log("55" === 55);
 var num1 = (5, 1, 4, 8, 0);
 console.log(num1);
-
+var num = 0;
+var result = (s3 && num1);
+console.log(result);
