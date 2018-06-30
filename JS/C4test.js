@@ -2,7 +2,7 @@
  * @Author: chyon71 
  * @Date: 2018-06-29 12:57:49 
  * @Last Modified by: chyon71
- * @Last Modified time: 2018-06-29 14:04:53
+ * @Last Modified time: 2018-06-30 14:28:38
  */
 var person = new Object();
 person.name = "Jack";
@@ -46,7 +46,12 @@ var o = {};
 console.log(typeof s + "\n" + typeof b + "\n" + typeof c + "\n" + typeof i + "\n"
 + typeof n + "\n" + typeof o);
 console.log(person instanceof Object);
+console.log(setName instanceof Function);
+console.log(setName instanceof Object);
+console.log(s instanceof String);
+console.log(s instanceof Object);
 console.log(typeof setName);
+console.log(typeof s == Object);
 
 var color = "blue";
 function changeColor(){
