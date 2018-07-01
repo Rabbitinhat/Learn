@@ -2,7 +2,7 @@
  * @Author: chyon71 
  * @Date: 2018-06-30 15:38:16 
  * @Last Modified by: chyon71
- * @Last Modified time: 2018-06-30 23:38:59
+ * @Last Modified time: 2018-07-01 21:29:03
  */
 
 var person = new Object();
@@ -241,3 +241,362 @@ var sum = numbers.reduce(function(prev, cur, index, array){
     return prev + cur;
 });
 console.log(sum);
+
+//Date
+var now = new Date();
+var someData = new Date(Date.parse("May 25, 2004"));
+var otherDate = new Date("May 25, 2004");//argunments are String
+var y2k = new Date(Date.UTC(2000, 0));
+var allFives = new Date(Date.UTC(2005, 4, 5, 17, 55, 55));//arguments are Number
+var y2k = new Date(2000, 0);// Local Time
+
+//var start = Date.now();
+function add(){
+    for(var i = 0; i < 100; i++)
+        ;
+}
+add();
+/*var stop = Date.now(),
+result = stop - start;
+console.log(result);*/
+
+var start = +new Date();
+add();
+var stop = +new Date();
+console.log(stop);
+var now1 = new Date().toString();
+var now2 = new Date().toLocaleString();
+console.log(now1);
+console.log(now2);
+
+var date1 = new Date(2017, 0, 1);
+var date2 = new Date(2017, 1, 1);
+console.log(date1 < date2);
+console.log(date1 > date2);
+
+var date3 = date1.toDateString();
+console.log(date3);
+var time3 = date1.toTimeString();
+console.log(time3);
+var localedate = date1.toLocaleDateString();
+console.log(localedate);
+var localetime = date1.toLocaleTimeString();
+console.log(localetime);
+var utc = date1.toUTCString();
+console.log(utc);
+console.log(date1.getUTCFullYear());
+
+//RegExp
+var pattern1 = /at/g;
+var pattern2 = /[bc]at/i;
+var pattern3 = /.at/gi;
+
+var pattern1 = /[bc]at/i;
+var pattern2 = /\[bt\]at/i;
+var pattern3 = /.at/gi;
+var pattern4 = /\.at/gi;
+
+var pattern1 = /[bc]at/i;
+
+var pattern2 = new RegExp("[bc]at", "i");
+var pattern3 = new RegExp("\\[bt\\]at", "i");
+var pattern3 = new RegExp("\\.at", "i");
+var pattern3 = new RegExp("name\\/age", "i");
+var pattern3 = new RegExp("\\d.\\d{1, 2}");
+var pattern3 = new RegExp("\\w\\\\hello\\\\123", "i");
+
+var re = null,
+    i;
+for(i = 0; i < 10; i++){
+    re = /cat/g;
+    re.test("catastrophe");
+}
+for(i = 0; i < 10; i++){
+    re = new RegExp("cat", "g");
+    re.test("catastrophe");
+}
+
+var pattern1 = /\[bc\]at/i;
+
+console.log(pattern1.global);
+console.log(pattern1.ignoreCase);
+console.log(pattern1.multiline);
+console.log(pattern1.lastIndex);
+console.log(pattern1.source);
+
+var pattern2 = new RegExp("\\[bc\\]at", "i");
+
+console.log(pattern2.global);
+console.log(pattern2.ignoreCase);
+console.log(pattern2.multiline);
+console.log(pattern2.lastIndex);
+console.log(pattern2.source);
+
+var text = "mom and dad and baby";
+var pattern = /mom( and dad( and baby)?)?/gi;
+
+var matches = pattern.exec(text);
+console.log(matches.index);
+console.log(matches.input);
+console.log(matches[0]);
+console.log(matches[1]);
+console.log(matches[2]);
+
+var text = "cat, bat, sat, fat";
+var pattern1 = /.at/;
+
+var matches = pattern1.exec(text);
+console.log(matches.index);
+console.log(matches[0]);
+console.log(pattern1.lastIndex);
+
+matches = pattern1.exec(text);
+console.log(matches.index);
+console.log(matches[0]);
+console.log(pattern1.lastIndex);
+
+var pattern2 = /.at/g;
+
+var matches = pattern2.exec(text);
+
+console.log(matches.index);
+console.log(matches[0]);
+console.log(pattern2.lastIndex);
+
+matches = pattern2.exec(text);
+
+console.log(matches.index);
+console.log(matches[0]);
+console.log(pattern2.lastIndex);
+
+var text = "000-00-0000";
+var pattern = /\d{3}-\d{2}-\d{4}/;
+
+if(pattern.test(text)){
+    console.log("The pattern was matched.");
+}
+
+var pattern = new RegExp("\\[bc\\]at", "gi");
+console.log(pattern.toString());
+console.log(pattern.toLocaleString());
+var pattern = /\[bc\]/gi;
+console.log(pattern.valueOf());
+
+var text = "this has been a short summer";
+var pattern = /(.)hort/g;
+
+/*if(pattern.test(text)){
+    console.log(RegExp.input);
+    console.log(RegExp.lastMatch);
+    console.log(RegExp.lastParen);
+    console.log(RegExp.leftContext);
+    console.log(RegExp.rightContext);
+    console.log(RegExp.multiline);
+}
+*/
+if(pattern.test(text)){
+    console.log(RegExp.$_);
+    console.log(RegExp["$'"]);
+    console.log(RegExp["$`"]);
+    console.log(RegExp["$&"]);
+    console.log(RegExp["$+"]);
+    console.log(RegExp["$*"]);
+}
+
+var pattern = /(..)or(.)/g;
+
+if(pattern.test(text)){
+    console.log(RegExp.$1);
+    console.log(RegExp.$2);
+}
+
+//Function
+function sum(num1, num2){
+    return num1 + num2;
+}
+
+var sum = function(num1, num2){
+    return num1 + num2;
+};
+
+var sum = new Function("num1", "num2", "return num1 + num2");
+
+console.log(sum(10, 10));
+var anotherSum = sum;
+console.log(anotherSum(10, 10));
+
+sum = null;
+console.log(anotherSum(10, 10));
+
+var addSomeNumber = function(num){
+    return num + 100;
+};
+
+addSomeNumber = function(num){
+    return num + 200;
+}
+
+var result = addSomeNumber(100);
+
+console.log(sum4(10, 10));
+var sum = function(num1, num2){
+    return num1 + num2;
+};
+console.log(sum(10, 10));
+function sum4(num1, num2){
+    return num1 + num2;
+}
+
+function callSomeFunction(someFunction, someArgument){
+    return someFunction(someArgument);
+}
+
+function add10(num){
+    return num + 10;
+}
+
+var result1 = callSomeFunction(add10, 10);
+console.log(result1);
+
+function getGreeting(name){
+    return "Hello, " + name;
+}
+
+var result2 = callSomeFunction(getGreeting, "Nicholas");
+console.log(result2);
+
+function createComparisonFunction(propertyName){
+    return function(object1, object2){
+        var value1 = object1[propertyName];
+        var value2 = object2[propertyName];
+
+        if(value1 < value2){
+            return -1;
+        } else if (value1 > value2){
+            return 1;
+        } else {
+            return 0;
+        }
+    };
+}
+
+var data = [{name: "Zachary", age: 28}, {name: "Nicholas", age: 29}];
+
+data.sort(createComparisonFunction("name"));
+console.log(data[0].name);
+
+data.sort(createComparisonFunction("age"));
+console.log(data[0].name)
+
+//arguments & this
+function factorial(num){
+    if(num <= 1){
+        return 1;
+    } else {
+        return num * factorial(num - 1);
+    }
+}
+
+function factorial(num){
+    if(num <= 1){
+        return 1;
+    } else {
+        return num * arguments.callee(num - 1);
+    }
+}
+
+var trueFactorial = factorial;
+
+factorial = function(){
+    return 0;
+};
+
+console.log(trueFactorial(5));
+console.log(factorial(5));
+
+//this
+window.color = "red";
+var o = {color: "blue"};
+
+function sayColor(){
+    console.log(this.color);
+}
+
+sayColor();
+
+o.sayColor = sayColor;
+o.sayColor();
+
+//caller
+function outer(){
+    inner();
+}
+
+function inner(){
+    console.log(inner.caller);
+}
+
+outer();
+
+function outer(){
+    inner();
+}
+
+function inner(){
+    console.log(arguments.callee.caller);
+}
+
+outer();
+
+function sayName(name){
+    console.log(name);
+}
+
+function sum(num1, num2){
+    return num1 + num2;
+}
+
+function sayHi(){
+    console.log("hi");
+}
+
+console.log(sayName.length + " " + sum.length + " " + sayHi.length);
+
+function sum(num1, num2){
+    return num1 + num2;
+}
+
+function callSum1(num1, num2){
+    return sum.apply(this, arguments);
+}
+
+function callSum2(num1, num2){
+    return sum.apply(this, [num1, num2]);
+}
+
+console.log(callSum1(10, 10));
+console.log(callSum2(10, 10));
+
+window.color = "red";
+var o = {color: "blue"};
+
+function sayColor(){
+    console.log(this.color);
+}
+
+sayColor();
+
+sayColor.call(this);
+sayColor.call(window);
+sayColor.call(o);
+
+var objectSayColor = sayColor.bind(o);
+objectSayColor();
+
+//Primitive Wrapper Types
+var s1 = "some text";
+var s2 = s1.substring(2);
+console.log(s2);
+
+var obj = new Object("some text");
+console.log(obj instanceof String);
