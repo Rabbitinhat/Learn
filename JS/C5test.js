@@ -2,7 +2,7 @@
  * @Author: chyon71 
  * @Date: 2018-06-30 15:38:16 
  * @Last Modified by: chyon71
- * @Last Modified time: 2018-07-01 21:29:03
+ * @Last Modified time: 2018-07-02 23:14:42
  */
 
 var person = new Object();
@@ -600,3 +600,117 @@ console.log(s2);
 
 var obj = new Object("some text");
 console.log(obj instanceof String);
+
+var booleanObject = new Boolean(true);
+
+var falseObject = new Boolean(false); //typeof falseObject is Object
+var result = falseObject && true;
+console.log(result);
+
+var falseValue = false; //typeof falseValue is Boolean
+result = falseValue && true;
+console.log(result);
+
+console.log(falseObject instanceof Boolean);
+console.log(falseValue instanceof Boolean);
+console.log(typeof falseObject);
+console.log(typeof falseValue);
+
+//Number
+var numberObject = new Number(10);
+var num = 10;
+console.log(num.toFixed(2));
+
+var num = 10.005;
+console.log(num.toFixed(2));
+
+var num = 10;
+console.log(num.toExponential(2));
+
+var num = 99;
+console.log(num.toPrecision(1));
+console.log(num.toPrecision(2));
+console.log(num.toPrecision(3));
+
+var numberValue = 10;
+console.log(typeof numberValue);
+console.log(typeof numberObject);
+console.log(numberObject instanceof Number);
+console.log(numberValue instanceof Number);
+
+//String
+var stringObject = new String("hello world");
+var stringValue = "hello object";
+console.log(stringValue.length);
+
+var stringValue = "hello world";
+console.log(stringValue.charAt(1));
+
+var stringValue = "hello world";
+console.log(stringValue[1]);
+
+var stringValue = "hello ";
+var result = stringValue.concat("world");
+console.log(result);
+console.log(stringValue);
+
+var stringValue = "hello world";
+console.log(stringValue.slice(3));
+console.log(stringValue.substring(3));
+console.log(stringValue.substr(3));
+console.log(stringValue.slice(3, 7));
+console.log(stringValue.substr(3, 7));
+console.log(stringValue.substring(3, 7));
+
+console.log(stringValue.slice(-3));
+console.log(stringValue.substring(-3));
+console.log(stringValue.substr(-3));
+console.log(stringValue.slice(3, -4));
+console.log(stringValue.substring(3, -4));
+console.log(stringValue.substr(3, -4));
+
+console.log(stringValue.indexOf("o"));
+console.log(stringValue.lastIndexOf("o"));
+
+console.log(stringValue.indexOf("o", 6));
+console.log(stringValue.lastIndexOf("o", 6));
+
+var stringValue = "Lorem ipsum dolor sit amet, consectetur adipisicing elit";
+var positions = new Array();
+var pos = stringValue.indexOf("e");
+
+while(pos > -1){
+    positions.push(pos);
+    pos = stringValue.indexOf("e", pos + 1);
+}
+
+console.log(positions);
+
+var stringValue = "   hello world    ";
+var trimmedStringValue = stringValue.trim();
+console.log(stringValue);
+console.log(trimmedStringValue);
+console.log(stringValue.trimLeft());
+console.log(stringValue.trimRight());
+
+var stringValue = "hello world";
+console.log(stringValue.toUpperCase());
+console.log(stringValue.toLowerCase());
+
+var text = "cat, bat, sat, fat";
+var pattern = /.at/;
+
+var matches = text.match(pattern);
+console.log(matches.index);
+console.log(matches[0]);
+console.log(pattern.lastIndex);
+
+var pos = text.search(/at/);
+console.log(pos);
+
+var text = "cat, bat, sat, fat";
+var result = text.replace("at", "ond");
+console.log(result);
+
+var result = text.replace(/at/g, "ond");
+console.log(result);
