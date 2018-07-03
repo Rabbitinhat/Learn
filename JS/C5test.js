@@ -2,7 +2,7 @@
  * @Author: chyon71 
  * @Date: 2018-06-30 15:38:16 
  * @Last Modified by: chyon71
- * @Last Modified time: 2018-07-02 23:14:42
+ * @Last Modified time: 2018-07-03 15:16:21
  */
 
 var person = new Object();
@@ -714,3 +714,131 @@ console.log(result);
 
 var result = text.replace(/at/g, "ond");
 console.log(result);
+
+result = text.replace(/(.at)/g, "word ($1)");
+result2 = text.replace(/(.at)/, "word ($2)");
+result3 = text.replace(/(.at)/, "word ($3)");
+console.log(result);
+console.log(result2);
+console.log(result3);
+
+function htmlEscape(text){
+    return text.replace(/[<>"&]/g, function(match, pos, originalText){
+        switch(match){
+            case "<":
+                return "&lt;";
+            case ">":
+                return "gt;";
+            case "&":
+                return "&amp;";
+            case "\"":
+                return "&quot;";
+        }
+    });
+}
+
+console.log(htmlEscape("<p class=\"greeting\">Hello World!</p>"));
+
+var colorText = "red, blue, green, yellow";
+var colors1 = colorText.split(",");
+var colors2 = colorText.split(",", 2);
+var colors3 = colorText.split(/[^\,]+/);
+
+console.log(colors1);
+console.log(colors2);
+console.log(colors3);
+
+var stringValue = "yellow";
+console.log(stringValue.localeCompare("brick"));
+console.log(stringValue.localeCompare("yellow"));
+console.log(stringValue.localeCompare("zoo"));
+
+function determineOrder(value){
+    var result = stringValue.localeCompare(value);
+    if(result < 0){
+        console.log("The string 'yellow' comes before the string '" + value + "'.");
+    }
+    else if(result = 0){
+        console.log("The string 'yellow' comes equal the string '"+ value +"'.");
+    }
+    else{
+        console.log("The string 'yellow' comes after the string '"+ value +"'.");
+    }
+}
+
+determineOrder("brick");
+determineOrder("yellow");
+determineOrder("zoo");
+
+console.log(String.fromCharCode(104, 101, 108, 108, 111));
+
+//Global
+var uri = "http://www.wrox.com/illegal value.htm#strart";
+console.log(encodeURI(uri));
+
+console.log(encodeURIComponent(uri));
+
+uri1 = encodeURI(uri);
+uri2 = encodeURIComponent(uri);
+console.log(decodeURI(uri1));
+console.log(decodeURIComponent(uri));
+console.log(decodeURI(uri2));
+console.log(decodeURIComponent(uri2));
+
+eval("console.log('hi')");
+var msg = "hello world";
+eval("console.log(msg)");
+eval("function sayHi(){console.log('hi');}");
+sayHi();
+
+eval("var msg = 'Hello World!'");
+console.log(msg);
+
+var color = "red";
+
+function sayColor(){
+    console.log(window.color);
+}
+
+window.sayColor();
+
+var global = function(){
+    return this;
+}();
+console.log(global);
+
+var max = Math.max(3, 54, 32, 16);
+console.log(max);
+
+var min = Math.min(3, 54, 32, 16);
+console.log(min);
+
+var values = [1, 2, 3, 5, 4, 6, 7, 8];
+var max = Math.max.apply(Math, values);
+console.log(max);
+
+console.log(Math.ceil(25.9));
+console.log(Math.ceil(25.5));
+console.log(Math.ceil(25.1));
+
+console.log(Math.round(25.9));
+console.log(Math.round(25.5));
+console.log(Math.round(25.1));
+
+console.log(Math.floor(25.9));
+console.log(Math.floor(25.5));
+console.log(Math.floor(25.1));
+
+var num1 = Math.floor(Math.random() * 10 + 1);
+var num2 = Math.floor(Math.random() * 10 + 2);
+
+console.log(num1);
+console.log(num2);
+
+function selectFrom(lowerValue, upperValue){
+    var choices = upperValue - lowerValue + 1;
+    return Math.floor(Math.random() * choices + lowerValue);
+}
+
+var num = selectFrom(2, 10);
+console.log(num);
