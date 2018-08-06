@@ -1,0 +1,53 @@
+@charset "utf-8";
+
+* {
+    margin: 0;
+}
+
+body {
+    font: 10px "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+h1 {
+    margin: 10px 0 20px 10px;
+    font-size: 3.5em;
+
+}
+h2 {
+    margin: 20px 0;
+    font-size: 2.5em;
+}
+h3 {
+    
+}
+section {
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+section div p,
+h3 {
+    font-size: 1.75em;
+}
+section div p {
+    margin-bottom: 20px;
+}
+.info div p {
+    margin-bottom: 0;
+}
+/*个人信息浮动放置*/
+.info div h3,
+.info div p {
+    float: left;
+}
+.info div {
+    overflow: hidden;
+}
+.info div h3 {
+    margin-right: .5em;
+}
+.info div p {
+    margin-right: 2em;
+}
+/*去掉最后一个p元素方式section之间边距扩大*/
+.info div p:last-child {
+    margin-right: 0;
+}

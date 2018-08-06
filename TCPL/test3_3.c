@@ -16,7 +16,7 @@ void expand(char* s1, char* s2){
     (s1[i] == '-')? s2[j++] = s1[i++]: x = s1[i];
     for( ; s1[i] != '\0'; i++){
         if(s[i] == '-' && s[i+1] != '\0'){
-                for(x=s[i-1]; x<s[i+1]; x++)
+                for(; x<s[i+1]; x++)
                     s2[j++] = x;
             } else s2[j++] = s[i];
         }

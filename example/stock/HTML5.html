@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Example</title>
+        <meta name="author" content="Adam Freeman" />
+        <meta name="description" content="A simple example" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <style>
+            .favorites {
+                background: grey;
+                color: white;
+                border: thin solid black;
+                padding: 0px;
+            }
+            body > header *, body > footer * {
+                background: transparent;
+                color: black;
+            }
+            h1, h2, h3{
+                background: brown;
+                color: white;
+            }
+            hgroup > h1{
+                margin-bottom: 0px;
+            }
+            hgroup > h2{
+                font-size: 1em;
+                margin-top: 0px;
+            }
+            p {
+                margin-left: 1px;
+            }
+            body > header, body > footer {
+                border: medium solid black;
+                padding-left: 5px;
+                margin: 10px 0 10px 0;
+            }
+
+            body > nav {
+                text-align:center;
+                padding: 2px;
+                border: dashed thin black;
+            }
+            body > nav > a{
+                padding: 2px;
+                color: black;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <hgroup>
+                <h1>Things I like</h1>
+                <h2>by Adam Freeman</h2>
+            </hgroup>
+            <address>
+                Questions and comments? <a href="mailto: adam@myboringblog.com">Email me</a>
+            </address>
+            <nav>
+                    <h1>Contents</h1>
+                    <ul>
+                        <!--<li><a href="#fruitsilike">Fruits I Like</a></li>
+                        <ul>
+                            <li><a href="#morefruit">Additional Fruits</a></li>
+                        </ul>
+                        <li><a href="#activitiesilike">Activities I like</a></li>
+                        <ul>
+                            <li><a href="#tritypes">Kinds of Triathlon</a></li>
+                            <li><a href="#mytri">The kind of triathlon I am aiming for</a></li>
+                        </ul>-->
+                        <li><a href="#fruitsilike">Fruits I like</a></li>
+                        <li><a href="#activitiesilike">Activities</a></li>
+                    </ul>
+                </nav>
+        </header>
+        <!--<pre><code>
+            var fruits = ["apples", "oranges", "mangoes", "cherries"];
+            for(var i = 0; i < fruits.length; i++){
+                document.writeln("I like " + fruits[i]);
+            }
+        </code></pre>-->
+        <div class="favorites">
+
+        <article>
+        <header>
+        <hgroup>
+        <h1 id="fruitsilike">Fruits I like</h1>
+        <h2>How I Learned to love Citrus</h2>
+        </hgroup>
+        </header>
+        <p>I like apples and organes.</p>
+        <section>
+            <h1 id="morefruit">Additional fruits</h2>
+            <p>I also like bananas, mangoes, cherries, apricots, plims, peaches and grapes.</p>
+            <section>
+                <h1>More information</h3>
+                <p>you can see other fruits I like <a href="fruitlist.html">here</a>.
+                </p>
+            </section>
+        </section>
+        </section>
+    </article>
+    <article>
+        <header>
+        <hgroup>
+            <h1 id="activitiesilike">Activites I like</h1>
+        </hgroup>
+        </header>
+        <section>
+        <p>I like to swim, cycle and run. I am in training for my first triathlon, but it is hard to work.</p>
+        <h1 id="tritypes">Kinds of Triathlon</h2>
+        There are different kinds of triathlon - sprint, Olympic and so on.
+        <section>
+        <h1 id="mytri">The kind of triathlon I am aiming for</h3>
+        <details>
+            <summary>Kinds of Triathlon</summary>
+            I am aiming for Olympic, which consists of the following:
+        <ol>
+            <li>1.5km swim</li>
+            <li>40km cycle</li>
+            <li>10km run</li>
+            
+        </ol>
+        </details>
+
+        <p><strong>Warning:</strong> Eating too many oranges can give you heart burn.</p>
+
+        <p>My favorite kind of orange is the mandarin, properly known
+            as <i>citrus reticulata</i>
+        Oranges at my local store cost <s>$1 each</s> $2 for 3.</p>
+        </section>
+        </section>
+        </section>
+    </article>
+        </div>
+
+        <backquote cite="http://en.wikipedia.org/wiki/Apple">
+            An apple is a sweet, edible fruit produced by an apple tree (Malus pumila). Apple trees are cultivated worldwide, and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found today. Apples have been grown for thousands of years in Asia and Europe, and were brought to North America by European colonists. Apples have religious and mythological significance in many cultures, including Norse, Greek and European Christian traditions.
+            <hr>
+            Apple trees are large if grown from seed. Generally apple cultivars are propagated by grafting onto rootstocks, which control the size of the resulting tree. There are more than 7,500 known cultivars of apples, resulting in a range of desired characteristics. Different cultivars are bred for various tastes and uses, including cooking, eating raw and cider production. Trees and fruit are prone to a number of fungal, bacterial and pest problems, which can be controlled by a number of organic and non-organic means. In 2010, the fruit's genome was sequenced as part of research on disease control and selective breeding in apple production.
+            <hr>
+            Worldwide production of apples in 2014 was 84.6 million tonnes, with China accounting for 48% of the total.
+         </backquote>
+
+        <p>The <abbr title="Florida Department of Citrus">FDDC</abbr> regulates the Florida citrus industry.</p>
+
+        <p>I still remember the best apple I ever tasted.
+        I bought it at <time datetime="15:00">3 o'clock</time> on <time datetime="1984-12-7">December 7th</time>.</p>
+
+        <ol type="1" reversed>
+            <li>cherries</li>
+            <li value="0">plums</li>
+            <li>peaches</li>
+            <li>grapes</li>
+        </ol>
+
+        <dl>
+            <dt>Apple</dt>
+                <dd>The apple is the pomaceous fruit of the apple tree</dd>
+                <dd><i>Malus domestia</i></dd>
+            <dt>Banana</dt>
+                <dd>The banana is the parthenocarpic fruit of the banana tree</dd>
+                <dd><i>Musa acuminata</i></dd>
+            <dt>Cherry</dt>
+                <dd>THe cherry is the stone fruit of the genus <i>Prunus</i></dd>
+        </dl>
+
+        <figure>
+            <figcaption>Listing 23. Using the code element</figcaption>
+            <code>var fruits = ["apples", "oranges", "mangoes", "cherries"];<br>
+                document.writeln("I like " + fruits.length + "fruits");</code>
+        </figure>
+        <nav>
+            More Information:
+            <a href="http://fruit.org">Learn More About Fruit</a>
+            <a href="http://triathlon.org">Learn More About Triathlons</a>
+        </nav>
+        <footer id="mainFooter">
+            &#169;2011, Adam Freeman. <a href="http://apress.com">Visit Apress</a>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,246 @@
+<!-- The Definitive Guide to HTML5 -->
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Example</title>
+        <meta name="author" content="Chyon" />
+        <meta name="description" content="A simple example"/>
+        <base href="http://127.0.0.1:8080"/>
+    </head> 
+    <body>
+        <form name="fruitvote" id="fruitvote" target="_blank" autocomplete="off" method="post" action="/form">
+            <fieldset>
+                <legend>Enter Your Details</legend>
+            <p><label for="fave">Fruit: <input id="fave" autofocus autocomplete="on" name="fave" /></label></p>
+            <p><label for="name">Name: <input name="name" id="fave"/></label></p>
+            
+            </fieldset>
+            <fieldset disabled>
+                <legend>Vote For Your Three Favorite Fruits</legend>
+                <p><label for="fave1">#1: <input id="fave1" name="fave1"/></label></p>
+                <p><label for="fave2">#2: <input id="fave2" name="fave2"/></label></p>
+                <p><label for="fave3">#3: <input id="fave3" name="fave3"/></label></p>
+            </fieldset>
+            <button>Submit Vote</button>
+            <button type="reset">Reset</button>
+            <button type="button">Do <strong>NOT</strong> press this button</button>
+       </form>
+    </body>
+</html>
+
+<!--C14-->
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Example</title>
+        <meta name="author" content="Chyon"/>
+        <meta name="description" content="A simple example"/>
+        <script type="text/javascript" src="C14test.js" defer></script>
+        <script type="text/javascript">
+            EventUtil.addHandler(window, "load", function(){
+                frames["richedit"].document.designMode = "on";
+            });
+     </script>
+    </head>
+    <body>
+        <form  target="_blank" method="post" action="http://127.0.0.1:8080/form" id="form1">
+            <p>
+                <label for="name">
+                    Name: <input maxlength="10" id="name" placeholder="Your name" name="name"/>
+                </label>
+            </p>
+            <p>
+                <label for="password">
+                    Password: <input type="password" placeholder="Min 6 characters" id="password" name="password" />
+                </label>
+            </p>
+            <p>
+                <label for="city">
+                    City: <input size="10" value="Beijing" placeholder="Where you live" id="city" name="city" readonly/>
+                </label>
+            </p>
+            <p>
+                <label for="fave">
+                    Fruit: <input size="10" list="fruitlist" id="fave" name="fave" value="orange"/>
+                </label>
+            </p>
+            <textarea rows="15" cols="10" id="textarea1">initial value</textarea>
+            <input size="10" list="fruitlist" id="textTel1" name="fave1" value="orange" required/>
+            <input size="10" list="fruitlist" id="textTel2" name="fave" value="apple"/>
+            <input size="10" list="fruitlist" id="textTel3" name="fave" value="banana"/>
+            <input type="email" name="email" />
+            <input type="url" name="homepage" />
+            <input type="submit" name="submit-btn" value="Submit Vote"/>
+            <input type="reset" value="Reset Form"/>
+            <input type="button" value="My Button"/>
+            <input type="number" min="0" max="100" step="5" name="count" />
+            <select name="location" id="selLocation">
+                <option value="Sunnyvale, CA">Sunnyvale</option>
+                <option value="Los Angeles, CA">Los Angeles</option>
+                <option value="Mountain View, CA">Mountain View</option>
+                <option value="">China</option>
+                <option>Australia</option>
+            </select>
+        </form>
+        <div id="myDiv" style="background-color:aqua;width:200px;height:200px"></div>
+        <datalist id="fruitlist">
+            <option value="Apples" label="Lovely Apples"/>
+            <option value="Oranges">Refreshing Oranges</option>
+            <option value="Cherries" />
+        </datalist>
+        <iframe name="richedit" style="height:100px;width:100px;" src="example.html"></iframe>
+
+        
+    </body>
+</html>
+//jQuery_C2
+        <div class="one" id="one">
+            id为one,class为one的
+            <div class="mini">class 为mini</div>
+        </div>
+        <div class="one" id="two">
+            id为two,class为one,title为test的div.
+            <div class="mini" title="other">class为mini,title为other</div>
+            <div class="mini" title="test">class为mini,title为test</div>
+        </div>
+        <div class="one">
+            <div class="mini">class为mini</div>
+            <div class="mini">class为mini</div>
+            <div class="mini">class为mini</div>
+        </div>
+        <div class="one">
+            <div class="mini">class为mini</div>
+            <div class="mini">class为mini</div>
+            <div class="mini">class为mini</div>
+            <div class="mini"></div>
+        </div>
+        <div class="one">
+            <div class="mini">class为mini</div>
+            <div class="mini">class为mini</div>
+            <div class="mini">class为mini</div>
+            <div class="mini" title="tesst">class为mini,title为tesst</div>
+        </div>
+        <div class="none" style="display: none">
+            style的display为"none"的div
+        </div>
+        <div class="hide">class为"hide"的div</div>
+        <div>
+            包含input的type为"hidden"的div<input type="hidden" size="8"/>
+        </div>
+        <span id="mover">正在执行动画的span元素</span>
+        <div title="en">title = en</div>
+        <div title="en-UK">title = en-UK</div>
+        <div title="english">title = english</div>
+        <div title="en uk">title = en uk</div>
+        <div title="uken">title = uken</div>
+
+C13 input elements
+            <p>
+                <label for="email">
+                    Email:<input type="email" placeholder="user@domain.com" id="email" name="email" />
+                </label>
+            </p>
+            <p>
+                <label for="tel">
+                    Tel: <input type="tel" placeholder="(XXX)-XXX-XXXX" id="tel" name="tel" />
+                </label>
+            </p>
+            <p>
+                <label for="url">
+                    Your homepage: <input type="url" id="url" name="url" />
+                </label>
+            </p>
+            <p>
+                <label for="lastbuy">
+                    <input type="date" id="lastbuy" name="lastbuy" />
+                </label>
+            </p>
+            <p>
+                <label for="color">
+                    Color: <input type="color" id="color" name="color" />
+                </label>
+            </p>
+            <p>
+                <label for="search">
+                    Search: <input type="search" id="search" name="search" />
+                </label>
+            </p>
+            <p>
+                <fileset>
+                    <legend>Vote for your favorite fruit</legend>
+                    <label for="apples">
+                        <input type="radio" checked value="Apples" id="apples" name="fave"/>Apples
+                    </label>
+                    <label for="message">
+                        <input type="radio" value="Oranges" id="oranges" name="fave" />Oranges
+                    </label>
+                    <label for="cherries">
+                        <input type="radio" value="Cherries" id="cherries" name="fave" />Cherries
+                    </label>
+                </fileset>
+            </p>
+            <p>
+                <label fpr="veggie">
+                    Are you vegetarian: <input type="checkbox" id="veggie" name="veggie" />
+                </label>
+            </p>
+            <p>
+                <label for="price">
+                    $per unit in your area: 1
+                    <input type="range" step="1" min="0" max="100" value="1" id="price" name="price" />100
+                </label>
+            </p>
+            <p>
+                <input type="file" name="filedata" />
+            </p>
+            <input type="image" src="../img/C4/bottom2.gif" name="submit" />
+
+        <form method="post" action="http://127.0.0.1:8080/form">
+            <input type="hidden" name="recordID" value="1234" />
+            <p>
+                <label for="name">
+                    Name: <input value="Adam" id="name" name="name" />
+                </label>
+            </p>
+            <p>
+                <label for="password">
+                    Password: <input type="password" placeholder="Min 6 characters" id="password" name="password" />
+                </label>
+            </p>
+            <p>
+                <label for="fave" style="vertical-align: top">
+                    Favorite Fruit
+                    <select id="fave" name="fave" size="3" multiple>
+                        <optgroup label="Top Choices">
+                        <option value="apples" selected label="Apples">Apples</option>
+                        <option value="oranges" label="Oranges">Oranges</option>
+                        </optgroup>
+                        <optgroup label="Others">
+                        <option value="cherries" label="Cherries">Cherries</option>
+                        <option value="pears" label="Pears">Pears</option>
+                        </optgroup>
+                    </select>
+                </label>
+            </p>
+            <p>
+                <textarea cols="20" rows="5" warp="hard" id="story" name="story">Tell us why this is your favorite fruit</textarea>
+            </p>
+            <input type="submit" value="Submit Vote" />
+        </form>
+        <form onsubmit="return false" oninput = "res.value = quant.valueAsNumber * price.valueAsNumber">
+            <fieldset>
+                <legend>Price Calculator</legend>
+                <input type="number" placeholder="Quantity" id="quant" name="quant" /> X
+                <input type="number" placeholder="Price" id="price" name="price" /> =
+                <output  name="res" />
+            </fieldset>
+        </form>
+        <p>
+            <a href="otherpage.html">
+                <img src="../img/C4/mask.gif" ismap alt="Triathlon Image" width="200" height="67" />
+            </a>
+        </p>
+        <a href="http://www.douban.com/" target="myframe">Baidu</a>
+        <iframe name="myframe" width="300" height="100" >
+
+        </iframe>

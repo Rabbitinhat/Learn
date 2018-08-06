@@ -1,0 +1,32 @@
+html {
+    font-size: 10px;
+}
+
+div {
+    font-size: 20px;
+}
+div .eng2 {
+    font-size: 1rem;
+    text-transform: capitalize;
+    text-decoration: line-through underline overline;
+    text-align: right;
+}
+div .eng{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grank', sans-serif;
+    font-size: 1em;
+    text-align: center;
+    font-weight: lighter;
+}
+.chinese2 {
+    font-size: 1em;
+}
+
+.chinese {
+    font-size: 4em;
+    text-shadow: 4px 4px 4px rgba(21, 48, 168, 0.7);
+}
+
+.chinese {
+    text-transform: full-width;
+
+}

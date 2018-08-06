@@ -1,0 +1,72 @@
+@charset "UTF-8";
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+/*全局字体设置*/
+body {
+    font: 12px "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+/*使用position：absolute & height: 100% 保证两列等高*/
+body > div{
+    position: relative;
+}
+header {
+    position: absolute;
+    width: 160px;
+    height: 100%;
+    background-color: #33f;
+}
+article {
+    margin-left: 160px;
+    padding-top: 15px;
+    min-width: 590px;
+    padding-left: 20px;
+}
+/*边栏*/
+header h1 {
+    margin: 50px auto 0 auto;
+    text-align: center;
+    font-size: 3em;
+    color: #fff;
+}
+/*简历主体*/
+/*文本大小*/
+section h2 {
+    font-size: 2.5em;
+    padding-bottom: 15px;
+}
+
+section h3,
+section p {
+    font-size: 1.5em;
+}
+
+.info h3,
+.info p {
+    float: left;
+}
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+
+p {
+    padding-bottom: 15px;
+}
+
+.info h3 {
+    padding-right: 5px;
+}
+.info p {
+    padding-right: 20px;
+}
+
+.info div p:last-child,
+.info div p:last-child {
+    padding-right: 0;
+}

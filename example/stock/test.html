@@ -1,0 +1,116 @@
+<!--/*
+ * @Author: chyon71 
+ * @Date: 2018-06-28 13:14:45 
+ * @Last Modified by: chyon71
+ * @Last Modified time: 2018-07-10 21:26:14
+ */
+-->
+<!Doctype html>
+<html>
+    <!--
+    <script type = "text/javascript" src = "C8test.js"></script>
+    <frameset rows="160, *">
+            <frame src="frame.html" name = "topFrame">
+            <frameset cols="50%, 50%">
+                <frame src="anotherframe.html" name = "leftFrame">
+                <frame src="yetanotherframe.html" name = "rightFrame">
+            </frameset>
+        -->
+    <head>
+        <!--metadata goes here -->
+        <title>Example</title>
+        <meta name="author" content="Adam Freeman" />
+        <meta name="description" content="A simple example" />
+        <meta charset="utf-8" />
+        <!--<link rel="stylesheet" type="text/css" href="styles.css" />-->
+        <style>
+            #nav>li {
+                background-color: red;
+                padding-left: 20px;
+            }
+            h2 + p {
+                font-size: 1.4em;
+                font-weight: bold;
+                color: #777;
+            }
+
+        </style>>
+        <script>
+            var toggleHidden = function(){
+                var elem = document.getElementById("toggle");
+                if(elem.hasAttribute("hidden")){
+                    elem.removeAttribute("hidden");
+                } else {
+                    elem.setAttribute("hidden", "hidden");
+                }
+            }
+        </script>
+        <script src="simple.js" defer></script>
+        <noscript>
+            <h1>JavaScript is required!</h1>
+            <p>You cannot use this page without Javascript</p>
+        </noscript>
+    </head>
+    <body>
+        <h2>Peru Celebrates Guimea Pig festival</h2>
+        <p>The guina pig festival in Peru is a one day event to celebrate these cute local animals.</p>
+        <p>Guinea pigs can be fried, roasted, or served in a casserole. Around 65 million guinea pigs are eaten in Peru each year.</p>
+        <ul id="nav">
+            <li><a href="/home/">Home</a></li>
+            <li><a href="/service/">Service</a>
+                <ul>
+                    <li><a href="/services/design"></a></li>
+                    <li><a href="/services/development">Development</a></li>
+                    <li><a href="/services/consultancy">Consultancy</a></li>
+                </ul></li>
+        </ul>
+        <form>
+            Name: <input type="text" name="name" accesskey="n" />
+            <p>
+                PassWord: <input type="password" name="password" accesskey="p"/>
+            </p>
+            <input type="submit" value="Log In" accesskey="s"/>
+        </form>
+        <div>
+        i like<a href="#fruits" id="applecode"> apples </a>>and oranges
+        <hr />
+        Today wa warm and sunny
+        Enter your name: <input disabled>
+        </div>
+        <a class="class1, class2" href="http://apress.com">Apress web site</a>
+        <p/>
+        <a class="class2 otherclass" href="http://w3c.org">W3C web site</a>
+        <p contenteditable="true">It is raining right now</p>
+        <p dir="ltr">This is <b>left-to-right</b></p>
+        <p dir="rtl">This is <b>right-to-left</b></p>
+        <button onclick="toggleHidden()">Toggle</button>
+        <p>This is left-to-right: <bdo dir="ltr">I like oranges</bdo></p>
+        <p>This is right-to-left: <bdo dir="rtl">I like oranges</bdo></p>
+        <table>
+            <tr><th>Name</th><th>City</th></tr>
+            <tr><td>Adam Freeman</td><td>London</td></tr>
+            <tr id="toggle" hidden><td>Joe Smith</td><td>New York</td></tr>
+            <tr><td>Anne Jones</td><td>Paris</td></tr>
+        </table>
+        <textarea spellcheck="true">This is some mispelled text</textarea>
+        <a title="Apress Publishing" href="http://apress.com">Visit the Apress site</a>
+        <p id="fruits">
+            <em>I</em> also like bananas, <s>mangoes</s>, cherries, apricots, plums.
+            The <abbr title="Florida Department of Citrus">FDOC</abbr>
+            <q cite="http://en.wikipedia.org/wiki/Apple">The <dfn title="apple">apple</dfn> is the pomaceous fruit of the apple tree.</q><br/>
+            My favorite book on fruit is <cite>Fruit: Edible, Inedible, Incredible</cite>
+            <ruby>魑<rp>(</rp><rt>chi</rt><rp>)</rp></ruby>
+        </p>
+        <p>
+            My <strong>favorite</strong> kind of orange is the mandarin, <br/>properly known as <i>citrus reticulata</i>
+        </p>
+        <p>
+            <strong>Warning:</strong> Eating <u>too many</u> oranges can give you heart burn.<small>(plux tax)</small>
+        </p>
+        <p>
+            the point x<sub>10</sub> is the 10<sup>th</sup> point.
+        </p>
+        <code>var fruits = ['apples', 'orange', 'mangoes', 'cherries'];<br/>
+            document.writeln("I like" + fruits.length + "fruits");</code>
+    </body>
+</html>
