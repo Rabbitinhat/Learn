@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+/*Flew-boxing*/
+.header,
+.footer {
+    width: 100%;
+    height: 40px;
+    background: red;
+}
+
+.container {
+    display: flex;
+}
+
+.left {
+    flex: 3;
+    background: grey;
+}
+
+.main {
+    flex: 7;
+    background: burlywood;
+}

@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+header,
+footer {
+    height: 40px;
+    background: red;
+}
+
+.container {
+    display: flex;
+}
+
+.left {
+    width: 80px;
+    background: grey;
+}
+
+.main {
+    flex: 1;
+    background: peru;
+}

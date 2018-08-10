@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+* {
+    margin: 0;
+}
+header,
+footer {
+    height: 40px;
+    background-color: red;
+}
+
+.container {
+    width: 100%;
+}
+.container:after {
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+.main {
+    float: left;
+    width: 800px;
+    height: 300px;
+    margin-left: 80px;
+    margin-right: calc(100% - 880px);
+    background: orangered;
+}
+.left {
+    float: left;
+    width: 80px;
+    height: 300px;
+    margin-left: -100%;
+    background-color: goldenrod;
+}
+.right {
+    float: left;
+    width: calc(100% - 880px);
+    height: 300px;
+    margin-left: calc(-100% + 880px);
+    background-color: goldenrod;
+}

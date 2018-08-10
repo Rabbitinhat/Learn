@@ -1,0 +1,27 @@
+@charset "UTF-8";
+/*head & footer*/
+header,
+footer {
+    width: 100%;
+    height: 40px;
+    background-color: red;
+}
+
+.container {
+    position: relative;
+    height: 300px; /*postion 无法阻止高度塌陷*/
+}
+
+.left {
+    position: absolute;
+    left: 0;
+    width: 80px;
+    height: 100%;
+    background: grey;
+}
+
+.main {
+    margin-left: 100px;
+    height: 100%; /*撑开.container内容*/
+    background: paleturquoise;
+}

@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+* {
+    margin: 0;
+}
+header,
+footer {
+    height: 40px;
+    background-color: red;
+}
+
+.container {
+    position: relative;
+    height: 300px;
+}
+
+.left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80px;
+    height: 100%;
+    background-color: goldenrod;
+}
+
+.right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: calc(100% - 880px);
+    height: 100%;
+    background-color: palevioletred;
+}
+
+.main {
+    width: 800px;
+    height: 100%;
+    margin-left: 80px;
+    margin-right: calc(100% - 880px);
+    background-color: royalblue;
+}

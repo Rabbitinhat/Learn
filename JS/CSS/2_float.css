@@ -1,0 +1,22 @@
+@charset  "UTF-8";
+/*Float*/
+/*header & footer*/
+.header, .footer {
+    height: 200px;
+    width: 100%;
+    background: red;
+}
+/*清除浮动*/
+.footer {
+    clear: both;
+}
+.left {
+    background: grey;
+    width: 30%;
+    float: left;
+}
+.main {
+    background: brown;
+    width: 70%;
+    margin-left: 30%;
+}
