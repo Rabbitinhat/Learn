@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <title>Turn to Binary</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    </head>
+    <body>
+        <input id="dec-number" type="number" placeholder="输入一个十进制非负整数">
+        <button id="trans-btn">转化为二进制</button>
+        <p id="result">运算结果</p>
+        <script>
+        function dec2bin(decNumber){
+            if(!isNaN(decNumber) && parseInt(decNumber) > 0 && parseInt(decNumber) == parseFloat(decNumber)){
+            var sum = "";
+            while(decNumber > 0){
+                var n = decNumber % 2;
+                sum = n + sum;
+                decNumber = parseInt(decNumber/2); /*除法取整*/
+                }
+            return sum;
+            }else if(!isNaN(parseInt(decNumber)) && parseInt(decNumber) != parseFloat(decNumber)){
+                /*null 会被isNaN调用的Number()转型函数转换为0，会通过判断.所以需要先用parseInt进行转型*/
+                console.log("TransWrong: input is a floating point");
+                return false;
+            }else{
+                console.log("TransWrong: input isn't a number");
+                return false;
+            }
+        }
+        
+        var number = document.getElementById("dec-number").value;
+        var trans = document.getElementById("trans-btn");
+        var result = document.getElementById("result");
+        trans.onclick = function(){
+                var bin = dec2bin(number);
+                if(bin){
+                    result.innerHTML = "输入数字二进制为 " + bin;
+                }else{
+                    result.innerHTML = "输入错误";
+                }
+        };
+        </script>
+    </body>
+</html>
