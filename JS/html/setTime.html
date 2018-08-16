@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <title>要我笑吗</title>
+        <meta http-equiv="X-UA-Compabile" content="IE=Edge">
+        <style>
+        #smile {
+            width: 480px;
+            height: 480px;
+            background-image: url(../img/smile.jpg);
+            background-position: 0 0;
+        }
+        section {
+            width: 480px;
+            margin: 0 auto;
+        }
+        </style>
+    </head>
+    <body>
+            <section>
+            <div id="smile"></div>
+            <button id="smile_show">要我笑吗</button>
+            <button id="smile_display">笑容渐渐消失(复位))</button>
+            </section>
+            <script>
+            var smile = document.querySelector("#smile");
+            var smile_s = document.querySelector("#smile_show");
+            var smile_d = document.querySelector("#smile_display");
+            var size = 0;
+            console.log(smile_d);
+            document.body.addEventListener("click", function(e){
+                
+                smile_d.disabled = true;
+                smile_s.disabled = true;
+                if(e.target.id == "smile_show"){                    
+                    setTimeout(function(){
+                        if(size == -7680){
+                            smile_d.disabled = false;
+                            console.log(size);
+                        }else{
+                            size -= 480;
+                            smile.style.backgroundPositionY = size + "px";
+                            console.log(size);
+                            setTimeout(arguments.callee, 80);
+                        }
+                    }, 80);
+                }else if(e.target.id == "smile_display"){
+                    console.log(size);
+                    setTimeout(function(){
+                        if(size == 0){
+                            smile_s.disabled = false;
+                        }else{
+                            size += 480;
+                            smile.style.backgroundPositionY = size + "px";
+                            console.log(size);
+                            console.log(smile.style.backgroundPositionY);
+                            setTimeout(arguments.callee, 80);
+                        }
+                    }, 80);
+                }
+            })
+            </script>
+    </body>
+</html>
