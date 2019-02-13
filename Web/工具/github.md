@@ -24,12 +24,14 @@
 打开`git`文件夹中的`git bash`
 配置git
 
+![打开bash](images/setting1.PNG)
+
 在命令行输入 
 ```
 ssh-keygen -t rsa -C "自己的邮箱地址"
 
 ```
-![打开bash](images/setting1.PNG)
+
 
 回车后, 输入保存密钥的地址; 不输入则使用默认地址(括号中内容)
 
@@ -45,7 +47,7 @@ ssh-keygen -t rsa -C "自己的邮箱地址"
 
 找到`id_rsa.pub`, 复制全部内容(?)
 
-回到`github`官网, 点击右上角头像进入`settings`页面
+回到`github`官网, 点击右上角头像进入`Settings`页面
 
 ![设置](images/settings.PNG)
 
