@@ -1,4 +1,4 @@
-s# HTTP入门
+# HTTP入门
 
 ## HTTP简介
 
@@ -232,3 +232,16 @@ header|描述
 Refresh| `1;url=http://www.baidu.com //过一秒跳转到指定位置`
 Content-Disposition|头字段
 Content-Type|响应对象的类型 `Content-Type: application/xml`
+
+## 参考
+
+***
+
+* Web基础---<<HTTP权威指南>>系列
+  * [WilsonLiu95](https://segmentfault.com/a/1190000006723609#articleHeader5)
+
+* 关于HTTP协议, 一篇就够了
+  * [ranyonsue](https://www.cnblogs.com/ranyonsue/p/5984001.html)
+
+* 前端必须会的!!!关于对HTTP协议的理解, HTTP协议原理分析
+  * [N-Tara](https://www.cnblogs.com/n-chenjun/p/6011869.html)
