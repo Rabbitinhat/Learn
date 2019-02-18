@@ -581,3 +581,111 @@ function start(response){
 使用`npm`安装外部模块
 
 ![安装外部模块](./images/安装外部模块.PNG)
+
+### 实现图片显示
+* 修改`requestHandlers`模块, 添加新的事件处理程序
+    ```js
+    //导入fs模块(?FileSave)
+    var fs = require("fs");
+    //...
+    function show(response, postData){
+        console.log("Request handler \"show\" was called.");
+        //调用fs模块的readFile方法读取本地文件
+        fs.readFile("./tmp/test.jpg", "binary", function(error, file){
+            if(error){
+                response.writeHead(500, {"Content-Type": "text/plain"});
+                response.write(error + "\n");
+                response.end();
+            }else{
+                //成功读取文件则返回响应, Content-Type为image/img
+                response.writeHead(200, {"Content-Type": "image/img"});
+                response.write(file, "binary");
+                response.end();
+            }
+        })
+
+    }
+    ```
+* 更新`index.js`中的`URL`映射
+    ```js
+    handle["/show"] = requestHandlers.show;
+    ```
+
+重启服务器后, 访问`http://127.0.0.1:8888/show`, 就可看到保存的图片文件
+
+### 实现图片上传
+
+* 在`/start`表单中添加一个文件上传元素
+* 将`node-formidable`整合到`upload`请求处理程序中, 将上传的图片保存到`./tmp/`中
+* 将图片嵌到`/upload`页面输出的`HTML`中
+
+实现
+
+* 舍弃`server.js`中的`postData`变量, 将`request`对象作为参数经由`router`模块传递给`requestHandlers`模块
+    ```js
+    //server.js改动
+    route(handle, pathname, response, request);
+
+    //router.js
+    function route(handle, pathname, response, request) {
+        //...
+        handle[pathname](response, request);
+    }
+    ```
+
+* 修改`requestHandlers`模块中`start`函数, 添加文件上传
+    ```js
+    //...
+    //在作为响应实体的HTML文件中, 添加文件上传部分
+    //注意元素的属性值和` " `之间没有空格(特别是<form>)
+    var body = "<html>" +
+    "<head>" +
+    "<meta http-equiv=\"Content-Type\" content=\"text/plain; charset=UTF-8\" />" +
+    "</head>" +
+    "<body>" +
+    "<form action=\"/upload\" method=\"post\" enctype=\"multipart/form-data\" >" +
+    "<input type=\"file\" name=\"upload\" multiple=\"multiple\" />" +
+    "<input type=\"submit\" value=\"Upload file\" />" +
+    "</form>" +
+    "</body>" +
+    "</html>";
+    //...
+
+* 修改`upload`函数, 使用`fromidable` 和`fs`模块, 将上传图片保存在服务器. 并返回显示图片页面
+    ```js
+    //...
+    //使用formidable模块
+    var form = new formidable.IncomingForm();
+    form.uploadDir = "tmp";
+    console.log("about to parse");
+    form.parse(request, function(error, fields, files){
+        console.log("parsing done");
+        //调用fs模块的renameSync方法
+        //修改上传文件的保存路径
+        fs.renameSync(files.upload.path, "./tmp/test.jpg");
+        response.writeHead(200, {"Content-Type": "text/html"});
+        //返回显示图片的页面
+        response.write("received image:<br/>");
+        //图片链接指向"/show", 获取保存在服务器的图片
+        response.write("<img src=\"/show\" />");
+        response.end();
+    })
+    //...
+    ```
+
+## 总结
+
+这样就完成了一个可以上传并显示图片的`Node.js`的Web应用;
+
+技术点:
+
+* 服务端`javascript`
+* 函数式编程
+* 阻塞与非阻塞
+* 回调函数
+* 事件
+* 内部&外部模块
+
+## 参考
+
+[Node.js入门(nodebeginner)](https://www.nodebeginner.org/index-zh-cn.html)
