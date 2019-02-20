@@ -1,0 +1,114 @@
+body, input, div, p, ul, ol, li, table, tr, td, th{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font: 25px "Microsoft YaHei", sans-serif;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+.clearfix:after {
+    clear: left;
+    content: "";
+    display: table;
+}
+
+/* 问答区域 start */
+#answerPage {
+    position: relative;
+    width: 400px;
+    height: 300px;
+    margin: 0 auto;
+    margin-top: 200px;
+    background-color: #09c;
+    border: 5px solid #969;
+}
+/* 问答区域 end */
+
+/* 问题显示部分start */
+#ques {
+    height: 160px;
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+    color: #333;
+    background-color: #9cf;
+}
+/* 问题显示end */
+
+/* 选项 start */
+#answer {
+    height: 100px;
+    background-color: #69c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#answer li{
+    width: 90px;
+    height: 80px;
+    float: left;
+    margin: 0 5px;
+    background-color: #ccc;
+    font-size: 16px;
+    text-align: center;
+
+
+}
+
+#answer li a {
+    color: #333;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    line-height: 2em;
+    vertical-align: middle;
+    cursor: pointer;
+    
+}
+
+/* 选项 end */
+
+/* right wrong start */
+#answer .wrong {
+    color: #fff;
+    background: #808080;
+}
+#answer .right {
+    color: #fff;
+    background: #f00;
+}
+
+/* next 按钮部分 start*/
+#next {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    height: 40px;
+    margin-top: -20px;
+    background: rgba(0, 0, 0, 0.3);
+    font-size: 10px;
+    line-height: 40px;
+}
+/* next 按钮部分 end */
+
+#back {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 40px;
+    margin-top: -20px;
+    background: rgba(0, 0, 0, 0.3);
+    font-size: 10px;
+    line-height: 40px;
+}
