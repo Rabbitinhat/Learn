@@ -1,0 +1,193 @@
+<!-- 文档声明, 声明文档使用HTML5规范 -->
+<!DOCTYPE html>
+<!-- 表明页面语言使用 zh-CN -->
+<html lang="zh-CN">
+<!-- 设置元数据 -->
+
+<head>
+    <!-- 设置文档编码为utf-8 -->
+    <meta charset="UTF-8" />
+    <!-- 页面标题 -->
+    <title>简历</title>
+    <!-- ? -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <!-- 表明文档作者 -->
+    <meta name="author" content="chyon" />
+    <!-- 添加关键词 -->
+    <meta name="keywords" content="简历, 百度前端学院" />
+    <!-- 添加描述 -->
+    <meta name="description" content="这是一份简历, 有关chyon的个人信息, 欢迎随时查看, 感谢献出您的时间" />
+    <!-- 禁止google翻译 -->
+    <meta name="google" content="notranslate" />
+
+    <style rel="stylesheet">
+        /* css reset */
+        html, body {
+            min-height: 100vh;
+        }
+        body, h1, header {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 一些全局设定 */
+        h1 {
+            /* 文本属性 */
+            text-align: center;
+            font-weight: bold;
+            font-size: 2rem;
+            text-shadow: 5px 5px 5px #ccc;
+        }
+        
+        a[href] {
+            text-decoration: none;
+            color: #333;
+        }
+
+        /* 
+            color
+            font-family
+            font-style
+            font-weight
+            font-size
+            text-align
+            text-decoration
+            text-indent
+            line-height
+            text-shadow
+        */
+        body {
+            font-family: "Microsoft Yahei", "Simsun", sans-serif;
+            font-size: 16px;
+        }
+
+        /* 设置内联样式 */
+        /* header 部分 */
+        header {
+            height: 75px;
+            background-color: #333;
+            color: #ccc;
+            line-height: 75px;
+        }
+
+        /* 标题 */
+        h1 {
+            line-height: 75px;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            font-weight: normal;
+            text-shadow: 2px 2px 2px #333;
+        }
+        /* header 结束 */
+
+        /* mainpart 部分 */
+        section[id="basicInfo"] {
+            text-align: left;
+        }
+        section[id="basicInfo"] dd {
+            
+        }
+
+        section dt {
+            font-weight: bold;
+        }
+
+        section dd {
+            text-indent: -40px;
+        }
+
+
+        /* mainpart 结束 */
+
+        /* footer */
+        footer {
+            height: 75px;
+            background-color: #333;
+
+            font-size: 2rem;
+            text-align: center;
+            color: #ccc;
+            line-height: 75px;
+        }
+    </style>
+</head>
+<!-- 元数据结束 -->
+
+<body>
+    <!-- 文档主要内容 -->
+    <!-- 头部 -->
+    <header id="title">
+        <!-- 标题 -->
+        <h1>简历</h1>
+    </header>
+    <!-- 主要内容 -->
+    <div id="mainpart">
+        <!-- 个人信息部分 -->
+        <div id="description">
+            <!-- 基本信息部分 -->
+            <section id="basicInfo">
+                <h2>基本信息</h2>
+                <!-- 信息使用说明列表 -->
+                <dl>
+                    <dt>姓名:</dt>
+                    <dd>Chyon</dd>
+                    <dt>性别:</dt>
+                    <dd>男</dd>
+                    <dt>应聘职位:</dt>
+                    <dd>前端开发工程师</dd>
+                    </dlsss>
+            </section>
+            <!-- 联系方式部分 -->
+            <section id="contact">
+                <h2>联系方式</h2>
+                <dl>
+                    <dt>手机:</dt>
+                    <dd>123456789</dd>
+                    <!-- 链接打开默认邮箱软件 -->
+                    <dt>Email:</dt>
+                    <dd><a href="mailto:myname@hotmail.com">myname@hotmail.com</a></dd>
+                    <dt>Github:</dt>
+                    <dd><a href="https://github.com/Rabbitinhat">Rabbitinhat</a></dd>
+                </dl>
+            </section>
+            <section id="ability">
+                <h2>能力描述</h2>
+                <dl>
+                    <dt>技术能力</dt>
+                    <dd>熟练掌握HTML, CSS, JavaScript</dd>
+                    <dt>综合能力</dt>
+                    <dd>良好的沟通, 主动积极, 学习勤奋</dd>
+                </dl>
+            </section>
+        </div>
+        <!-- 教育经历 -->
+        <section id="education">
+            <h2>教育经历</h2>
+            <dl>
+                <dt>本科生</dt>
+                <dd>百度前端技术学院</dd>
+                <dt>研究生</dt>
+                <dd>百度前端技术学院</dd>
+                </dt>
+        </section>
+        <!-- 项目经历 -->
+        <section id="projectExperience">
+            <h2>项目经历</h2>
+            <!-- 修改使用说明列表 -->
+            <dl>
+                <dt>小度小度</dt>
+                <dd>作为前端工程师参与了组件ABC的开发</dd>
+                <dt>SAN DOC</dt>
+                <dd>作为文档工程师参与了San Doc的编写</dd>
+            </dl>
+        </section>
+    </div>
+    <!-- 页脚 -->
+    <footer>
+        &copy;chyon
+    </footer>
+</body>
+
+</html>
