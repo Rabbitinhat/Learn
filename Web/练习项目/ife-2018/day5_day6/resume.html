@@ -20,6 +20,37 @@
     <!-- 禁止google翻译 -->
     <meta name="google" content="notranslate" />
 
+    <style rel="stylesheet">
+        #change{
+            position: fixed;
+            right: 0;
+            top: 0;
+        }
+        #change span {
+            display: inline-block;
+
+            width: 30px;
+            height: 30px;
+        }
+
+        .one {
+            border: 1px solid #ccc;
+
+            background-color: #333;
+        }
+
+        .two {
+            border: 1px solid #333;
+
+            background-color: #33f;
+        }
+
+        .three {
+            border: 1px solid #333;
+
+            background-color: #ccc;
+        }
+    </style>
     <link href="main.css" rel="stylesheet" />
 </head>
 <!-- 元数据结束 -->
@@ -27,6 +58,11 @@
 <body>
     <!-- 文档主要内容 -->
     <div>
+        <div id="change">
+            <span class="one" data-link="main.css"></span>
+            <span class="two" data-link="main2.css"></span>
+            <span class="three" data-link="main3.css"></span>
+        </div>
         <!-- 头部 -->
         <header id="title">
             <!-- 标题 -->
@@ -102,7 +138,8 @@
             </section>
         </div>
     </div>
-
+    <!-- script -->
+    <script src="main.js"></script>
 </body>
 
 </html>
