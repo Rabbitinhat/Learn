@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style rel="stylesheet">
+    /* 使用auto p171 */
+    .test {
+        /* Box Model  */
+        width: 400px;
+        height: 75px;
+        
+        /* Visual */
+        border: 1px solid #333;
+        background-color: #ccc;
+    }
+
+    /* 过分受限 */
+    #one .test p {
+        /* Box Model */
+        width: 100px;
+        margin-left: 100px;
+        margin-right: 100px;
+
+        background-color: red;
+    }
+    /* 3者都为auto */
+   #two .test p {
+       width: auto;
+       margin-left: auto;
+       margin-right: auto;
+       background-color: red;
+   }
+   /* 负右外边距 */
+   #three .test p {
+       width: auto;
+       margin-left: 100px;
+       margin-right: -100px;
+
+       background-color: red;
+   }
+
+   /* 负左外边距 */
+   #four .test p {
+       width: auto;
+       margin-left: -100px;
+       margin-right: 100px;
+
+       background-color: red;
+   }
+
+   /* margin-top/margin-bottom: auto */
+   .heighttest .test {
+       height: 100px;
+
+       background-color: #ccc;
+       border: 1px solid #333;
+   }
+   #five .test p {
+       height: 50px;
+       margin-top: auto;
+       margin-bottom: auto;
+
+       background-color: yellow;
+   }
+
+   #six .test p {
+       height: 50%;
+       margin-top: 25%;
+       margin-bottom: 25%;
+
+       background-color: yellow;
+   }
+    </style>
+</head>
+<body>
+    <div class="testarea">
+        <h2>width</h2>
+        <article class="widthtest">
+        <h2>使用<code>auto</code></h2>
+        <section id="one">
+            <p>width: 100px; margin-left: 100px; margin-right: 100px</p>
+            <div class="test">
+                <p>A Paragraph</p>
+            </div>
+        </section>
+        <section id="two">
+            <p>width: auto; margin-right: auto; margin-left: auto</p>
+            <div class="test">
+                <p>A Paragraph</p>
+            </div>
+        </section>
+        </article>
+        <article class="widthtest">
+            <h2>负外边距</h2>
+            <section id="three">
+                <p>width: auto; margin-left: 100px; margin-right: -100px</p>
+                <div class="test">
+                    <p>A Paragraph</p>
+                </div>
+            </section>
+            <section id="four">
+                <p>width: auto;
+                    margin-left: -100px;
+                    margin-right: 100px;
+                </p>
+                <div class="test">
+                    <p>A Paragraph</p>
+                </div>
+            </section>
+        </article>
+        <!-- 高度 -->
+        <h2>height</h2>
+        <article class="heighttest">
+            <section id="five">
+                <p>height=100px; margin-top: auto; margin-bottom: auto</p>
+                <div class="test">
+                    <p>A Paragraph</p>
+                </div>
+            </section>
+                <div id="six">
+                <p></p>
+                <div class="test">
+                    <p>A Paragraph</p>
+                </div>
+                </div>
+        </article>
+    </div>
+</body>
+</html>

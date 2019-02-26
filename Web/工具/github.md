@@ -119,6 +119,8 @@ git config -global user-email "邮箱"
     //branch: 分支名
     git push origin <branch>
 ```
+`git push -f`
+
 完成推送,可以在网站上进行查看
 
 ![推送](images/push.PNG)

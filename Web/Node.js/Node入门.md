@@ -4,7 +4,7 @@
 
 ## 服务端JavaScript
 
-实现后台运行`JavaScript`代码, 代码需要鲜卑解释然后正确的执行
+实现后台运行`JavaScript`代码, 代码需要先被解释然后正确的执行
 
 `Node.js`的原理: 使用`Google`的`V8`虚拟机(Chrome浏览器使用的JavaScript执行环境), 来解释和执行`JavaScript`代码
 

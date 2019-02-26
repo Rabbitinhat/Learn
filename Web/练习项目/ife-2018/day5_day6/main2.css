@@ -1,0 +1,151 @@
+@charset "utf-8";
+
+/* 
+* Formatting Model
+* Box Model
+* Typographic
+* Visual
+*/
+
+/* 全局设置 */
+html,
+body {
+    min-height: 100vh;
+}
+
+body,
+header,
+h1,
+h2,
+h3,
+p,
+dl {
+    /* Box Model Style */
+    margin: 0;
+    padding: 0;
+}
+
+/* clear float */
+.clear:after {
+    content: ".";
+    /* Formatting Model */
+    display: block;
+    clear: both;
+    height: 0;
+    visibility: hidden;
+}
+body {
+    /* Formatting Model */
+    position: relative;
+    /* typographic */
+    font-family: "Helvetica Neue", Arial, "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft YaHei", sans-serif;
+    font-size: 16px;
+}
+
+/* 文档主体 */
+
+/* header start */
+header {
+    /* Formatting Model */
+    position: absolute;
+    left: 0;
+    top: 0;
+    /* Box Model */
+    width: 160px;
+    height: 100%;
+    padding-top: 2rem;
+
+
+    /* Visual */
+    background-color: #33f;
+}
+h1 {
+    /* Typographic */
+    text-align: center;
+
+    /* Visual */
+    color: #fff;
+}
+/* head end */
+
+/* mainpart */
+#mainpart {
+    /* formatting Model */
+    /* Box Model */
+    margin-left: 190px;
+    padding: 1rem 0;
+}
+/* description */
+section {
+    /* Box Model */
+    margin-bottom: 1rem;
+}
+
+section[id="basicInfo"] {
+    text-align: left;
+}
+
+h2 {
+    /* Box Model */
+    margin-bottom: 1rem;
+
+    /* Typographic */
+    font-size: 1.5rem;
+    
+    /* Visual */
+    font-weight: bold;
+}
+
+#basicInfo h3,
+#basicInfo p,
+#contact h3,
+#contact p {
+    /* Formatting Model */
+    display: inline-block;
+
+    /* Typographic */
+    font-size: 1rem;
+}
+
+#basicInfo h3,
+#contact h3 {
+    /* Box Model */
+    margin-right: 10px;
+}
+
+#basicInfo p,
+#contact p {
+    /* Box Model */
+    margin-right: 2rem;
+}
+
+/* contact start */
+/* ability start */
+/* education start */
+section dt {
+    /* Box Model */
+    margin-bottom: 5px;
+    /* Visual */
+    font-weight: bold;
+}
+
+section dd {
+    /* Box Model */
+    margin-bottom: 1rem;
+    /* Typographic */
+    text-indent: -40px;
+}
+#projectExperience {
+    /* Box Model */
+    margin-bottom: 0;
+}
+#projectExperience dd:last-child {
+    /* Box Model */
+    margin-bottom: 0;
+}
+
+/* footer start */
+footer {
+    /* Formatting Model */
+    display: none;
+}
