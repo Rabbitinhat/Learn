@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>两栏布局</title>
+    <style rel="stylesheet">
+    .container {
+        box-sizing: border-box;
+        padding: 20px 10px;
+        border: 3px solid #333;
+    }
+    .left {
+        box-sizing: border-box;
+        width: 200px;
+        border: 3px solid red;
+    }
+    .right {
+        box-sizing: border-box;
+        margin-left: 20px;
+        border: 3px solid orange;
+    }
+    </style>
+    <link href="flex.css" rel="stylesheet"/>
+</head>
+<body>
+    <!-- 两栏布局 基本样式 -->
+    <div class="container">
+        <div class="left">
+            左边宽度固定, width=200px
+        </div>
+        <div class=right>
+            右边宽度自适应; 两栏高度不定, 左侧可能会比右侧高或低 间隔 20px 
+        </div>
+    </div>
+</body>
+</html>

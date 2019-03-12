@@ -1,0 +1,17 @@
+/* 使用overflow:auto触发BFC */
+.container:after {
+    content: "";
+    display: block;
+    clear: both;
+    visibility: hidden;
+}
+
+.left {
+    float: left;
+    margin-right: 20px;
+}
+
+.right {
+    /* 触发BFC(box formatting context) */
+    overflow: auto;
+}

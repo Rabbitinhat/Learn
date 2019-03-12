@@ -1,0 +1,15 @@
+/* inline-block */
+.container {
+    /* ? */
+    box-sizing: content-box;
+    font-size: 0;
+}
+.container div {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 14px;
+}
+
+.right {
+    width: calc(100% - 220px);
+}
