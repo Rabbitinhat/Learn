@@ -80,7 +80,7 @@ function sum(nums) {
 console.log(sum(range(1, 10)));
 
 //NOTE range()修改 指定构建数组时的步长(step) 数字的间隔
-function range(start, end, step = 1) {
+function range(start, end, step = start < end ? 1 : -1) {
     let nums = [];
     if (start < end) {
         for (let i = start; i < end + 1; i += step) {
@@ -143,7 +143,14 @@ function arrayToList(arr){
     };
     return first;
 }
-
+//NOTE Answer
+function arrayToList(arr){
+    let list = null;
+    for(let i=arr.length-1; i>0; i--){
+        list = {value: arr[i], rest: list};
+    }
+    return list;
+}
 var test = arrayToList([1,2,3]);
 console.log(test);
 

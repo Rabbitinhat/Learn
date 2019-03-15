@@ -80,4 +80,6 @@ display: inline-flex;
 
 ### flex 居中
 
-`align-items: center;` `justify-content: center;`
+
+`align-items: center;` 沿交叉轴居中
+`justify-content: center;` 沿主轴居中
