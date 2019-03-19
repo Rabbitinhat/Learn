@@ -89,6 +89,10 @@ JS中, 函数可以作为参数; 使用匿名函数作为参数
 
 通常来说, 我们会使用`index.js`的文件去调用其他模块来引导和启动应用
 
+如何将`server.js`变成一个真正的`Node.js`模块, 使它可以被我们的`index.js`主文件调用
+
+把某段代码变成模块意味着我们需要把我们希望提供其功能的部分导出到请求这个模块的脚本中
+
 首先, 修改server.js, 将创建服务器的脚本放入一个函数, 以便可以导出
 
 ```js
@@ -110,6 +114,9 @@ function start() {
         //终端提示文本
         console.log("Server running at http://127.0.0.1:8888/");
 }
+
+//NOTE 导出这个函数
+exports.start = start;
 ```
 再创建 `index.js` 调用该模块, 并使用导出的方法创建服务器
 
@@ -129,9 +136,13 @@ server.start();
 
 因此, 我们需要获取请求的`URL`, `GET`和`POST`参数, 我们暂且将其作为服务器的功能
 
+`/start(url.parse(string).pathname)?foo=bar(querystring(string)["foo"](为"bar"))&hello=word(url.parse(string).query)`
+
 我们需要的所有数据都包含在`request`对象中, 为了解析这个数据, 我们要导入 `url` 和 `querystring`(?) 模块
 
 * 修改`server.js`
+
+    通过导入`url`模块, 调用`url.parse(request.url).pathname`来获得`url`路径名
 
     ```js
     //导入 url 模块
@@ -155,9 +166,9 @@ server.start();
         }
         //...
     ```
+    我们得到路径名后, 就可以根据请求的`URL`路径不同来处理不同的请求
 
 * 编写路由, 建立router.js文件
-
     ```js
     function route(pathname) {
         console.log("About to route a request for " + pathname);
