@@ -167,8 +167,10 @@ function BinarySearchTree() {
             }
 
             //NOTE 有两个子节点的节点
+            //NOTE 找到该节点右子树中的最小节点
             var aux = findMinNode(node.right);
             node.key = aux.key;
+            //NOTE 删除右子树中最小的节点
             node.right = removeNode(node.right, aux.key);
             return node;
         }

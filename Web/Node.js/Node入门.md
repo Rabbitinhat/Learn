@@ -4,6 +4,8 @@
 
 ## 服务端JavaScript
 
+相对于浏览器环境, Node.js事实上就是另外一种上下文, 允许在后端(脱离浏览器环境)运行JavaScript代码
+
 实现后台运行`JavaScript`代码, 代码需要先被解释然后正确的执行
 
 `Node.js`的原理: 使用`Google`的`V8`虚拟机(Chrome浏览器使用的JavaScript执行环境), 来解释和执行`JavaScript`代码
