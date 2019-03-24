@@ -8,10 +8,18 @@ var logger = require('morgan');
 //导入路由模块
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var articleRouter = require("./routes/article");
 
 //创建应用对象(app, application)
 var app = express();
 
+//链接数据库
+const mongoose = require("mongoose");
+const mongoDB = process.env.MONGODB_URL || "mongodb://localhost:27017/db";
+mongoose.connect(mongoDB);
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+db.on("err", console.error.bind(console, "MongoDB 链接错误: "));
 //设置视图模板
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //导入路由
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use("/articles", articleRouter);
 
 //添加错误处理方法
 // catch 404 and forward to error handler

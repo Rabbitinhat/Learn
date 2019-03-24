@@ -4,8 +4,8 @@ var router = express.Router();
 
 //指定路由
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/', (req, res) => {
+  res.redirect("/articles");
 });
 
 //导出
