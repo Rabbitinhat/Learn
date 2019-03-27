@@ -1,34 +1,62 @@
 //RegexpGolf
-//cat and car
-let regexp1 = /ca[rt]/;
-console.log(regexp1.exec("car"));
-console.log(regexp1.exec("cat"));
 
-//pop and prop
-let regexp2 = /pr?op/;
-console.log(regexp2.exec("pop"));
-console.log(regexp2.exec("prop"));
+function verify(regexp, yes, no){
+    if(regexp.source == "...") return;
+    for(let str of yes){
+        if(!regexp.test(str)){
+            console.log(`Failure to match ${str}`);
+        }
+        for(let str of no){
+            if(regexp.test(str)){
+                console.log(`Unexpected match for ${str}`);
+            }
+        }
+    }
+}
 
-//ferret and ferry and ferrari
-let regexp3 = /ferr(et|y|ari)/;
-console.log(regexp3.exec("ferry"));
-console.log(regexp3.exec("ferret"));
-console.log(regexp3.exec("ferrari"));
+verify(/ca[rt]/,
+    ["my car", "bad cats"],
+    ["camper", "high art"]);
 
-//end by ious
-let regexp4 = /\w*ious$/;
-console.log(regexp4.exec("serious"));
+verify(/pr?op/,
+    ["pop culture", "mad props"],
+    ["plop", "prrrop"]);
 
-//space before . : ;
-let regexp5 = /(\s)+(.|:|;)/;
-console.log(regexp5.exec("Hello : I'm here     ; you're OK      ."));
+verify(/ferr(et|y|ari)/,
+    ["ferret", "ferry", "ferrari"],
+    ["ferrum", "transfer A"]);
 
-//not include e E
-let regexp6 = /[^e]*/;
-console.log(regexp6.exec("Banana, regExp, good".toLowerCase()));
+verify(/ious\b/,
+    ["how delicious", "spacious room"],
+    ["ruinous", "consciousness"]);
 
-//more than 6
-let regexp7 = /\w{6,}/;
-console.log(regexp7.exec("good"));
-console.log(regexp7.exec("Banana"));
-console.log(regexp7.exec("interesting"));
+verify(/\s[.,:;]/,
+    ["bad punctuation  ."],
+    ["escape the period"]);
+
+verify(/\w{7}/,
+    ["hottentottententen"],
+    ["no", "hotten totten tenten"]);
+
+verify(/\b[^\We]+\b/i,
+    ["red platypis", "wobbling nest"],
+    ["earch bed", "learning ape", "BEET"]);
+
+//QuotingStyle
+let text = "'I'm the cook,' he said, 'it's my job.'";
+console.log(text.replace(/(^|\W)'|'(\W|$)/g, '$1"$2'));
+
+//NumbersAgain
+let number = /^[+-]?(\d*[.]\d+|\d+[.]\d*|\d+)([eE][+-]?\d*)?$/;
+let numberAns = /^[+\-]?(\d+(\.\d*)?)\.\d+)([eE][+\-]?\d+)?$/;
+
+for(let str of ["1", "-1", "+15", "1.55", ".5", "5.", "1.3e2", "1E-4", "1e+12"]){
+    if(!number.test(str)){
+        console.log(`Failed to match '${str}'`);
+    }
+}
+for(let str of ["1a", "+-1", "1.2.3", "1+1", "1e4.5", ".5.", "1f5", "."]){
+    if(number.test(str)){
+        console.log(`Incorrectly accepted '${str}'`);
+    }
+}
