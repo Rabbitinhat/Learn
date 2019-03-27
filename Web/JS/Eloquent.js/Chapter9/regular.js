@@ -125,8 +125,9 @@ function minusOne(match, amount, unit){
 console.log(stock.replace(/(\d+) (\w+)/g, minusOne));
 
 //移除注释
+//使用[^]*?尽量少匹配字符
 function stripComments(code){
-    return code.replace(/\/\/.*|\/\*[^]*\*\//g, "");
+    return code.replace(/\/\/.*|\/\*[^]*?\*\//g, "");
 }
 
 console.log(stripComments("1 + /* 2 */3"));
@@ -134,3 +135,91 @@ console.log(stripComments("1 + /* 2 */3"));
 console.log(stripComments("x=10;//ten!"));
 
 console.log(stripComments("1/* a */+/* b */1"));
+
+//RegExp 对象
+let name = "harry";
+let text = "Harry is a suspicious character.";
+let regexp = new RegExp("\\b(" + name + ")\\b", "gi");
+console.log(text.replace(regexp, "_$1_"));
+
+//包含特殊字符
+let name = "dea+h1[]rd";
+let text = "This dea+h1[]rd guy is super annoying.";
+//为特殊字符(排除\w\s)添加转义"\"
+let escaped = name.replace(/[^\w\s]/g, "\\$&");
+let regexp = new RegExp("\\b(" + escaped + ")\\b", "gi");
+console.log(text.replace(regexp, "_><_"));
+
+//search
+console.log("  word".search(/\S/));
+console.log("   ".search(/\S/));
+
+//lastIndex
+let pattern = /y/g;
+pattern.lastIndex = 3;
+let match = pattern.exec("xyzzy");
+console.log(match.index);
+console.log(pattern.source);
+console.log(pattern.lastIndex);
+
+//g y
+let global = /abc/g;
+console.log(global.exec("xyz abc"));
+console.log(global.lastIndex);
+//y模式时, 只有当匹配从lastIndex(开头)开始时, 才会匹配成功
+let sticky = /abc/y;
+console.log(sticky.lastIndex);
+console.log(sticky.exec("xyz abc"));
+console.log(sticky.exec("abc xyz"));
+
+let digit = /\d/g;
+console.log(digit.exec("here it is: 1"));
+console.log(digit.lastIndex);
+console.log(digit.exec("and now: 1"));
+
+console.log("Banana".match(/an/g));
+
+//循环匹配
+let input = "A string with 3 numbers in it... 42 and 88.";
+let number = /\b(\d+)\b/g;
+let match;
+while(match = number.exec(input)){
+    console.log("Found", match[0], "a", match.index);
+}
+
+//处理INI文件
+//遍历文件的行构建一个对象. 顶部的属性直接存储在对象中, 节中找到的属性存储在单独的节对象中
+//section指向当前节对象
+function parseINI(string){
+    //
+    let result = {};
+    let section = result;
+    //将分割文件的每行(/\r?\n/匹配换行符)
+    string.split(/\r?\n/).forEach(line => {
+        let match;
+        //匹配节中的选项
+        if(match = line.match(/^(\w+)=(.*)$/)){
+            section[match[1]] = match[2];
+        }else if(match=line.match(/^\[(.*)\]$/)){
+            //节中的属性存储在单独的节对象中
+            //section指向当前节的对象
+            section = result[match[1]] = {};
+        }else if(!/^\s*(;.*)?$/.test(line)){
+            throw new Error("Line '" + line + "' is not valid.");
+        }
+    });
+    return result;
+}
+
+console.log(parseINI(
+`name=Vasilis
+[address]
+city=Tessaloniki`
+));
+
+//代码单元
+//emoji被视为两个代码单元, 但正则只能处理一个代码单元
+console.log(/\ud83c\udf4e{3}/.test("\ud83c\udf4e\ud83c\udf4e\ud83c\udf4e"));
+console.log(/<.>/.test("<\ud83c\udf39>"));
+//u(Unicode)
+console.log(/<.>/u.test("<\ud83c\udf39>"));
