@@ -2,13 +2,21 @@
  * @Author: chyon71 
  * @Date: 2019-03-09 18:10:48 
  * @Last Modified by: chyon71
- * @Last Modified time: 2019-03-09 19:23:19
+ * @Last Modified time: 2019-03-28 19:34:33
  * @The Answer : The C Answer Book by Clovis L. Tondo & Scott E. Gimpel 
  */
+
+//绑定/变量
+let caught = 5 * 5;
+
 //NOTE LoopingTriangle
 let str = "";
 for (let i = 0; i < 7; i++) {
     console.log(str += "#");
+}
+
+for(let line = "#"; line.length < 7; line += "#"){
+    console.log(line);
 }
 
 //NOTE FizzBuzz
@@ -39,6 +47,12 @@ for (let i = 1; i < 101; i++) {
     }
 }
 
+for(let i=1; i<101; i++){
+    let output = ""
+    if(i % 3 === 0) output += "Fizz";
+    if(i % 5 === 0) output += "Buzz";
+    console.log(output || i);
+}
 console.log(
     ` # # # #
 # # # # 
