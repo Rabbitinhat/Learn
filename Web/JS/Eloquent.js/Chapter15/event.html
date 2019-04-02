@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chapter15-Events</title>
+    <style>
+    body{
+        height: 200px;
+        background: beige;
+    }
+    .dot {
+        height: 8px;
+        width: 8px;
+        border-radius: 4px;
+        background: blue;
+        position: absolute;
+    }
+    dot {
+        position: absolute;
+        display: block;
+        border: 2px solid red;
+        border-radius: 50px;
+        height: 100px;
+        width: 100px;
+    }
+
+    /* 滚动事件 */
+    #progress {
+        border-bottom: 2px solid blue;
+        width: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+    </style>
+</head>
+<body>
+    <p>A paragraph with a <button>button</button>.</p>
+    <button>A</button>
+    <button>B</button>
+    <button>C</button>
+
+    <p>This page turns violet when you hold the V key.</p>
+
+    <p>Press Ctrl-Space to continue</p>
+    <a href="https://developer.mozilla.org/">MDN</a>
+
+    <!-- 拖拽 -->
+    <p>Drag the bar to change its width:</p>
+    <div style="background:orange; width: 60px; height: 20px"></div>
+
+    <p>Touch this page</p>
+
+    <div id="progress"></div>
+    <p id="content"></p>
+    <script>
+    let para = document.querySelector("p");
+    let button = document.querySelector("p button");
+    para.addEventListener("mousedown", ()=>{
+        console.log("Handler for paragraph.");
+    });
+    button.addEventListener("mousedown", event=>{
+        console.log("Handler for button.");
+        //event.button 表明鼠标点击时,使用的按键(左, 中, 右)
+        if(event.button == 2) event.stopPropagation();
+    });
+
+    //使用target找出事件来源节点
+    document.body.addEventListener("click", evnet=>{
+        if(event.target.nodeName == "BUTTON"){
+            console.log("Clicked", event.target.textContent);
+        }
+    });
+
+    //取消默认行为
+    let link = document.querySelector("a");
+    link.addEventListener("click", event => {
+        console.log("Nope");
+        event.preventDefault();
+    })
+
+    //按键事件
+    //鼠标点击也会触发keydown
+    window.addEventListener("keydown", event=>{
+        document.body.style.background = "violet";
+    });
+    window.addEventListener("keyup", event=>{
+        if(event.key == "v"){
+            document.body.style.background = "";
+        }
+    });
+
+    //shift ctrl alt meta 修饰按键
+    window.addEventListener("keydown", event=>{
+        if(event.key == " " && event.ctrlKey){
+            console.log("Continuing!");
+        }
+    });
+
+    //鼠标和触摸屏
+    window.addEventListener("click", evnet => {
+        let dot = document.createElement("div");
+        dot.className = "dot";
+        dot.style.left = (event.pageX - 4) + "px";
+        dot.style.top = (event.pageY - 4) + "px";
+        document.body.appendChild(dot);
+    });
+
+    //拖拽
+    let lastX;
+    let bar = document.querySelector("div");
+    bar.addEventListener("mousedown", event => {
+        //event.button & event.buttons
+        if(event.button == 0){
+            lastX = event.clientX;
+            console.log(event.buttons);
+            window.addEventListener("mousemove", moved);
+            event.preventDefault();
+        }
+    });
+
+    function moved(event){
+        //event.buttons == 0 没有按键按下时,取消事件处理
+        if(event.buttons == 0){
+            window.removeEventListener("mousemove", moved);
+        }else{
+            let dist = event.clientX - lastX;
+            let newWidth = Math.max(10, bar.offsetWidth + dist);
+            bar.style.width = newWidth + "px";
+            lastX = event.clientX;
+        }
+    }
+
+    //触摸事件
+    function update(event){
+        for(let dot; dot=document.querySelector("dot");){
+            dot.remove();
+        }
+        for(let i=0; i<event.touches.length; i++){
+            let {pageX, pageY} = event.touches[i];
+            let dot = document.createElement("dot");
+            dot.style.left = (pageX - 50) + "px";
+            dot.style.top = (pageY - 50) + "px";
+            document.body.appendChild(dot);
+        }
+    }
+    window.addEventListener("touchstart", update);
+    window.addEventListener("touchmove", update);
+    window.addEventListener("touchend", update);
+
+    //滚动事件
+    let content = document.getElementById("content");
+    content.appendChild(document.createTextNode(
+        "supercalifragilisticexpialidocious ".repeat(100)
+    ));
+
+    let bar2 = document.querySelector("#progress");
+    window.addEventListener("scroll", ()=>{
+        //滚动内容高度减去窗口内容高度为最大滚动位置
+        let max = document.body.scrollHeight - innerHeight;
+        //当前滚动位置/最大滚动位置得到百分比
+        bar2.style.width = `${(pageYOffset/max) * 100}%`;
+    });
+
+    </script>
+</body>
+</html>
