@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chapter15-Exercise</title>
+    <style rel="stylesheet">
+    .dot {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        border: 2px solid red;
+    }
+    section {
+        position: relative;
+        width: 100px;
+        height: 200px;
+    }
+    section div {
+        position: absolute;
+        left: 0;
+        top: 100px;
+        width: 100px;
+        height: 100px;
+    }
+    div[data-tabname="one"] {
+        background: red;
+    }
+    div[data-tabname="two"] {
+        background: green;
+    }
+    div[data-tabname="three"] {
+        background: blue;
+    }
+    </style>
+</head>
+
+<body>
+    <p style="font-size:15px">🎈</p>
+
+    <!-- 选项卡 -->
+    <section class="tab-panel">
+        <div data-tabname="one">Tab one</div>
+        <div data-tabname="two">Tab two</div>
+        <div data-tabname="three">Tab three</div>
+    </section>
+    <script>
+        //气球
+        let ballon = document.querySelector("p");
+        let size = parseFloat(ballon.style.fontSize);
+        window.addEventListener("keydown", change);
+        function change(event){
+            if (event.key == "ArrowUp") {
+                console.log(size);
+                if(size < 100){
+                    ballon.style.fontSize = Math.floor(1.1 * size) + "px";
+                    size = parseFloat(ballon.style.fontSize);
+                }else{
+                    ballon.innerHTML = "&#x1f4a5;";
+                    window.removeEventListener("keydown", change);
+                }
+                event.preventDefault();
+            }
+            if (event.key == "ArrowDown") {
+                if (size > 10)
+                    ballon.style.fontSize = Math.floor(0.9 * size) + "px";
+                    size = parseFloat(ballon.style.fontSize);
+                    event.preventDefault();
+            }
+            
+        }
+
+        /* //轨迹
+        let dots = [];
+        for(let i=0; i<12; i++){
+            let node = document.createElement("div");
+            node.className = "dot";
+            document.body.appendChild(node);
+            dots.push(node);
+        }
+
+        let currentDot = 0;
+
+        window.addEventListener("mousemove", (event)=>{
+            let dot = dots[currentDot];
+            dot.style.left = (event.pageX - 5) + "px";
+            dot.style.top = (event.pageY - 5) + "px";
+            currentDot = (currentDot + 1) % dots.length;
+        }); */
+
+        //选项卡
+        let buttons = document.createElement("section");
+        buttons.style.clear = "all";
+        let tabs = document.body.getElementsByClassName("tab-panel")[0];
+        let divs = tabs.getElementsByTagName("div");
+        console.log(tabs);
+        for(let i=0; i<3; i++){
+            let button = document.createElement("button");
+            button.textContent = divs[i].getAttribute("data-tabname");
+            buttons.appendChild(button);
+        }
+        tabs.insertBefore(buttons, divs[0]);
+
+        tabs.addEventListener("click", (event)=>{
+            for(let i=0; i<divs.length; i++){
+                divs[i].style.display = "none";
+            }
+            let nums = {};
+            nums["one"] = 0;
+            nums["two"] = 1;
+            nums["three"] = 2;
+            divs[nums[event.target.textContent]].style.display = "block";
+        })
+
+        //answer
+        /* function asTabs(node){
+            let tabs = Array.from(node.children).map(node=>{
+                let button = document.createElement("button");
+                button.textContent = node.getAttribute("data-tabname");
+                let tab = {node, button};
+                button.addEventListener("click", ()=>selectTab(tab));
+                return tab;
+            });
+
+            let tabList = document.createElement("div");
+            for(let {button} of tabs) tabList.appendChild(button);
+            node.insertBefore(tabList, node.firstChild);
+
+            function selectTab(selectedTab){
+                for(let tab of tabs){
+                    let selected = tab == selectedTab;
+                    tab.node.style.display = selected ? "" : "none";
+                }
+            }
+            selectTab(tabs[0]);
+        }
+
+        asTabs(document.getElementsByClassName("tab-panel")[0]); */
+    </script>
+</body>
+
+</html>

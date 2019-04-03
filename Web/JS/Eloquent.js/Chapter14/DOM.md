@@ -45,7 +45,7 @@
 
 `node.appendChild(child)` 添加子节点, 放在子节点列表末尾
 
-`.insertBefore(firstnode, secondenode)` 将第一个参数的节点插入到第二个参数的节点
+`.insertBefore(firstnode, secondenode)` 将第一个参数的节点插入到第二个参数的节点之前
 
 `.replaceChild(新节点, 被替换的子节点)` 替换调用对象的子节点
 

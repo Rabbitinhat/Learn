@@ -55,6 +55,12 @@
 
     <div id="progress"></div>
     <p id="content"></p>
+
+    <p>Name: <input type="text" data-help="Your full name"></p>
+    <p>Age: <input type="text" data-help="Your age in years"></p>
+    <p id="help"></p>
+
+    <textarea>Type something here...</textarea>
     <script>
     let para = document.querySelector("p");
     let button = document.querySelector("p button");
@@ -164,6 +170,56 @@
         bar2.style.width = `${(pageYOffset/max) * 100}%`;
     });
 
+    //获取焦点 不会冒泡
+    let help = document.querySelector("#help");
+    let fields = document.querySelectorAll("input");
+    for(let field of Array.from(fields)){
+        field.addEventListener("focus", event=>{
+            let text = event.target.getAttribute("data-help");
+            help.textContent = text;
+        });
+        field.addEventListener("blur", event => {
+            help.textContent = "";
+        });
+    }
+
+    //Web Worker 多线程
+    let squareWorker = new Worker("./squareworker.js");
+    squareWorker.addEventListener("message", event => {
+        console.log("The worker responded:", event.data);
+    });
+    squareWorker.postMessage(10);
+    squareWorker.postMessage(24);
+
+    //setTimeout 定时器
+    let bombTimer = setTimeout(()=>{
+        console.log("BOOM!");
+    }, 500);
+
+    if(Math.random() < 0.5) {
+        console.log("Defused.");
+        clearTimeout(bombTimer);
+    }
+
+    //Debounce 降频 使用setTimeout
+    let textarea = document.querySelector("textarea");
+    let timeout;
+    textarea.addEventListener("input", ()=>{
+        clearTimeout(timeout);
+        timeout = setTimeout(()=>console.log("Typed!"), 500);
+    });
+
+    //
+    let scheduled = null;
+    window.addEventListener("mousemove", event=>{
+        if(!scheduled){
+            setTimeout(()=>{
+                document.body.textContent = `Mouse at ${scheduled.pageX}, ${scheduled.pageY}`;
+                scheduled = null;
+            }, 250);
+        }
+        scheduled = event;
+    });
     </script>
 </body>
 </html>
