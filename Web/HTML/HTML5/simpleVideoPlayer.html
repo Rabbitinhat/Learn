@@ -1,0 +1,31 @@
+<!-- HTML5 media element exercise -->
+<!-- a simple video player -->
+<!doctype html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <title>A Simple VPlayer</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/>
+        
+    </head>
+
+    <body>
+        <!-- ?figure -->
+        <figure class="video-player">
+            <video preload="none" width="1280" height="720" poster="./video.png">
+                <source src="video.webm" type="video/webm"/>
+                <source src="video.mp4" type="video/mp4"/>
+            </video>
+            <button class="play-toggle">Toggle play</button>
+            <button class="mute-toggle">Toggle mute</button>
+            <button class="loop-toggle">Toggle loop</button>
+        </figure>
+        <script src="./videPlayer.js"></script>
+        <script>
+            /* ? this */
+        new VideoPlayer({
+            element: document.querySelector(".video-player")
+        });
+        </script>
+    </body>
+</html>

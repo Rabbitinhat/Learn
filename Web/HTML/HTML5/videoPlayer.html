@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <title>VideoPlayer</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <link rel="stylesheet" href="./normalize.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="./video.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="c-video">
+            <video class="video">
+                <source src="./video.webm" type="video/webm">
+                <source src="./video.mp4" type="video/mp4">
+            </video>
+            <div class="controls">
+                <div class="orange-bar">
+                    <div class="orange-juice"></div>
+                </div>
+                <div class="buttons">
+                    <button type="button" id="play-toggle"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="video.js"></script>
+    <script>
+        new VideoPlayer({
+            element: document.querySelector(".c-video")
+        });
+    </script>
+</body>
+
+</html>
