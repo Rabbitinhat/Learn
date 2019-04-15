@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <title>Drag and Drop</title>
+    <meta http-equiv="X-UA-Complible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <style rel="stylesheet">
+        body > * {
+            float: left;
+        }
+
+        #target {
+            border: 2px solid orangered;
+            margin: 4px;
+            height: 75px;
+            width: 200px;
+            display: flex;
+            align-content: center;
+        }
+
+        table {
+            margin: 4px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="target">
+        <p id="msg">Drop Files Here</p>
+    </div>
+    <table id="data"></table>
+    <script>
+    let target = document.getElementById("target");
+
+    target.ondragenter = handleDrag;
+    target.ondragover = handleDrag;
+
+    function handleDrag(e){
+        e.preventDefault();
+    }
+
+    /* file API */
+    target.ondrop = function(e){
+        let files = e.dataTransfer.files;
+        let tableElem = document.getElementById("data");
+        tableElem.innerHTML = "<tr><th>Name</th><th>Type</th><th>Size</th></tr>";
+        for(var i=0; i<files.length; i++){
+            let row = "<tr><td>" + files[i].name + "</td><td>"
+                + files[i].type + "</td><td>" + files[i].size + "</td></tr>";
+            tableElem.innerHTML += row;
+        }
+        e.preventDefault();
+    }
+    </script>
+</body>
+</html>
