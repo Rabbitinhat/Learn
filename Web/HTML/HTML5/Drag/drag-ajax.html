@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <title>Drag & Ajax</title>
+    <meta name="author" content="chyon">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compblie" content="IE=Edge">
+    <style>
+        #target {
+            width: 400px;
+            height: 80px;
+            border: 2px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="imgform" method="post" action="">
+        <label for="pic1">Picture1: <input id="pic1" name="pic1" value="2"></label>
+        <label for="pic2">Picture2: <input id="pic2" name="pic2" value="2"></label>
+        <label for="pic3">Picture3: <input id="pic3" name="pic3" value="20"></label>
+        <label for="file">File: <input id="file" type="file" name="file"></label>
+        <div>
+            <div class="cell label">Total:</div>
+            <div id="result" class="cell">0 items</div>
+        </div>
+        <div id="target">
+            <p id="msg">Drop Files Here</p>
+        </div>
+        <button id="submit" type="submit">Submit Form</button>
+    </form>
+    <script>
+        let target = document.getElementById("target");
+        let httpRequest;
+        let fileList;
+
+        document.getElementById("submit").onclick = handleButtonPress;
+        /* 取消dragenter & dragover 默认行为*/
+        /* 将target变为拖放区 */
+        target.ondragenter = handleDrag;
+        target.ondragover = handleDrag;
+
+        function handleDrag(e) {
+            e.preventDefault();
+        }
+
+        target.ondrop = function (e) {
+            fileList = e.dataTransfer.files;
+            console.log(fileList);
+            
+            e.preventDefault();
+        }
+
+        function handleButtonPress(e) {
+            e.preventDefault();
+
+            let form = document.getElementById("imgform");
+            let formData = new FormData(form);
+
+            /* 将拖拽的文件添加到formData中 */
+            if (fileList || true) {
+                for (let i = 0; i < fileList.length; i++) {
+                    /* Ajax */
+                    fromData.append("file" + i, fileList[i]);
+                }
+            }
+            httpRequest = new XMLHttpRequest();
+            httpRequest.onreadystatechange = handleResponse;
+            httpRequest.open("POST", form.action);
+            httpRequest.send(formData);
+        }
+
+        function handleResponse() {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                let data = JSON.parse(httpRequest.responseText);
+                document.getElementById("results").innerHTML = "You ordered" + data.total + "items";
+            }
+        }
+    </script>
+</body>
+
+</html>
