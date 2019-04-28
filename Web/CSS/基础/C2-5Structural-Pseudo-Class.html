@@ -1,0 +1,74 @@
+<!-- nth-child -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Structural-Pesudo-Class</title>
+    <style rel="stylesheet">
+        /* (odd) 标题行 + td(1, 3, 5...) 
+            (even) td(2, 4, 6...)
+        */
+        tr:nth-child(3n+4) {
+            background-color: aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <table id="test">
+        <thead>
+            <tr>
+                <th>Row &#8470;</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Not matched</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Not matched</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Not matched</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>3 &times; 0 = 0. Add 4 and get a match for row &#8470; 4!</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Not matched</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Not matched</td>
+            </tr>
+            <tr>
+                    <td>7</td>
+                    <td>3 &times; 1 = 3. Add 4 and get a match for row &#8470; 7!</td>
+                </tr>
+                
+            <tr>
+                <td>8</td>
+                <td>Not matched</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>Not matched</td>
+            </tr>
+            <tr>
+                    <td>10</td>
+                    <td>3 &times; 0 = 0. Add 4 and get a match for row &#8470; 4!</td>
+                </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

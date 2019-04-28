@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <title>Get Postion</title>
+        <meta name="author" content="chyon">
+        <meta http-equiv="X-UA-Compablie" content="IE=Edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    </head>
+
+    <body>
+        <table>
+            <tr>
+                <th>Longitube:</th><td id="longitude">-</td>
+                <th>Latitude:</th><td id="latitude">-</td>
+            </tr>
+            <tr>
+                <th>Altitude:</th><td id="altitude">-</td>
+                <th>Accuracy:</th><td id="accuracy">-</td>
+            </tr>
+            <tr>
+                <th>Altitude Accuracy:</th><td id="altitudeAccuracy">-</td>
+                <th>Heading:</th><td id="heading">-</td>
+            </tr>
+            <tr>
+                <th>Speed:</th><td id="speed">-</td>
+                <th>Time Stamp:</th><td id="timestamp">-</td>
+            </tr>
+            <tr>
+                <th>Error Code:</th><td id="errcode">-</td>
+                <th>Error Message:</th><td id="errmessage">-</td>
+            </tr>
+        </table>
+        <button id="pressme">Cancel Watch</button>
+        <script>
+        let options = {
+            enableHignAccuracy: false,
+            timeout: 2000,
+            maximumAge: 30000
+        };
+
+        let watchID = navigator.geolocation.watchPosition(displayPosition, handleError, options);
+
+        document.getElementById("pressme").onclick = function(e){
+            navigator.geolocation.clearWatch(watchID);
+        }
+            /* navigator.geolocation  callback displayPosition()*/
+            /* 加入处理错误信息的回调函数 handleError */
+            /* options 控制位置信息的获取方式 */
+        /* navigator.geolocation.getCurrentPosition(displayPosition, handleError, options); */
+
+            /* 传入Position Object */
+        function displayPosition(pos){
+            /* Position Object 属性集合 */
+            let properties = ["longitude", "latitude", "altitude", "accuracy", "altitudeAccuracy", "heading", "speed"];
+
+            for(let i=0; i<properties.length; i++){
+                let value = pos.coords[properties[i]];
+                document.getElementById(properties[i]).innerHTML = value;
+            }
+            document.getElementById("timestamp").innerHTML = pos.timestamp;
+
+        }
+
+        function handleError(err){
+            /* 访问PositionError 属性 */
+            document.getElementById("errcode").innerHTML = err.code;
+            document.getElementById("errmessage").innerHTML = err.message;
+        }
+        </script>
+    </body>
+</html>

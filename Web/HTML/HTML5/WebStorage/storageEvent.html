@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <title>Storage</title>
+        <meta name="author" content="chyon">
+        <meta http-equiv="X-UA-Compabile" content="IE=Edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <style rel="stylesheet">
+            /* border-collapse */
+        </style>
+    </head>
+    <body>
+        <table id="data">
+            <tr>
+                <th>Key</th>
+                <th>oldValue</th>
+                <th>newValue</th>
+                <th>url</th>
+                <th>storageArea</th>
+            </tr>
+        </table>
+        <script>
+        let tableElem = document.getElementById("data");
+        
+        /* onstorage event */
+        window.onstorage = handleStorage;
+
+        function handleStorage(e){
+            let row = "<tr>";
+            row += "<td>" + e.key + "</td>";
+            row += "<td>" + e.oldValue + "</td>";
+            row += "<td>" + e.newValue + "</td>";
+            row += "<td>" + e.url + "</td>"
+            row += "<td>" + (e.storageArea == localStorage) + "</td></tr>";
+            tableElem.innerHTML += row;
+        };
+        </script>
+    </body>
+</html>

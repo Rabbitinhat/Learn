@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Only of type</title>
+    <style rel="stylesheet">
+    p {
+        color: #ccc;
+    }
+    p:only-of-type {
+        color: blue;
+        font-size: 2em;
+    }
+    h1:only-of-type {
+        color:violet;
+        font-size: 2em;
+    }
+    </style>
+</head>
+<body>
+    <div>
+        <p>
+            I'm the only &lt;p&gt; element of my parents
+        </p>
+        <section>
+            <h1>
+                I'm the only Title
+            </h1>
+            <p>I'm the first &lt;p&gt; elemnts</p>
+            <p>I'm second &lt;p&gt; elements</p>
+        </section>
+    </div>
+</body>
+</html>
