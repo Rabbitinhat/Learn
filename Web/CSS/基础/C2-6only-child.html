@@ -1,26 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Only-Child</title>
     <style rel="stylesheet">
-    div:only-child {
-        color: red;
-        font-size: 2em;
-    }
+/*         not selector
+        div div:not(#third) {
+            color: orangered;
+            font-size: 2em;
+        }
+
+        div:only-child {
+            color: blue;
+            font-size: 2em;
+        }
+ */
+
+.fancy {
+    color: orange;
+}
+
+.photograph p:not(.fancy) {
+    color: yellowgreen;
+}
     </style>
 </head>
+
 <body>
+
     <div>
         <div>I'm the only child of my parents</div>
     </div>
 
     <div>
-        <div>I'm the first child</div>
-        <div>I'm the second child</div>
-        <div>I'm the third child</div>
+        <div id="first">I'm the first child</div>
+        <div id="second">I'm the second child</div>
+        <div id="third">I'm the third child</div>
+    </div>
+
+    <div class="photograph">
+        <p>I am a photograph</p>
+        <p class="fancy">I am so very <span>fancy</span></p>
+        <div>I am not a photograph</div>
     </div>
 </body>
+
 </html>
