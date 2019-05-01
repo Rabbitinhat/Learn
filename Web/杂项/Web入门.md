@@ -69,3 +69,29 @@
     * 浏览器发送HTTP请求到服务器, 请求得到一份网页拷贝(包括请求在内, 所有传递的数据都是通过互联网使用TCP/IP协议传输的)
     * 服务器同意请求后, 会返回状态码为`200 OK`的响应, 表示同意访问, 然后会将网页文件以数据包的形式传输到浏览器
     * 浏览器将数据包还原为完整的网页后进行显示
+
+## 基础
+
+命令行
+cmd & bash
+
+path
+
+cmder设置
+
+快捷键 hotkey autohotkey vscode
+
+IDE vscode & sublime text
+
+### 软件 software
+
+everything (link)[https://www.voidtools.com/zh-cn/]
+
+鼠标手势 StrokeIt
+
+FTP FileZilla
+
+代码同步
+
+git
+
