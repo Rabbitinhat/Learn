@@ -66,14 +66,14 @@ console.log(null === 0); //->false
 
 console.log("" == false); //->true
 console.log(0 == false); //->true
-console.log(NaN == false); //->true? false
+console.log(NaN == false); //!->true? false
 
 /* short-circuiting */
 /* || */
-console.log(null || "user"); //-> "user"
-console.log("Agnes" || "user"); //->"Agnes"
+console.log(null || "user"); //!-> "user"
+console.log("Agnes" || "user"); //!->"Agnes"
 
 /* && */
-console.log(null && "user"); //->null?
+console.log(null && "user"); //!->null?
 console.log("Agnes" && undefined); //->undefined
 
