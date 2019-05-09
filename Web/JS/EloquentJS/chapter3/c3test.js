@@ -7,6 +7,7 @@ const square = function(x){
 console.log(square(12));//->144
 
 /*no parameters */
+/* side effect */
 const makeNoise = function(){
   console.log("Pling!");
 };
@@ -169,7 +170,7 @@ function power(base, exponent){
 
 console.log(power(2, 3)); //->8
 
-/* 3 & 5 */
+/* *3 || +5 */
 function findSolution(target){
   function find(current, history){
     if(current == target){

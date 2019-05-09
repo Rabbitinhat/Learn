@@ -5,11 +5,12 @@ function min(a, b){
 /* test */
 console.log(min(0, 10));
 console.log(min(0, -10));
+console.log(min("abc", "Abc"));
 
 /* C3Q2 Recursion */
 function isEven(num){
   if(num < 0){
-    num = -num;
+    num = -num; /* isEven(-num) */
   }
   if(num === 0){
     return true;

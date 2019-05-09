@@ -1,0 +1,4 @@
+{
+  "squirrel": false,
+  "events": ["work", "touched tree", "pizza", "running"]
+}
