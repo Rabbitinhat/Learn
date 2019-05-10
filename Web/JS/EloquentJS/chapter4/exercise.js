@@ -69,3 +69,64 @@ console.log(reverseArray(["A", "B", "C"]));
 let arrayValue = [1, 2, 3, 4, 5];
 reverseArrayInPlace(arrayValue);
 console.log(arrayValue);
+
+/* A list */
+/* change an array to list */
+function arrayToList(array){
+  if(array.length == 0){
+    return null;
+  }
+  return {value: array.shift(), rest: arrayToList(array)};
+}
+
+console.log(arrayToList([10, 20])); //{ value: 10, rest: { value: 20, rest: null } }
+
+/* change a list to array */
+function listToArray(list){
+  let result = [];
+  for(;list != null; list = list.rest){
+    result.push(list.value);
+  }
+  return result;
+}
+
+console.log(listToArray(arrayToList([10, 20, 30]))); //[10, 20, 30]
+
+/* put num to head of list, make a new list */
+function prepend(num, list){
+  let newlist = {};
+  newlist.value = num;
+  newlist.rest = list;
+  return newlist;
+}
+
+/* find a num in list */
+function nth(list, index){
+  for(;index!=0;index--,list=list.rest){
+    if(list==null){
+      return undefined
+    }
+  }
+  return list.value;
+}
+
+console.log(prepend(10, prepend(2, null)));
+console.log(nth(arrayToList([10, 20, 30, 40]), 2));
+
+/* Deep Comparison */
+function deepEqual(arg1, arg2){
+  if(typeof arg1 === "object" && typeof arg2 === "object"){
+    let arg1Arr = Object.keys(arg1);
+    let arg2Arr = Object.keys(arg2);
+    for(let i=0; i<arg1Arr.length; i++){
+      return deepEqual(arg1[arg1Arr[i]], arg2[arg2Arr[i]]);
+    }
+  }else{
+    return arg1 === arg2;
+  }
+}
+
+let obj = {here: {is: "an"}, object: 2};
+console.log(deepEqual(obj, obj)); //->true
+console.log(deepEqual(obj, {here: 1, object: 2}));//-> false
+console.log(deepEqual(obj, {here: {is: "an"}, object: 2}));

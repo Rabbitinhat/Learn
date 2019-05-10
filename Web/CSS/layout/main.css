@@ -12,4 +12,5 @@
 
 .right {
     width: calc(100% - 220px);
+    background-color: transparent;
 }
