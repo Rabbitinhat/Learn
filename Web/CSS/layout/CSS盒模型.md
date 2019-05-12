@@ -26,12 +26,12 @@ CSS假定每个元素都会生成一个或多个矩形框, 称为元素框; 框�
 
 * 如果内容高度>元素框高度; 具体行为要取决于`overflow`
 
-
 ### box-sizing
 
 设置一个元素为`box-sizing: border-box;` 内边距和边框不会再增加它的宽度
 
 ### 使用inline-block
+
 * `vertical-align` 会影响`inline-block`
 * 需要设置每一列的宽度
 * 如果HTML文件中, inline-block元素间有空白字符, 列和列之间会产生空白
