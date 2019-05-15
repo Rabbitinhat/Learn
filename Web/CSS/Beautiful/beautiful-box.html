@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Beautiful Box</title>
+  <style>
+  div {
+    width: 300px;
+    height: 75px;
+    border: 3px dotted rgb(66, 66, 66);
+    margin-bottom: 20px;
+  }
+
+  .rgb {
+    background-color: rgb(186, 218, 85);
+  }
+
+  .hsl {
+    /* 角度, 饱和度, 亮度 */
+    background-color: hsl(74, 64%, 59%);
+  }
+
+  /* 背景透明 */
+  .alpha {
+    background-color: rgba(186, 218, 85, 0.5);
+  }
+
+  /* 整个元素透明 */
+  .opacity {
+    background-color: rgb(186, 218, 85);
+    opacity: 0.5;
+  }
+  </style>
+</head>
+<body>
+  <div class="rgb"></div>
+  <div class="hsl"></div>
+
+  <div class="alpha"></div>
+  <div class="opacity"></div>
+</body>
+</html>

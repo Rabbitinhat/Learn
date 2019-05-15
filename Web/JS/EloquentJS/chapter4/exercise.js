@@ -100,7 +100,7 @@ function prepend(num, list){
   return newlist;
 }
 
-/* find a num in list */
+/*  */
 function nth(list, index){
   for(;index!=0;index--,list=list.rest){
     if(list==null){

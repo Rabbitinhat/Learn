@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style rel="stylesheet">
+    body {
+      margin: 0;
+    }
+
+    .container {
+      width: 800px;
+      height: 400px;
+
+      background-color: aquamarine;
+    }
+
+    /* 此时, margin-left: 计算为0, margin-right计算为-100px */
+    .inside {
+      width: 900px;
+      height: 200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 30px;
+      border: 10px solid burlywood;
+
+      background-color: orangered;
+      opacity: 0.8;
+    }
+
+    /* 当被包含元素设定具体宽度时(px), 而父元素并未设置; 当浏览器缩小至一定程度时(viewport/body/html宽度小于被包含元素的宽度), 被包含元素会溢出父元素*/
+    .top {
+      min-width: 600px;
+      height: 75px;
+      margin-bottom: 5px;
+
+      background-color: #333;
+    }
+
+    .nav {
+      width: 600px;
+      height: 75px;
+      margin-left: auto;
+      margin-right: auto;
+
+      line-height: 75px;
+      text-align: center;
+
+      color: #ccc;
+    }
+
+    .top-padding {
+      height: 75px;
+      padding-left: calc(50% - 300px);
+      padding-right: calc(50% - 300px);
+      margin-bottom: 5px;
+
+      text-align: center;
+      line-height: 75px;
+
+      color: #ccc;
+      background-color: #333;
+    }
+
+    .center {
+      max-width: 600px;
+      min-width: 300px;
+      height: 75px;
+      margin: 0 auto;
+      background-color: #333;
+    }
+
+    .container-hover {
+      width: 860px;
+      height: 200px;
+      background-color: #ccc;
+    }
+
+    .container-hover div {
+      display: inline-block;
+      width: ;
+      height: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="inside"></div>
+  </div>
+
+  <div class="top">
+    <nav class="nav">
+      使用margin使我在中间
+  </div>
+  </div>
+  
+  <div class="top-padding">
+        使用padding使我在中间
+  </div>
+  
+  <div class="center">
+  </div>
+
+  <div class="container-hover">
+    <div class="block"></div>
+    <div class="block"></div>
+    <div class="block"></div>
+    <div class="block"></div>
+  </div>
+</body>
+
+</html>

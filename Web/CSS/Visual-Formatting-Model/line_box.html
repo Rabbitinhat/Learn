@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Line-Box</title>
+  <style rel="stylesheet">
+  p {
+    font-size: 2em;
+    line-height: 1.5em;
+    background-color: aquamarine;
+    color: #333;
+  }
+
+  /* inline 元素的生成的内容区由font-size决定 */
+  /* 每行的行盒子高度由line-height决定, 行内元素的line-height增高会使整个行盒子的高度增高 */
+  /* 背景颜色组成的盒子高度和line-height不相等 */
+  strong {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: #ccc;
+    border-left: 3px solid aqua;
+    border-right: 3px solid aqua;
+    background-color: orangered;
+  }
+
+  .container {
+    /* font-size: 1.5em; */
+    background-color: aquamarine;
+
+  }
+
+  /* 默认行内元素按照基线对齐, 所以inline-block时, 下方会出现空白 */
+  .inline {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    background-color: orange;
+    vertical-align: bottom;
+  }
+  </style>
+</head>
+<body>
+  <p>
+    It can get <strong>Vxry complicated</strong> once you start
+  </p>
+
+  <!-- 为block element设置display: inline-block时, 元素之间的空白符(换行, tab, 空格)会造成元素间的空白 -->
+  <div class="container">
+    <div class="inline"></div><div class="inline"></div><div class="inline"></div>
+    It can get <strong>Vxry complicated</strong> once you start
+  </div>
+</body>
+</html>
