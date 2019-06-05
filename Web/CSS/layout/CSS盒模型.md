@@ -51,3 +51,15 @@ BFC规则只对触发了BFC的元素的内部生效
 父元素负外边距和子元素的正外边距
 
 normalize.css
+
+## inline
+
+行内元素(display: inline) 垂直方向上不受外边距, 内边距, 边框影响, 无法设置width, height;
+
+inline : 行内框为line-height
+
+inline-block 行内框由margin-box确定, 没有外边距重叠问题
+
+vertical-align
+
+文本生成的行框, 看行高

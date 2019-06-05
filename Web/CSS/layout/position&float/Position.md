@@ -79,3 +79,9 @@ position:sticky的元素不会脱离包含元素
 一个堆叠上下文中, 无论z-index的值多大或多小, 都不会影响其他堆叠上下文
 
 ### 贝塞尔曲线
+
+### 其他
+
+pointer-event: none;
+
+position:absolute 初始位置; 忽略定位 left top等问题
