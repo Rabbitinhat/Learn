@@ -1,51 +1,49 @@
 const journal = require("./journal.js");
-/* compute the measure of correlation between two Boolean variables */
-function phi(table) {
-  return (table[3] * table[0] - table[2] * table[1]) / Math.sqrt((table[3] + table[2]) * (table[0] + table[1]) * (table[1] + table[3]) * (table[0] + table[2]));
+
+// * 计算不同事件之间的关联, phi系数 phi coefficient
+function phi(table){
+  return (table[3] * table[0] - table[2] * table[1]) /
+    Math.sqrt((table[2] + table[3]) * (table[0] + table[1]) * (table[1] + table[3]) * (table[0] + table[2]))
 }
 
-function phiUpdate([n00, n01, n10, n11]){
-  return (n11 * n10 - n00 * n01) / Math.sqrt((n11 + n10) * (n00 + n01) * (n01 + n11) * (n10 + n00));
+// * 判断事件是否存在于记录中
+function isEvent(event, entry){
+  return entry.events.indexOf(event) !== -1
 }
 
-/* how many times the event occurs in relation to squirrel transformations */
-function tablefor(event, journal) {
-  let table = [0, 0, 0, 0];
-  for (let i = 0; i < journal.length; i++) {
-    let entry = journal[i];
-    let index = 0;
-    if (entry.events.includes(event)) index++;
-    if (entry.squirrel) index += 2;
-    table[index]++;
+// * 计算记录中, 不同事件和变身发生的次数
+function tableFor(event, journal){
+  let table = [0, 0, 0, 0]
+  // * array loop (for let index of array)
+  for(let entry of journal){
+    let index = 0
+    if(isEvent(event, entry)) index += 1
+    if(entry.squirrel) index += 2
+    table[index]++
   }
-  return table;
+  return table
 }
 
+console.log(tableFor("pizza", JOURNAL));
 
-function journalEvents(journal) {
-  let events = [];
-  for (let entry of journal)
-    for (let event of entry.events) {
-      if (!events.includes(event)) {
-        events.push(event);
-      }
+function journalEvents(journal){
+  let events = {}
+  for(let entry of journal){
+    for(let event of entry.events){
+      let getPhi = phi(tableFor(event, journal))
+      if(Math.abs(getPhi) > .1)
+        events[event] = getPhi
     }
-  return events;
-}
-
-let result = [];
-for (let event of journalEvents(journal)) {
-
-  let correlation = phi(tablefor(event, journal));
-  if (correlation > 0.1 || correlation < -0.1) {
-    result.push(event + ", " + correlation);
   }
+  return events
 }
 
-for(let entry of journal){
-  if(entry.events.includes("peanuts") && !entry.events.includes("brushed teeth")){
-    entry.events.push("peanut teeth");
+  for(let entry of journal){
+    if(isEvent("peanuts", entry) && !(isEvent("brushed teeth", entry))){
+      entry.events.push("peanuts teeth")
+    }
   }
-}
 
-console.log(phi(tablefor("peanut teeth", journal)));
+  console.log(phi(tableFor("peanuts teeth", journal)))
+
+console.log(journalEvents(journal))

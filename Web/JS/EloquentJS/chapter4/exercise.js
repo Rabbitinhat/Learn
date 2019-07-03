@@ -130,3 +130,27 @@ let obj = {here: {is: "an"}, object: 2};
 console.log(deepEqual(obj, obj)); //->true
 console.log(deepEqual(obj, {here: 1, object: 2}));//-> false
 console.log(deepEqual(obj, {here: {is: "an"}, object: 2}));
+
+function flat(ary){
+  let newary = []
+  for(let i=0; i<ary.length; i++){
+    if(ary[i].slice){
+      for(let j=0; j<ary[i].length; j++){
+        newary.push(ary[i][j])
+      }
+    }else{
+      newary.push(ary[i])
+    }
+  }
+  return newary
+}
+
+function sum(){
+  let sum = 0
+  for(let i=0; i<arguments.length; i++){
+    sum += arguments[i]
+  }
+  return sum
+}
+
+console.log(`Sum: ${sum(18, 19, 28, 37)}`)
