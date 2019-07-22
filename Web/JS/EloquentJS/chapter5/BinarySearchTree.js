@@ -83,3 +83,4 @@ function swap(ary, i, j){
 }
 
 // * 插入排序 (数组 time: O(N ^２)) -> (改进 采用平衡二叉树, time: O(N*logN))
+// * 使用insert(root, val) 将数组转换为平衡二叉树, 再转换为数组

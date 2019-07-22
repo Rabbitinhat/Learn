@@ -47,15 +47,31 @@ console.log(expectancy(groupBy(ANCESTRY, groupDate)));
 // * [1, [1, 3, 2], [4, 5]] => [1, 1, 3, 2, 4, 5]
 function flatten(memo, a) {
   // * 如果a为数组, 就将其和累积的项合并
-  if (Array.isArray(a)) memo = memo.concat(a);
-  // * 如果是其他项, 直接push到累积的项中
-  else memo.push(a);
-  return memo;
+  return memo.concat(...a)
+}
+
+function flattenDeep(ary, depth = 1){
+  if(depth === 0) return result.slice()
+  let result = [] 
+  for(let item of ary){
+    if(Array.isArray(item)){
+      let flattedItem = flattenDepth(item, depth - 1)
+      result.push(...flattedItem)
+    }else{
+      result.push(item)
+    }
+  }
 }
 
 var arrays = [[1, 2, 3], [4, 5], [6]];
 console.log(arrays.reduce(flatten, []));
 
+function flatten(ary){
+  return [].concat(ary)
+}
+function flattenDepth(ary, depth){
+  return Array(depth).fill(0).reduce((ary)=>{return flatten(ary)}, ary.slice())
+}
 // ! Mother-child age difference
 // * get Mother's borthday
 // * 过滤数据, 得到符合name值的新数组
@@ -112,3 +128,44 @@ console.log(some([NaN, 3, 4], isNaN));
 // → true
 console.log(some([2, 3, 4], isNaN));
 // → false
+
+// * 倒置参数传入func
+function flip(func){
+  return function(...args){
+    return func(...args.reverse())
+  }
+}
+
+// * 限定传入f的参数长度为n
+function ary(f, n=f.length){
+  return function(...args){
+    return f(...args.slice(0, n))
+  }
+}
+
+// * 只向f传入一个函数
+function unary(f){
+  return function(...args){
+    return f(args[0])
+  }
+}
+// * spread, unary
+[
+  [1, 2, 3],
+  [1, 2],
+  [4, 5, 6]
+].map(unary(spread(sum)))
+
+// * 保存执行过的变量值
+function memoize(f){
+  let memory = {}
+  return function(arg){
+    if(memory[arg]){
+      return memory[arg]
+    }else{
+      memory[arg] = f(arg)
+      return memory(arg)
+    }
+  }
+}
+

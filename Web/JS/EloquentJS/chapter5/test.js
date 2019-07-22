@@ -81,3 +81,25 @@ function map(array, transform){
   return map
 }
 
+// * apply this=> f
+ f.apply(obj)
+// * apply(f.apply) this=>f(apply(f))
+ f.apply.apply(f, [obj])
+
+//  ary.slice = function(start, end){
+   
+//  }
+
+Array.prototype.slice2 = function(start=0, end=this.length-1){
+  var result = []
+  for(let i=start; i<end; i++){
+    result.push(this[i])
+  }
+  return result
+}
+
+function Rabbit(){}
+Rabbit.prototype.name = "rabbit"
+var killer = new Rabbit()
+console.log(killer.__proto__)
+console.log(Object.prototype.toString.call(killer))

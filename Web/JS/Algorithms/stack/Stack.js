@@ -9,7 +9,7 @@ function Stack(){
     };
     //NOTE 移除元素
     this.pop = function(element){
-        let elemnt = items.pop();
+        let element = items.pop();
         return element;
     };
     //NOTE 查看栈顶元素
@@ -157,3 +157,5 @@ function clear(){
 function length(){
     return this.top;
 } */
+
+
