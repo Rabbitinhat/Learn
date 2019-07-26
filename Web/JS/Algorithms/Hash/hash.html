@@ -1,0 +1,93 @@
+<script>
+  // * review 链表添加, 移除节点
+class myHashTable{
+  constructor(){
+    this.values = new Array(97)
+    this.count = 0
+    this.size = 0
+  }
+
+  hash(key){
+    let weight = [4, 1, 9, 7, 3, 5, 17, 22, 88, 53, 37, 97, 71]
+    let sum = 0
+    for(let i=0; i<key.length; i++){
+      sum += key[i].charCodeAt() * weight[i % weight.length]
+    }
+
+    return sum % this.values.length
+  }
+
+  set(key, val){
+    let initIdx = this.hash(key)
+    let node = {
+      key: key,
+      val: val,
+      next: null
+    }
+
+    if(initIdx in this.values){
+      let currlist = this.values[initIdx]
+      // * 否则遍历currlist至倒数第一个节点
+      while(currlist.next){
+        if(currlist.key === key){
+          currlist.val = val
+          return this
+        }
+      }
+      // * 如果当前节点key为key, 则修改val属性值
+      if(currlist.key === key){
+        currlist.val = val
+      }else{
+        // * 否则将next指向新节点
+        // ? this.count++
+        currlist.next = node
+        this.count++
+      }
+      return this
+    }else{
+      this.values[initIdx] = node
+      this.count++ 
+      this.size++
+    }
+    return this
+  }
+
+  get(key){
+    let initIdx = this.hash(key)
+    if(initIdx in this.values){
+      let currlist = this.values[initIdx]
+      while(currlist){
+        if(currlist.key === key){
+          return currlist.val
+        }
+        currlist = currlist.next
+      }
+    }
+  }
+
+  delete(key){
+    let initIdx = this.hash(key)
+    if(initIdx in this.values){
+      this.count--
+      let currlist = this.values[initIdx]
+      let prevnode = currlist
+      while(currlist){
+        if(currlist.key === key){
+          if(prevnode === currlist){
+            if(currlist.next){
+              this.values[initIdx] = currlist.next
+            }else{
+              delete this.values[initIdx]
+              this.size--
+            }
+          }else{
+            prevnode.next = null
+          }
+        }
+        prevnode = currlist
+        currlist = currlist.next
+      }
+    }
+  }
+}
+</script>
