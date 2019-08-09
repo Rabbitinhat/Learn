@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>RegExp101-fake</title>
+    <style>
+    span {
+      display: inline-block;
+      height: 1rem;
+      /* FIXME 為span添加min-width, 儅span包含""時, 保留最小寬度 */
+      min-width: 2px;
+      text-align: bottom;
+      background-color: lightblue;
+    }
+    </style>
+  </head>
+  <body>
+    <input
+      type="text"
+      name="reg"
+      id="reg"
+      onkeyup="addHighLight()"
+    />
+  </br>
+    <textarea name="str" id="str" cols="30" rows="10" onkeyup="addHighLight()"></textarea
+    >
+    <p id="output"></p>
+
+    <script>
+      let strInput = document.getElementById("str");
+      let output = document.getElementById("output");
+
+      function addTag(str, reg, firstIndex = 0) {
+        reg.lastIndex = firstIndex;
+        let match;
+        let result = "";
+        while ((match = reg.exec(str))) {
+          result += str.slice(firstIndex, match.index);
+          result += "<span>" + match[0] + "</span>";
+          // * 在匹配断言时, 每次匹配位置并不会改变(match.index, 可能会造成死循环); 需要手动改变lastIndex, 使regexp继续向后匹配
+          firstIndex = reg.lastIndex;
+          if(match[0].length === 0){
+           reg.lastIndex += 1
+          }
+          
+          // * 循环匹配
+          // * 重新拼接result添加<em>
+          // str = str.slice(reg.lastIndex)
+        }
+        console.log(result)
+        console.log(str)
+        result += str.slice(firstIndex);
+
+        return result;
+      }
+
+      function addHighLight() {
+        try {
+          var regInput = document.getElementById("reg").value;
+          // *FIXME  RegExp("", "g") => /(?:)/g
+          var getreg = new RegExp(regInput, "g");
+          console.log(getreg)
+          console.log(regInput)
+        } catch (e) {
+          if (e instanceof SyntaxError) {
+            output.innerHTML = e.message;
+            return;
+          } else {
+            throw e;
+          }
+        }
+        let end = addTag(strInput.value||"", getreg).replace(/\s/g, "&nbsp;");
+        output.innerHTML = end;
+      }
+      //* 输入时, 触发function
+    </script>
+  </body>
+</html>

@@ -1,93 +1,141 @@
 <script>
   // * review 链表添加, 移除节点
-class myHashTable{
-  constructor(){
-    this.values = new Array(97)
-    this.count = 0
-    this.size = 0
-  }
-
-  hash(key){
-    let weight = [4, 1, 9, 7, 3, 5, 17, 22, 88, 53, 37, 97, 71]
-    let sum = 0
-    for(let i=0; i<key.length; i++){
-      sum += key[i].charCodeAt() * weight[i % weight.length]
+  class myHashTable {
+    constructor() {
+      this.values = new Array(97);
+      this.count = 0;
+      this.size = 0;
     }
 
-    return sum % this.values.length
-  }
-
-  set(key, val){
-    let initIdx = this.hash(key)
-    let node = {
-      key: key,
-      val: val,
-      next: null
-    }
-
-    if(initIdx in this.values){
-      let currlist = this.values[initIdx]
-      // * 否则遍历currlist至倒数第一个节点
-      while(currlist.next){
-        if(currlist.key === key){
-          currlist.val = val
-          return this
-        }
+    // * 对象内无法调用位于后面声明的函数?
+    // * O(1) 整个链表长度
+    copylist(list) {
+      if (list) {
+        let node = this.copylistNode(list);
+        node.next = this.copylist(list.next);
+        return node;
       }
-      // * 如果当前节点key为key, 则修改val属性值
-      if(currlist.key === key){
-        currlist.val = val
-      }else{
-        // * 否则将next指向新节点
-        // ? this.count++
-        currlist.next = node
-        this.count++
-      }
-      return this
-    }else{
-      this.values[initIdx] = node
-      this.count++ 
-      this.size++
+      return null;
     }
-    return this
-  }
 
-  get(key){
-    let initIdx = this.hash(key)
-    if(initIdx in this.values){
-      let currlist = this.values[initIdx]
-      while(currlist){
-        if(currlist.key === key){
-          return currlist.val
-        }
-        currlist = currlist.next
-      }
-    }
-  }
-
-  delete(key){
-    let initIdx = this.hash(key)
-    if(initIdx in this.values){
-      this.count--
-      let currlist = this.values[initIdx]
-      let prevnode = currlist
-      while(currlist){
-        if(currlist.key === key){
-          if(prevnode === currlist){
-            if(currlist.next){
-              this.values[initIdx] = currlist.next
-            }else{
-              delete this.values[initIdx]
-              this.size--
-            }
-          }else{
-            prevnode.next = null
+    copylistNode(node) {
+      // * Cannot set property 'key' of null
+      let newNode = {}
+      if (node) {
+        for (let property in node) {
+          if (node.hasOwnProperty(property) && property !== "next") {
+            newNode[property] = node[property];
           }
         }
-        prevnode = currlist
-        currlist = currlist.next
+        return newNode;
+      }else{
+        return null
+      }
+      
+    }
+
+    // * 增加hash table容量
+    enlargeSpace() {
+      let values = this.values;
+      this.values = new Array(this.values.length * 2);
+
+      for (let index in values) {
+        // * 链表复制
+        this.values[index] = this.copylist(values[index]);
+      }
+    }
+
+    hash(key) {
+      let weight = [4, 1, 9, 7, 3, 5, 17, 22, 88, 53, 37, 97, 71];
+      let sum = 0;
+      for (let i = 0; i < key.length; i++) {
+        sum += key[i].charCodeAt() * weight[i % weight.length];
+      }
+
+      return sum % this.values.length;
+    }
+
+    set(key, val) {
+      let initIdx = this.hash(key);
+      let node = {
+        key: key,
+        val: val,
+        next: null
+      };
+
+      if (initIdx in this.values) {
+        let currlist = this.values[initIdx];
+        // * 否则遍历currlist至倒数第一个节点
+        while (currlist.next) {
+          if (currlist.key === key) {
+            currlist.val = val;
+            return this;
+          }
+          currlist = currlist.next;
+        }
+        // * 如果当前节点key为key, 则修改val属性值
+        if (currlist.key === key) {
+          currlist.val = val;
+        } else {
+          // * 否则将next指向新节点
+          // ? this.count++
+          currlist.next = node;
+          this.count++;
+        }
+        return this;
+      } else {
+        this.values[initIdx] = node;
+        this.count++;
+        this.size++;
+
+        if (this.size / this.values.length > 0.7) {
+          this.enlargeSpace();
+        }
+      }
+      return this;
+    }
+
+    get(key) {
+      let initIdx = this.hash(key);
+      if (initIdx in this.values) {
+        let currlist = this.values[initIdx];
+        while (currlist) {
+          if (currlist.key === key) {
+            return currlist.val;
+          }
+          currlist = currlist.next;
+        }
+      }
+    }
+
+    delete(key) {
+      let initIdx = this.hash(key);
+      if (initIdx in this.values) {
+        this.count--;
+        let currlist = this.values[initIdx];
+        let prevnode = currlist;
+        while (currlist) {
+          if (currlist.key === key) {
+            // * 当当前位置的头节点就为要删除节点
+            if (prevnode === currlist) {
+              if (currlist.next) {
+                // * 如果头节点后还有其他节点, 当前位置就为之后节点
+                this.values[initIdx] = currlist.next;
+              } else {
+                // * 如果当前位置只有一个节点, 直接删除该位置的节点
+                delete this.values[initIdx];
+                this.size--;
+              }
+            } else {
+              // * 不是头节点, 则从链表中删除当前节点
+              prevnode.next = prevnode.next.next;
+            }
+          }
+          // * 将当前节点赋值给保存上一节点的变量prev
+          prevnode = currlist;
+          currlist = currlist.next;
+        }
       }
     }
   }
-}
 </script>

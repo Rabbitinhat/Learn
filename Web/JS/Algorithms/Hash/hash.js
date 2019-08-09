@@ -49,6 +49,7 @@ class HashMap {
       // ? 计算整个key的总的字符*对应weight的值
       sum += key.charCodeAt(i) * weight[i]
     }
+    // * 将hash后的值范围限制在[0, this.values.length-1]
     return sum % this.values.length
     // key.split('')
     // .map(it=>it.charCodeAt(0))
@@ -83,6 +84,11 @@ class HashMap {
         break
       }
     }
+  }
+
+  // * 更改key值對應的value值
+  setAt(key, f){
+    
   }
 
   get(key) {
@@ -156,6 +162,7 @@ class HashMap {
             currlist.val = val
             return this
           }
+          currlist = currlist.next
         }
         // * 如果当前节点key为key, 则修改val属性值
         if(currlist.key === key){
@@ -196,20 +203,27 @@ class HashMap {
         let prevnode = currlist
         while(currlist){
           if(currlist.key === key){
+            // * 当当前位置的头节点就为要删除节点
             if(prevnode === currlist){
               if(currlist.next){
+                // * 如果头节点后还有其他节点, 当前位置就为之后节点
                 this.values[initIdx] = currlist.next
               }else{
+                // * 如果当前位置只有一个节点, 直接删除该位置的节点
                 delete this.values[initIdx]
                 this.size--
               }
             }else{
-              prevnode.next = null
+              // * 不是头节点, 则从链表中删除当前节点
+              prevnode.next = prevnode.next.next
             }
           }
+          // * 将当前节点赋值给保存上一节点的变量prev
           prevnode = currlist
           currlist = currlist.next
         }
       }
     }
   }
+
+
