@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="autocompletion">
+      <input type="text" name="" id="" />
+      <ul class="suggest" style="display: none"></ul>
+    </div>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+
+    <script>
+      var showTime = 0;
+
+      $("input")
+        .on("input", function(e) {
+          // NOTE 获取input对象和输入值
+          var inputEl = this;
+          var inputStr = this.value;
+
+          // 如果输入内容存在
+          if (inputStr) {
+            // 生成补全内容
+            var time = Date.now();
+            getSuggestion(inputStr, suggestions => {
+              if (time > showTime) {
+                showTime = time
+                // NOTE items 获得suggestions生成内容组成的li节点的数组
+                var items = $(suggestions).map((idx, suggest) => {
+                  // NOTE $()生成一个类数组对象， 包含li节点
+                  let result = $(`<li><a>${suggest}</a></li>`);
+                  // NOTE 获取当中节点值
+                  return result[0];
+                });
+                // NOTE a每次调用清空已存在的补全内容， 修改为新的内容
+                $("ul")
+                  .empty()
+                  .append(items)
+                  .show();
+              }
+            });
+          } else {
+            $("ul")
+              .empty()
+              .hide();
+          }
+        })
+        .blur(function(e) {
+          // is 判断状态是否为hover, 不为hover时, 隐藏suggest
+          if ($(".suggest").is(":hover")) $(".suggest").show();
+          else $(".suggest").hide();
+        })
+        .focus(function(e) {
+          if (this.value.length > 0) {
+            $(".suggest").show();
+          }
+        });
+
+      // NOTE 事件代理， ul绑定'li a'中发生的click事件, this => event.target
+      $("ul").on("click", "li a", function() {
+        var suggest = this.textContent;
+        $("input").val(suggest);
+        // 替换完毕后, 隐藏掉ul
+        $("ul").hide();
+      });
+
+      // NOTE getSuggestion函数, 生成自动补全内容
+      function getSuggestion(str, callback) {
+        var suggestions = new Array(10)
+          .fill(0)
+          //  将数组索引作为数组值
+          .map((_, idx) => idx)
+          .map(it => str + it);
+
+        // NOTE a模拟服务器传输延时效果, 异步
+        setTimeout(() => {
+          callback(suggestions);
+        }, 500 + 500 * Math.random());
+      }
+    </script>
+  </body>
+</html>

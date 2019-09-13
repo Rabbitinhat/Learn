@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">s
+  <title>Document</title>
+</head>
+<body>
+  <textarea name="enter" id="enter" cols="30" rows="10"></textarea>
+  <button id='run'>run</button>
+  <p id=output></p>
+  <script>
+  let codefile = document.getElementById('enter')
+  let output = document.getElementById('output')
+  let run = document.getElementById('run')
+  function runCode(code){
+    var logs = []
+    var console = {
+      log : function(...args){
+        logs.push(args)
+      }
+    }
+
+    let newGobal = eval
+    let result = newGobal(code)
+    //* 如果code中含有console.log字段就会自动调用函数内console对象的log方法
+    // * output(logs, result) 输出log结果, 与正常返回值
+    // * 当code中含有覆盖已存在变量或函数的代码时, 会影响当前作用域内容
+    output.textContent = output(logs, result)
+  }
+
+  </script>
+</body>
+</html>

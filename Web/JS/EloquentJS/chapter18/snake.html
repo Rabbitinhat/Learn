@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <pre id="world"></pre>
+  <script>
+    class Snake {
+      constructor(width = 20, height = width){
+        this.width = width
+        this.height = height
+
+        this.world = Array(height).fill(0).map(it => Array(width).fill('.'))
+
+        this.generateApple()
+        this.head = this.tail = this.generateHead()
+      }
+
+      // 生成苹果
+      generateApple(){
+        var x = this.width * Math.random() | 0
+        var y = this.height * Math.random() | 0
+
+        if(this.world[y][x] === '.'){
+          this.world[y][x] = 'Q'
+          return [x, y]
+        }else{
+          this.generateApple()
+        }
+      }
+
+      generateHead(){
+        var x = (this.width / 2) * Math.random() + (this.width / 4) | 0
+        var y = (this.height / 2) * Math.random() + (this.width / 4) | 0
+        if(this.world[y][x] === '.'){
+          this.world[y][x] = '>'
+          return [x, y]
+        }else{
+          return this.generateHead()
+        }
+      }
+
+      getNextPos(x, y) {
+        switch(this.world[y][x]){
+          // 上方
+          case 'A': return [x, y-1]
+          case 'V': return [x, y+1]
+          case '<': return [x - 1, y]
+          case '>': return [x + 1, y]
+        }
+      }
+
+      // 取得对应位置的值
+      getPosFlag(x, y) {
+        return this.world[y][x]
+      }
+
+      setPosFlag(x, y, flag){
+        this.world[y][x] = flag
+      }
+
+      setHeadDirection(direction){
+        var [x, y] = this.head 
+        this.world[y][x] = direction
+      }
+
+
+
+      next() {
+        // 头部位置
+        var [hx, hy] = this.head
+        // 头部下一个位置
+         var [hnx, hny] = this.getNextPos(hx, hy)
+        //  尾部位置
+         var [tx, ty] = this.tail
+        //  尾部下一个位置
+         var [tnx, tny] = this.getNextPos(tx, ty)
+        // 当前位置的符号
+         var headFlag = this.getPosFlag(hx, hy)
+        //  下一个位置的符号
+         var headNexFlag = this.getPosFlag(hnx, hny)
+
+         if(headNexFlag === 'Q'){
+          this.setPosFlag(hnx, hny, headFlag)
+          this.head = [hnx, hny]
+          // 重新创建苹果
+          this.generateApple()
+
+         }else{
+          this.setPosFlag(hnx, hny, headFlag)
+          this.head = [hnx, hny]
+          this.tail = [tnx, tny]
+          this.setPosFlag(tx, ty, '.')
+         }
+      }
+      
+      toString() {
+          return '\n' + this.world.map(it => it.join('')).join('\n')
+      }
+    }
+
+    let world = document.getElementById('world')
+    var s = new Snake()
+
+    setInterval(() => {
+      s.next()
+      world.textContent = s.toString()
+    }, 500)
+
+    window.addEventListener('keyup', e=>{
+      switch(e.key){
+        case 'ArrowUp': 
+        s.setHeadDirection('A')
+        return
+        case 'ArrowDown': 
+        s.setHeadDirection('V')
+        return
+        case 'ArrowLeft': 
+        s.setHeadDirection('<')
+        return
+        case 'ArrowRight': 
+        s.setHeadDirection('>')
+        return
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,3 +1,9 @@
+// @ts-check
+
+/**
+ * 
+ * @param {String} path 
+ */
 function require(path) {
   // * 从文件中读取函数部分
   var filecontent = readFile(path);
@@ -24,6 +30,10 @@ exports.add = function add(a, b) {
   return a + b;
 };
 
+/**
+ * 
+ * @param {String} path 
+ */
 function require(path) {
   // * .moduleCache 存储已require的path的文件, 再次require时, 直接从缓存中读取
   if (require.moduleCache.hasOwnProperty(path)) {
@@ -99,6 +109,9 @@ for(var val of [1, 2, 3][Symbol.iterator]){
 
 
 // NOTE 
+/**
+ * @param
+ */
 Number.prototype[Symbol.iterator] = function*(){
   for(var i=1; i<=this; i++){
     yield i

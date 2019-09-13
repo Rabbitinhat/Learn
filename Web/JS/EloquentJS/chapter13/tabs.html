@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+    #container {
+      position: relative;
+    }
+    #container>div[data-tabname] {
+      display: none;
+      position: absolute;
+      top: 20px;
+      width: 300px;
+      height: 75px;
+      word-wrap: break-word;
+      border: 2px solid #333;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div data-tabname="tab1">
+        In this exercise you must implement a simple tabbed interface.
+      </div>
+      <div data-tabname="tab2">
+        Write a function, asTabs, that takes a DOM node and creates a tabbed
+        interface showing the child elements of that node
+      </div>
+      <div data-tabname="tab3">
+        The currently visible node can be selected by clicking the buttons
+      </div>
+      <div data-tabname="tab4">
+        In this exercise you must implement a simple tabbed interface.
+      </div>
+      <div data-tabname="tab5">
+        Write a function, asTabs, that takes a DOM node and creates a tabbed
+        interface showing the child elements of that node
+      </div>
+      <div data-tabname="tab6">
+        The currently visible node can be selected by clicking the buttons
+      </div>
+      <div data-tabname="tab7">
+        In this exercise you must implement a simple tabbed interface.
+      </div>
+      <div data-tabname="tab8">
+        Write a function, asTabs, that takes a DOM node and creates a tabbed
+        interface showing the child elements of that node
+      </div>
+      <div data-tabname="tab9">
+        The currently visible node can be selected by clicking the buttons
+      </div>
+    </div>
+    <script>
+      let container = document.getElementById('container')
+      function asTabs(node) {
+        let buttons = document.createElement("div");
+        buttons.style.height = '20px'
+        for (let child of Array.from(node.children)) {
+          let tab = document.createElement("button");
+          tab.textContent = child.getAttribute("data-tabname");
+          buttons.appendChild(tab);
+        }
+        node.insertBefore(buttons, node.firstChild);
+        for(let i=0; i<buttons.children.length; i++){
+          buttons.children[i].addEventListener('focus', (e) => {
+            for(let j = 1; j<node.children.length; j++){
+              node.children[j].style.display = 'none'
+            }
+            node.children[i+1].style.display = 'block'
+          })
+        }
+      }
+      
+      function adTabs(node) {
+        let tabs = Array.from(node.children).map(node => {
+          let button = document.createElement('button')
+          button.textContent = node.getAttribute('data-tabname')
+          // * 将button和对应的node进行绑定
+          let tab = {node, button}
+          button.addEventListener('click', ()=>selectTab(tab))
+          return tab
+        })
+
+        let tabList = document.createElement('div')
+        // * 找出tabs中所有button属性, 将属性值(button节点)添加入tabList
+        for(let {button} of tabs) tabList.appendChild(button)
+        node.insertBefore(tabList, node.firstChild)
+
+        function selecTab(selectTab){
+          for(let tab of tabs){
+            let selected = tab === selectedTab
+            tab.node.style.display = selected ? '' : 'none'
+            tab.button.style.color = selected ? 'red' : ''
+          }
+        }
+      }
+      window.onload = (e) => {
+        asTabs(container)
+      }
+    </script>
+  </body>
+</html>

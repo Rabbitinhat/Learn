@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  div, p, button {
+    border: 3px solid orange
+    padding: 10px
+  }
+  </style>
+</head>
+<body>
+  <div onclick="console.log(div)">
+    <p onclick="console.log(p)">
+      <button onclick="console.log(button)">Click Me!</button>
+    </p>
+  </div>
+
+
+  <script>
+  // function mousePosition(node){
+  //   var elPos = node.getBoundingClientRect()
+  //   var mouseClientPositionX = window.event.clientX
+  //   var mouseClientPositionY = window.event.clientY
+  //   return {
+      
+  //   }
+  // } 
+  var buttons = document.querySelector("button")
+  for(var i=0; i<button.length; i++){
+    (function(i){
+      button[i].addEventListener("click", function(){
+        console.log(i)
+      })
+    }())
+    // NOTE 括号位置
+  }
+  
+  div.addEventListener("click", function(e){
+    // NOTE matches 目标元素符合选择器判断 事件委托 Event Delegate
+    if(e.target.matches("div button")){
+      var btns = Array.from(div.children)
+      console.log(btns.indexOf(event.target))
+    }
+  })
+  
+  // * 解析选择器(和语法树结构相同)
+  //div.foo.bar p#id span
+  function matches(node, selector){
+    var singleComboSelectors = selector.split(' ')
+    var i = singleComboSelectors.length - 1
+    if(matchesSingleComboSelector(node, singleComboSelectors[i])){
+      node = node.parentNode
+      i--
+      while(node && i >= 0){
+        if(matchesSingleComboSelector(node, singleComboSelectors[i])){
+          i--
+        }
+        node = node.parentNode
+      }
+      return i===0
+    }else{
+      return false
+    }
+  }
+  // * 匹配单独层级的选择器(无祖先后代关系)
+  function matchesSingleComboSelector(node, selector){
+    var singleSelectors = selector.split(/(?=\.|\#)/g)
+    return singleSelectors.every(s=>{
+      matchesSingleSelector(node, s)
+    })
+  }
+
+  function matchesSingleSelector(node, selector){
+    if(selector[0] === "."){
+      return matchesClassSelector(node, selector.slice(1))
+    }
+    if(selector[0] === "#"){
+      return matchesIdSelector(node, selector.slice(1))
+    }
+    return matchesElementSelector(node, selector)
+  }
+
+  function matchesClassSelector(node, selector){
+    return node.className.indexOf(selector) !== -1
+  }
+
+  function matchesIdSelector(node, selector){
+    return node.id === selector
+  }
+
+  function matchesElementSelector(node, selector){
+    return node.tagName === selector.toUpperCase()
+  }
+
+
+  </script>
+</body>
+</html>

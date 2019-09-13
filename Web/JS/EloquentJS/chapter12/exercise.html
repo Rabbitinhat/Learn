@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // * create Table
+
+    const MOUNTAINS = [
+    {name: "Kilimanjaro", height: 5895, place: "Tanzania"},
+    {name: "Everest", height: 8848, place: "Nepal"},
+    {name: "Mount Fuji", height: 3776, place: "Japan"},
+    {name: "Vaalserberg", height: 323, place: "Netherlands"},
+    {name: "Denali", height: 6168, place: "United States"},
+    {name: "Popocatepetl", height: 5465, place: "Mexico"},
+    {name: "Mont Blanc", height: 4808, place: "Italy/France"}
+  ];
+
+  function createTable(data){
+    let table = document.createElement("table")
+    let tr = document.createElement("tr")
+    for(let ele in data[0]){
+      if(data[0].hasOwnProperty(ele)){
+        let th = document.createElement("th")
+        th.innerText = ele
+        th.style.textAlign = "left"
+        tr.appendChild(th)
+      }
+    }
+    table.appendChild(tr)
+    for(let ele of data){
+      let tr = document.createElement("tr")
+      for(let val in ele){
+        let td = document.createElement("td")
+        td.innerText = ele[val]
+        td.style.textAlign = "left"
+        tr.appendChild(td)
+      }
+      table.appendChild(tr)
+    }
+    return table
+  }
+  document.body.appendChild(createTable(MOUNTAINS))
+
+  // * elementsByTagName elementById binary tree
+
+  function elementsByTagName(node, tagName, result=[]){
+    for(let child of node.children){
+      if(child.tagName === tagName.toUpperCase()){
+        result.push(child)
+      }
+      if(child.children.length > 0){
+        elementsByTagName(child, tagName, result)
+      }
+    }
+    return result
+  }
+
+  function getElementsByTagName(node, tagName){
+    let result = []
+    let tagName = tagName.toUpperCase()
+    for(let child of node.children){
+      if(child.tagName === tagName){
+        result.push(child)
+      }
+      result.push(...getElementsByTagName(child, tagName))
+    }
+    return result
+  }
+
+  function getElementsByTagName(node, tagName){
+    var result = []
+    tagName = tagName.toUpperCase
+
+    travelDes(node, it=>{
+      if(it.tagName === tagName){
+        result.push(it)
+      }
+    })
+    
+    function travelDes(node, action){
+      if(node){
+        for(let child of node.children){
+          action(child)
+          travelDes(child, action)
+        }
+      }
+    }
+  }
+
+  function getElementById(id, root=document.documentElement){
+    if(root.id === id){
+      return root
+    }
+    for(let child of root.children){
+      let res = getElementById(id, child)
+      // * 返回none时, 继续循环
+      if(res){
+        return res
+      }
+    }
+    return none
+  }
+
+  // 二叉树遍历查找节点
+  function containValue(root, val){
+    if(root){
+      if(root.val === val) return true
+      return containValue(root.left, val) || containValue(root.right, val)
+    }
+    return false
+  }
+
+  function traverse(root, action){
+    if(root){
+      if(action(root)) return false
+      return traverse(root.left, action) && traverse(root.right, action)
+    }
+  }
+
+  // var res = find(a)
+  // if(res){
+  //   return res
+  // }
+
+  // var res = find(b)
+  // return res
+  // 
+  // 
+
+  
+
+  let cat = document.querySelector('#cat')
+  let hat = document.querySelector('#hat')
+
+  let angle = 0
+  let lastTime = null
+  function animate(time){
+    if(lastTime !== null) angle += (time - lastTime) * 0.001
+    lastTime = time
+    cat.style.top = (Math.sin(angle)*40 + 40) + "px"
+    cat.style.left = (Math.cos(angle)*230 + 230) + "px"
+    hat.style.top = (Math.sin(angle)*40 + 40) + "px"
+    hat.style.left = (Math.cos(angle)*230 + 230) + "px"
+
+    requestAnimationFrame(animate)
+  }
+  requestAnimationFrame(animate)
+
+  </script>
+</body>
+</html>

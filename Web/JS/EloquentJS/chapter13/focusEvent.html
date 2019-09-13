@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.slim.js"
+  integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+  <p>Name: <input type="text" data-help="Your full name"></p>
+  <p>Age:<input type="text" data-help="Your age in years"></p>
+  <p id="help"></p>
+
+  <script>
+  // let help = document.querySelector('#help')
+  // let fields = document.querySelectorAll('input')
+  // // 由于focus blur 不会冒泡, 所以将事件处理程序绑定到input元素上
+  // for(let field of Array.from(fields)){
+  //   field.addEventListener('focus', event=>{
+  //     let text = event.target.getAttribute('data-help')
+  //     help.textContent = text
+  //   })
+  //   field.addEventListener('blur', event=>{
+  //     help.textContent = ''
+  //   })
+  // }
+
+  // 注意DOM节点无法调用jQuery方法, 需要转换
+  $('input')
+  .focus((event)=>{
+    $('#help').text($(event.target).attr('data-help'))
+  })
+  .blur((event) => {
+    $('#help').text('')
+  })
+  </script>
+</body>
+</html>

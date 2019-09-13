@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style rel="stylesheet">
+      .drawing,
+      .drop {
+        width: 100%;
+        height: 250px;
+        background-color: #333;
+        margin-bottom: 30px;
+      }
+      .dot {
+        display: block;
+        height: 4px;
+        width: 4px;
+        border-radius: 2px;
+        background-color: orange;
+        position: absolute;
+      }
+
+      #left {
+        width: 80px;
+        height: 80px;
+        position: absolute;
+        background-color: orange;
+      }
+      #right {
+        width: 80px;
+        height: 80px;
+        position: absolute;
+        background-color: red;
+      }
+
+      #progress {
+        height: 5px;
+        background-color: orange;
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="drawing"></div>
+    <div class="drop">
+      <div id="left"></div>
+      <div id="right"></div>
+    </div>
+
+    <div class="progress">
+      <button id="start">Start</button>
+      <button id="increase">Increase(5)</button>
+      <button id="set">Set(50)</button>
+      <button id="end">End</button>
+    </div>
+    <script>
+      // drawing
+      let drawing = document.getElementsByClassName("drawing")[0];
+
+      function addDot(e) {
+        e.preventDefault();
+        let dot = document.createElement("span");
+        dot.className = "dot";
+        dot.style.left = e.pageX - 2 + "px";
+        dot.style.top = e.pageY - 2 + "px";
+        drawing.appendChild(dot);
+      }
+
+      // * 传入的应为函数, 而非调用
+      drawing.addEventListener("mousedown", addDot);
+      drawing.addEventListener("mousemove", e => {
+        if (e.buttons !== 0) {
+          console.log(e);
+          addDot(e);
+        }
+      });
+      drawing.addEventListener("contextmenu", e => {
+        e.preventDefault();
+      });
+
+      // drop
+      let drop = document.getElementsByClassName("drop")[0];
+      let left = document.getElementById("left");
+      let right = document.getElementById("right");
+
+      let index = 0;
+
+      drop.addEventListener("mousemove", e => {
+        // * 阻止默认拖动事件
+        e.preventDefault();
+        if (e.buttons !== 0) {
+          if (e.target.id === "left") {
+            left.style.left = e.pageX - 40 + "px";
+            left.style.top = e.pageY - 40 + "px";
+          }
+          if (e.target.id === "right") {
+            right.style.left = e.pageX - 40 + "px";
+            right.style.top = e.pageY - 40 + "px";
+          }
+        }
+      });
+
+      drop.addEventListener("mousedown", e => {
+        if (e.target.className.indexOf("drop") === -1) {
+          if (e.buttons === 1) {
+            index++;
+            e.target.style.zIndex = index;
+          } else {
+            e.target.style.zIndex = "0";
+            index = 0;
+          }
+        }
+      });
+
+      class progress {
+        constructor() {
+          this.progress = 0;
+        }
+
+        start() {
+          let progressBar = document.createElement("div");
+          progressBar.id = "progress";
+          document.body.appendChild(progressBar);
+          this.progress = progressBar;
+        }
+
+        increase(n) {
+          let width = n * 0.01 * document.body.clientWidth;
+          if (this.progress.offsetWidth > document.body.clientWidth - width) {
+            this.progress.style.width = "100%";
+          } else {
+            this.progress.style.width =
+              this.progress.offsetWidth + width + "px";
+          }
+        }
+
+        set(n) {
+          let width = n * 0.01 * document.body.clientWidth;
+          this.progress.style.width = width + "px";
+        }
+
+
+
+        end() {
+          this.progress.remove();
+        }
+      }
+
+      var progress_bar = new progress();
+      let progress_buttons = document.getElementsByClassName("progress")[0];
+      progress_buttons.addEventListener("click", e => {
+        if (e.target.id === "start") {
+          progress_bar.start();
+        }
+        if (e.target.id === "increase") {
+          progress_bar.increase(5);
+        }
+        if (e.target.id === "set") {
+          progress_bar.set(50);
+        }
+        if (e.target.id === "end") {
+          progress_bar.end();
+        }
+      });
+
+      // var square = new Worker('./squareworker.js')
+      // square.addEventListener('message', function(event){
+      //   console.log('The worker responed:', event.data)
+      // })
+      // squareWorker.postMessage(10)
+      // squareWorker.postMessage(24)
+
+      var tricks = 0;
+      var clock = setInterval(() => {
+        console.log("trick", tricks++);
+        if (tricks === 10) {
+          clearInterval(clock);
+          console.log("end");
+        }
+      }, 200);
+
+
+      function swap(node1, node2){
+
+        var p1 = node1.parentNode
+        var p2 = node2.parentNode
+        
+        var flag1 = document.createTextNode('')
+
+        p1.insertBefore(flag1, node1)
+
+        p2.insertBefore(node1, node2)
+        p1.insertBefore(node2, flag1)
+
+        p1.removeChild(flag1)
+
+        
+      }
+      
+    </script>
+  </body>
+</html>

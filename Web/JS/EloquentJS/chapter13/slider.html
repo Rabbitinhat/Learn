@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style rel="stylesheet">
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .outer {
+        overflow: hidden;
+        position: relative;
+      }
+      .container:after {
+        content: "";
+        display: block;
+        clear: both;
+      }
+      .container img {
+        display: block;
+        float: left;
+      }
+
+      #left,
+      #right {
+        display: block;
+        width: 50px;
+        height: 100px;
+        background-color: #ccc;
+        color: #fff;
+        text-align: center;
+        font-size: 2rem;
+        line-height: 100px;
+
+        font-weight: bold;
+        position: absolute;
+        z-index: 999;
+        cursor: pointer;
+      }
+
+      #left {
+        left: 0;
+        top: 50%;
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+
+      #right {
+        right: 0;
+        top: 50%;
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <div class="outer">
+      <div class="container">
+        <img
+          src="https://i01.appmifile.com/webfile/globalimg/us/USBanner/lazerprojectnew.jpg"
+          alt=""
+        />
+        <img
+          src="https://i01.appmifile.com/webfile/globalimg/us/USBanner/spherecamera3.jpg"
+          alt=""
+        />
+        <img
+          src="https://i01.appmifile.com/webfile/globalimg/us/USBanner/Scooter-banner.jpg"
+          alt=""
+        />
+        <img
+          src="https://i01.appmifile.com/webfile/globalimg/us/USBanner/Mi-box-s-007.jpg"
+          alt=""
+        />
+        <img
+          src="https://i01.appmifile.com/webfile/globalimg/us/USBanner/truckbanner.jpg"
+          alt=""
+        />
+      </div>
+      <span id="left">&lt;</span>
+      <span id="right">&gt;</span>
+    </div> -->
+    <div id="show"></div>
+    <script type="text/javascript">
+      // let left = document.getElementById("left");
+      // let right = document.getElementById("right");
+
+      // let container = document.getElementsByClassName("container")[0];
+      // let outer = document.getElementsByClassName("outer")[0];
+
+      // outer.addEventListener("click", function(e) {
+      //   if (e.target.id === "right") {
+      //     if (container.offsetLeft !== 0) {
+      //       container.style.marginLeft =
+      //         container.offsetLeft + window.innerWidth + "px";
+      //     } else if (container.offsetLeft === 0) {
+      //       container.style.marginLeft = -(window.innerWidth * 4) + "px";
+      //     }
+      //   }
+      //   if (e.target.id === "left") {
+      //     let leftMax = -window.innerWidth * 4;
+      //     if (container.offsetLeft === leftMax) {
+      //       container.style.marginLeft = "0px";
+      //     } else {
+      //       container.style.marginLeft =
+      //         container.offsetLeft - window.innerWidth + "px";
+      //     }
+      //   }
+      // });
+    </script>
+    <script src='./slider.js'></script>
+  </body>
+</html>

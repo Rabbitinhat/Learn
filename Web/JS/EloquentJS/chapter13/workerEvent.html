@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <input type='text' id='getName' data-helper='Please enter your name'>
+  <button id='get'>getName</button>
+  <p id='helper'></p>
+  <script>
+  let getName = document.getElementById('getName')
+  let helper = document.getElementById('helper')
+  let get = document.getElementById('get')
+  getName.addEventListener('focus', (e)=>{
+    
+    helper.textContent = e.target.getAttribute('data-helper')
+  })
+  getName.addEventListener('blur', (e)=>{
+    helper.textContent = ''
+  })
+
+  let squareWorker = new Worker('./squareworker.js')
+  // worker只通过message事件交流信息, 通过event.data传输数据
+  squareWorker.addEventListener('message', event=>{
+    document.body.lastChild.remove()
+    let show = document.createElement('div')
+    console.log(event.data)
+    show.textContent = 'Hi! ' + event.data
+    document.body.appendChild(show)
+  })  
+  get.addEventListener('click', (e)=>{
+    console.log(getName.value)
+    squareWorker.postMessage(getName.value)
+  })
+  
+  </script>
+</body>
+</html>

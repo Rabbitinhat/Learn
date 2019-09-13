@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>get10Cats</title>
+</head>
+<body>
+  <script>
+  let base = 'https://xieranmaya.github.io/images/cats'
+  let count = 0
+  let imgSrcs = []
+  let container = document.createElement('div')
+  container.id = 'container'
+  function get(url, callback, onerror){
+    var req = new XMLHttpRequest()
+    req.open('get', url, true)
+    req.addEventListener('load', () => {
+      if(req.status < 400){
+        callback(req)
+      }else{
+        onerror(req)
+      }
+    })
+    req.addEventListener('error', () => {
+      onerror(req)
+    })
+    req.send()
+  }
+
+  let button = document.createElement('button')
+  button.textContent = '喵'
+  button.addEventListener('click', () => {
+    createCat()
+    getoneCat()
+  })
+  document.body.appendChild(button)
+  document.body.appendChild(container)
+  getURL()
+  function getURL(){
+    console.log(base + '/cats.json')
+    get(base + '/cats.json', (req)=>{
+      let urls = JSON.parse(req.responseText)
+      console.log(urls)
+      for(let i=0; i<10; i++){
+        imgSrcs.push({url: base + '/' + urls[i].url, width: urls[i].width, height: urls[i].height})
+      }
+      console.log(imgSrcs)
+    }, onerror)
+  }
+
+  function getoneCat(){
+    get(imgSrcs[count].url, setCat, onerror)
+  }
+
+  function setCat(req){
+    let img = container.lastElementChild
+    img.src = imgSrcs[count].url
+    if(count <= 8 ){
+    createCat()
+    }
+    count++
+    if(count<=9){
+      getoneCat()
+    }
+  }
+
+  function createCat(){
+    let img = document.createElement('img')
+    img.src = './loading.gif'
+    img.style.width = imgSrcs[count].width
+    img.style.height = imgSrcs[count].height
+    container.appendChild(img)
+  }
+
+  function onerror(req){
+    try{
+      throw new Error('Request Wrong' + req.status)
+    }catch(e){
+      console.log(e.message)
+    }
+  }
+
+
+  </script>  
+</body>
+</html>

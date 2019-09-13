@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // let textarea = document.querySelector('textarea')
+    // let timeout
+    // textarea.addEventListener('input', ()=>{
+    //   // 间隔小于.5s时, 清除之前的计时器, 重新设置(不再连续输入时, 立刻执行事件)
+    //     clearTimeout(timeout)
+    //   timeout = setTimeout(() => console.log('Typed!'), 500)
+    // })
+
+    let scheduled = null
+    window.addEventListener('mousemove', event => {
+      // 如果scheduled === null 设置定时器
+      if(!scheduled){
+        setTimeout(()=>{
+          // 当前scheduled为null, 但scheduled.pageX, scheduled.pageY设置在.25s后读取
+          document.body.textContent = `Mouse at ${scheduled.pageX}, ${scheduled.pageY}`
+          scheduled = null
+        }, 250)
+      }
+      // 将scheduled绑定到event上, 立即执行
+      scheduled = event
+    })
+
+
+    function throttle(f, duration){
+      var lastTime = null
+      var timeId = null
+      return function(...args){
+        clearTimeout(timeId)
+        var now = Date.now()
+        if(now - lastRunTime > duration){
+          f(...args)
+          lastTime = now
+        }else{
+          timeId = setTimeout(() => {
+            f(...args)
+            lastTime = Date.now()
+          }, duration)
+        }
+      }
+    }
+
+    function debounce(f, duration){
+      var timeId = null
+      return function(...args){
+        cleartTimeout(timeId)
+        timeId = setTimeout(()=>f.call(this, ...args), duration)
+      }
+    }
+  </script>
+</body>
+</html>

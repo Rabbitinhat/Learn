@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style rel="stylesheet">
+  balloon {
+    font-size: 16px;
+  }
+  </style>
+</head>
+<body>
+  <span id="balloon">🎈</span>
+  <script>
+    let balloon = document.getElementById('balloon')
+    let inCount = 0
+    let deCount = 0
+
+    function flate(event){
+      let maxSize=10, pixels=10
+      event.preventDefault()
+      // * .getAttribute/.style 无法读取到<style>中的样式, 只能读取到标签内样式
+      let fontsize = parseInt(window.getComputedStyle(balloon, null).fontSize)
+      console.log(fontsize)
+      console.log(event.key)
+      if(event.key === 'ArrowUp'){
+      if(inCount < maxSize){
+        inCount++ 
+        balloon.style.fontSize = fontsize * 1.1 + "px"
+        console.log(balloon.getAttribute('fontSize'))
+      }else{
+        balloon.textContent = '💥'
+        document.body.removeEventListener('keyup', flate)
+      }
+    }else if(event.key === 'ArrowDown'){
+      if(fontsize>16){
+        balloon.style.fontSize = fontsize * .9 + 'px'
+      }else{
+        document.body.removeEventListener('keyup', flate)
+      }
+    }
+    }
+    document.body.addEventListener('keyup', flate)
+
+    let size
+    function setSize(newSize){
+      size = newSize
+      p.style.fontSize = size + 'px'
+    }
+    setSize(20)
+
+    function handleArrow(event){
+      if(event.key === 'ArrowUp'){
+        if(size > 70){
+          p.textContent = '💥'
+          document.body.removeEventListener('keydown', handleArrow)
+        }else{
+          setSize(size * 1.1)
+          event.preventDefault()
+        }
+      }else if(event.key === 'ArrowDown'){
+        setSize(size * .9)
+        event.preventDefault()
+      }
+    }
+    document.body.addEventListener('keydown', handleArrow)
+  </script>
+</body>
+</html>

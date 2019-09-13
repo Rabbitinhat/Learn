@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>Drag the to change its width:</p>
+    <div style="background: orange; width: 60px; height: 20px"></div>
+
+    <button>Act-once button</button>
+
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+
+    <a href="https://developer.mozilla.org">MDN</a>
+
+    <p>A paragraph with a <button>button</button>.</p>
+
+    <p>This page turns violet when you hold the V key.</p>
+    <script>
+      let lastX;
+      let bar = document.querySelector("div");
+      bar.addEventListener("mousedown", event => {
+        if (event.button === 0) {
+          // NOTE a修改为鼠标点击后, 长度变为当前鼠标位置
+          lastX = event.clientX;
+          bar.style.width = Math.max(10, event.clientX - bar.clientX) + "px";
+          window.addEventListener("mousemove", moved);
+          event.preventDefault();
+        }
+      });
+
+      function moved(event) {
+        if (event.buttons == 0) {
+          window.removeEventListener("mousemove", moved);
+        } else {
+          let dist = event.clientX - lastX;
+          let newWidth = Math.max(10, bar.offsetWidth + dist);
+          bar.style.width = newWidth + "px";
+          lastX = event.clientX;
+        }
+      }
+
+      document.addEventListener(
+        "mousewhell",
+        e => {
+          console.log(e)
+          var start = Date.now();
+          while (Data.now() - start < 200) {}
+        },
+        { passive: false }
+      );
+
+
+        let button = document.querySelector('button')
+        function once(){
+          console.log('done')
+          button.removeEventListener('click', once)
+        }
+        button.addEventListener('click', once)
+
+        button.addEventListener('mousedown', event=>{
+          if(event.button === 0){
+            console.log('left')
+          }else if(event.button === 1){
+            console.log('middle')
+          }else if(event.button === 2){
+            console.log('right')
+          }
+        })
+
+        let para = document.querySelector('p')
+        let button = document.querySelector('button')
+        para.addEventListener('mousedown', ()=>{
+          console.log('Handle for paragraph.')
+        })
+        button.addEventListener('mousedown', event=>{
+          console.log('Handler for button')
+          if(event.button === 2) event.stopPropagation()
+        })
+
+        document.body.addEventListener('click', event=>{
+          if(event.target.nodeName === 'BUTTON'){
+            console.log("Clicked", event.target.textContent)
+          }
+        })
+
+        let link = document.querySelector('a')
+        link.addEventListener('click', event=>{
+          console.log('Nope')
+          // 阻止默认行为
+          event.preventDefault()
+        })
+
+        window.addEventListener('keydown', event=>{
+          if(event.key === 'v'){
+            document.body.style.background = 'violet'
+          }
+        })
+
+        window.addEventListener('keyup', event=>{
+          if(event.key === 'v'){
+            document.body.style.background = ''
+          }
+        })
+
+        window.addEventListener('keydown', event => {
+          if(event.key === ' ' && event.ctrlKey){
+            console.log('Coutinuing!')
+          }
+        })
+
+        
+    </script>
+  </body>
+</html>

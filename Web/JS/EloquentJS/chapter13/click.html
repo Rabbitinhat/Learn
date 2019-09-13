@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style rel="stylesheet">
+    img {
+      width: 500px;
+    }
+    .copyright {
+    width: 180px;
+    height: 47px;
+    background-color: yellowgreen;
+    position: fixed;
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+    line-height: 47px;
+    }
+    .copyright:focus {
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+<img src="./fuji.jpg" alt="Fuji">
+  <script>
+  var img = document.querySelector('img')
+
+  img.addEventListener('contextmenu', e => {
+    let menus = document.getElementsByClassName('copyright')
+    for(let ele of menus){
+      ele.remove()
+    }
+    e.preventDefault()
+    var tip = document.createElement('span')
+    tip.textContent = 'copyright username'
+    tip.classList.add('copyright')
+    // 获取焦点
+    tip.tabIndex = -1
+    tip.style.left = e.clientX + 'px'
+    tip.style.top = e.clientY + 'px'
+
+    tip.addEventListener('blur', e=>{
+      document.body.removeChild(tip)
+    })
+    document.body.appendChild(tip)
+    tip.focus()
+  })
+  </script>
+</body>
+</html>

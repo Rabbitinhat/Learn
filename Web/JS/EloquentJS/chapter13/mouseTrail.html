@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      body {
+        height: 1600px;
+        background-color: #ccc;
+      }
+      #trail {
+        position: fixed;
+        width: 30px;
+        height: 30px;
+        border-radius: 15px;
+        border: 2px solid orange;
+      }
+
+      .trail {
+        position: absolute;
+        height: 6px;
+        width: 6px;
+        border-radius: 3px;
+        background: teal;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      function setTrail(node) {
+        let trail = document.createElement("div");
+        trail.id = "trail";
+        trail.style.left = node.pageX + "px";
+        trail.style.top = node.pageY + "px";
+        document.body.appendChild(trail);
+        console.log(trail);
+        return trail;
+      }
+
+      let count = 0;
+      let trails = new Array(20).fill(1);
+      window.addEventListener("mousemove", e => {
+        if (trails[count] !== 1) {
+          trails[count].remove();
+        }
+        trails[count] = setTrail(e);
+        if (count < 19) count++;
+        else count = 0;
+      });
+
+      let dots = []
+      for(let i=0; i<12; i++){
+        let node = document.createElement('div')
+        node.className = 'trail'
+        document.body.appendChild(node)
+        dots.push(node)
+      }
+      let currentDot = 0
+
+      window.addEventListener('mousemove', event=>{
+        let dot = dots[currentDot]
+        dot.style.left = (event.pageX - 3) + 'px'
+        dot.style.top = (event.pageY - 3 + 'px')
+        currentDot = (currentDot + 1) % dots.length
+      })
+    </script>
+  </body>
+</html>
