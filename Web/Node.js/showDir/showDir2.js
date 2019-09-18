@@ -1,7 +1,7 @@
 const fs = require('fs')
 const fs_p = fs.promises
 
-function listAllFilesSync(path){
+function listAllFilesSync(path){ 
   var result = []
   let stats = fs.statSync(path)
   if(stats.isFile()){
@@ -17,7 +17,39 @@ function listAllFilesSync(path){
   }
 }
 
-console.log(listAllFilesSync('./'))
+
+
+async function listAllFilesAwait(path){
+  var result = []
+  let stats = await fs_p.stat(path)
+  if(stats.isFile()){
+    return [path]
+  }else{
+    let entries = await fs_p.readdir(path)
+
+    // for(let entry of entries){
+    //    let newPath = path + '/' + entry
+    //    let file = await listAllFilesAwait(newPath)
+    //    result.push(...file)
+    // }
+    // 为每个文件创建异步函数(未执行, 开始调用)
+    var entryPromises = entries.map((entry) => {
+      let newPath = path + '/' + entry
+      return listAllFilesAwait(newPath).then(files => {
+        result.push(result)
+      })
+    })
+
+    // // 等待每个异步返回
+    // // ? Promise.all 返回数组 [[path]]
+    // // Promise.all要等待数组中全部的promise object完成后才会返回
+    // var entryValue = await Promise.all(entryPromises)
+    // return result.push(...[].concat(entryValue))
+    return [].concat(...result)
+  }
+}
+
+
 
 // return 为then的返回值
 function listAllFilesPromise(path){
@@ -44,7 +76,7 @@ function listAllFilesPromise(path){
     })
 }
 
-listAllFilesPromise('./').then(console.log)
+
 
 function listAllFilesAsync(path, cb){
   
@@ -55,7 +87,9 @@ function listAllFilesAsync(path, cb){
       fs.readdir(path, (err, datas) => {
         var result = []
         var count = 0
-        datas.map(data => {
+        if(datas.length === 0) cb([])
+        else{
+          datas.forEach(data => {
           let newPath = path + '/' + data
           listAllFilesAsync(newPath, (files) => {
             result.push(...files)
@@ -66,10 +100,24 @@ function listAllFilesAsync(path, cb){
             }
           })
         })
+      }
       })
     }
   })
 }
 
-listAllFilesAsync('./', (result) => {
-  console.log(result)})
+
+
+// listAllFilesAwait('./').then((files) => {
+//   console.log('Await', files)
+// })
+
+// listAllFilesPromise('./').then((files) => {
+//   console.log('Promise', files)
+// })
+
+// listAllFilesAsync('./', (val) => {
+// console.log('Callback', val)
+// })
+
+console.log('Sync', listAllFilesSync('./'))

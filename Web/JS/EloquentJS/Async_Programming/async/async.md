@@ -195,3 +195,67 @@ var promise = new Promise((resolve, reject) => {
 })
 ```
 
+## 使用Generator 生成器来处理异步函数
+
+为什么要使用Generator函数来处理异步函数
+- 根据种类不同(普通异步调用, promise), 异步函数书写时总会使用大量的缩进, 相较于同步来说不够美观
+- 使用Generator函数处理异步函数, 可以将异步函数书写转换为类似同步的形式
+
+缺点(只根据创建的函数而言)
+- 没有处理含有参数的generator函数
+- 生成器实际上不符合语义
+
+## Async await
+
+注意事项
+- async function 为一个keyword
+- await 后参数一般为Promise, 但原始值也可以, 会立刻返回
+- await 语句会返回promise的结果
+- async function 返回一个promise, 可以调用then
+- 虽然书写形式和同步相似, 但本质上仍为异步函数, 在递归操作时需要注意
+
+```js
+  async function f() {
+    console.log(1)
+    var a = await Promise.resolve(5)
+    console.log(a)
+  }
+
+  run(f)
+
+  console.log(2) 
+//  操作的输出是什么, 为什么
+  // 1 run会先运行同步代码, 在等待异步操作完成
+  // 2
+  // 5
+
+  async function f(){
+    console.log(1)
+    var a = await Promise.resolve(5)
+    console.log(a)
+    var a = await Promise.resolve(5)
+    console.log(a)
+    var a = await Promise.resolve(5)
+    console.log(a)
+  }
+
+  async function g(){
+    console.log(2)
+    var b = await Promise.resolve(6)
+    console.log(b)
+    var b = await Promise.resolve(6)
+    console.log(b)
+    var b = await Promise.resolve(6)
+    console.log(b)
+  }
+
+  f()
+  g()
+  console.log(3)
+
+  // 输出是什么
+  // 1 => 2 => 3 => 5 => 6 => 5 => 6
+  // 协程
+  // f, g会立刻运行同步代码, 然后各自等待异步代码完成
+  // f的第一个异步完成后, 会接着查看g中的第一个异步
+```

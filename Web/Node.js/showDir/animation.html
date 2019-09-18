@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Animation</title>
+  <style rel="stylesheet">
+  h1 {
+  font: 200 4em/1.5 "Roboto", Verdana, sans-serif;
+  text-align: center;
+  animation-name: pluse;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
+  animation-play-state: running;
+}
+
+@keyframes flash {
+  from {
+    opacity: 1;
+  }
+  25% {
+    opacity: .7;
+    animation-timing-function: ease-in-out;
+  }
+  50% {
+    opacity: 0;
+  }
+  75%{
+    opacity: .7;
+    animation-timing-function: ease-in-out;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pluse {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+    animation-timing-function: ease-in-out;
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  from {
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(-.7%);
+  }
+  45% {
+    transform: translateX(-.5%);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  55% {
+    transform: translateX(.5%);
+  }
+  60% {
+    transform: translateX(.7%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+
+}
+
+@keyframes swiming {
+  from {
+    transform: rotate(0);
+  }
+
+  20% {
+    transform: rotate(10deg);
+  }
+
+  40% {
+    transform: rotate(-10deg);
+  }
+
+  60% {
+    transform: rotate(5deg);
+  }
+
+  80% {
+    transform: rotate(-5deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+  </style>
+</head>
+<body>
+  <h1>Animation.css</h1>
+</body>
+</html>
