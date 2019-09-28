@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="example">
+        <p>Original message: "{{message}}"</p>
+        <!-- ? reversedMessage 位于computed, 而非data -->
+        <p>Computed reversed message: "{{reversedMessage()}}"</p>
+    </div>
+
+	<!-- 计算属性 vs 侦听属性 -->
+	<div id="demo">{{fullName}}</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+    //创建出的vm
+    var vm = new Vue({
+        el: '#example',
+        // 使用proxy拦截get, set
+        // data中的数据转换为get, set属性?(方法)
+        data: {
+            // ?
+            // 此处this为一个Proxy对象
+            message: 'Hello World !',
+        },
+        // computed内的函数转换为vm中的get, set函数
+        computed: {
+            reversedMessage() {
+                console.log(this)
+                return this.message.split('').reverse().join('')
+            }
+        },
+        methods: {
+        	reversedMessage: function(){
+        		return this.message.split('').reverse().join('')
+        	}
+        }
+    })
+
+
+    var vm2 = new Vue({
+    	el: '#demo',
+    	data: {
+    		firstName: 'Foo',
+    		lastName: 'Bar',
+    		fullName: 'Foo Bar'
+    	},
+    	watch: {
+    		//分别侦听firstName, lastName属性变化
+    		firstName: function(val){
+    			console.log('firstName method')
+    			this.fullName = val + ' ' + this.lastName
+    		},
+    		lastName: function(val){
+    			console.log('lastName method')
+    			this.fullName = this.firstName + ' ' + val
+    		},
+    	}
+    })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="example">
+        <p v-once>{{a}}</p>
+        <button v-on:click="a = 'baz'">Change it</button>
+    </div>
+    <!-- rawhtml渲染为string -->
+    <div id='raw'>Using mustaches: {{rawhtml}}
+        <!-- isButtonDisable null, false, undefined时, disabled不会存在 -->
+        <button v-bind:disabled="isButtonDisabled">Button</button>
+        
+        <!-- ? -->
+        <div v-bind:id="dynamicId">DynamicId</div>
+        
+        <span>{{Math.floor(Math.random() * 100) + n}}</span>
+    </div>
+    <p>Using v-html directive:<span v-html="rawhtml"></span></p>
+    
+	
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+    var data = { a: 1 }
+    var vm = new Vue({
+        el: "#example",
+        data: data,
+        // created 实例创建后调用
+        // 如果使用arrow function, this => window
+        created: () => {
+            console.log(this)
+            console.log('a is: ' + this.a)
+        }
+    })
+
+    console.log(vm.$data)
+    console.log(vm.$data === data)
+
+    // onchange, a的值改变后调用回调
+    vm.$watch('a', function(newValue, oldValue) {
+
+    })
+
+    var raw = new Vue({
+        el: '#raw',
+        data: {
+            rawhtml: '<span style=\'color: red\'></span>',
+            n: 1,
+            isButtonDisabled: false,
+            // 
+            dynamicId: "hi",
+        }
+    })
+    </script>
+</body>
+
+</html>
