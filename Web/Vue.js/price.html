@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <div id='cal'>
+    <input type="number" v-model='price'>price<b/>
+    <input type="number" v-model='amount'>amount<b/>
+    <input type="number" v-model='total'>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    var cal = new Vue({
+      el: '#cal',
+      data: {
+        price: 12,
+        amount: 0,
+      },
+      computed: {
+        total: {
+          get: function(){
+            return this.price * this.amount
+          },
+          set: function(val){
+            this.amount = val / this.price
+          }
+        }
+      }
+    })
+
+  </script>
+</body>
+</html>

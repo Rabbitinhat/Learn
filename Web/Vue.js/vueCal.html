@@ -11,10 +11,20 @@
         <p>Original message: "{{message}}"</p>
         <!-- ? reversedMessage 位于computed, 而非data -->
         <p>Computed reversed message: "{{reversedMessage()}}"</p>
+        <div>{{fullName}}</div>
     </div>
 
 	<!-- 计算属性 vs 侦听属性 -->
 	<div id="demo">{{fullName}}</div>
+
+
+	<div id="watch-example">
+		<p>Ask a yes/no question<input type="text" v-model="question"></p>
+		<p>{{answer}}</p>
+	</div>
+
+
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -28,12 +38,27 @@
             // ?
             // 此处this为一个Proxy对象
             message: 'Hello World !',
+            firstName: 'Foo',
+    		lastName: 'Bar',
         },
         // computed内的函数转换为vm中的get, set函数
+        // computed 中的属性名无法与 data 中属性名重复
         computed: {
             reversedMessage() {
                 console.log(this)
                 return this.message.split('').reverse().join('')
+            },
+        	// computed 默认属性为 getter, 也可以设置 setter
+            fullName: {
+            	get: function(){
+            		return this.firstName + " " + this.lastName
+            	},
+            	set: function(newValue){
+            		var names = newValue.split(' ')
+            		console.log(names)
+            		this.firstName = names[0]
+            		this.lastName = names[names.length - 1]
+            	}
             }
         },
         methods: {
@@ -64,6 +89,51 @@
     	}
     })
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+	<script>
+		var watchExampleVM = new Vue({
+			el: '#watch-example',
+			data: {
+				question: "",
+				answer: 'I cannot give you an answer until you ask a question'
+			},
+			// watch(监视question 变化)
+			// => 调用debouncedGetAnswer
+			// => 调用getAnswer, 获取结果
+			watch: {
+				// ? newQuestion, oldQuestion 什么用途
+				question: function(newQuestion, oldQuestion){
+					this.answer = 'Waitting for you to stop typing...'
+					// 
+					this.debouncedGetAnswer()
+				}
+			},
+			created: function(){
+				this.debouncedGetAnswer = _.debounce(this.getAnswer, 500)
+			},
+			methods: {
+				getAnswer: function(){
+					if(this.question.indexOf('?') === -1){
+						this.answer = 'Question usually contain a question mark.'
+						return
+					}
+					this.answer = 'Thinking...'
+					var vm = this
+
+					// 获取 answer
+					axios.get('https://yesno.wtf/api')
+					.then(function(response){
+						vm.answer = _.capitalize(response.data.answer)
+					})
+					.catch(function(error){
+						vm.answer = 'Error! Could not reach the API.' + error
+					})
+				}
+			}
+		})
+
+	</script>
 </body>
 
 </html>

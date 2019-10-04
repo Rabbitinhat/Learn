@@ -1,3 +1,11 @@
+/*
+ * @Author: chyon71 
+ * @Date: 2019-09-18 16:59:57 
+ * @Last Modified by: chyon71
+ * @Last Modified time: 2019-09-27 11:39:17
+ */
+
+
 # Node.js
 
 - 不同于框架, 库, Node 为 JS 的新的运行环境(浏览器, 微信小程序, MongoDB), 操作本地环境(网络, 文件)
@@ -87,7 +95,7 @@ File Descriptor 文件
 
 ## 异步操作与生成器 generator
 
-## async await
+### async await
 
 并行加载 串行显示
 
@@ -270,3 +278,247 @@ man 命令的详细介绍
 
 服务端触发下载
 Content-Disposition: attachment; filename="logo.png"
+
+## Repl
+
+作用
+- 打开一个交互式控制台
+- reql.start
+
+## VM
+
+作用
+- visual machine 使用虚拟机来运行js代码
+- vm.Script
+
+
+## Worker Treads
+
+作用
+- 添加新的进程
+
+集群
+
+## Event-loop
+
+事件循环
+
+当前线程没有任务正在执行, 但存在一些稍后执行的代码(setTimeout, callback, promise...), node是如何处理.
+异步操作的具体实现
+- 依靠事件循环
+
+Node打开后, 执行流程
+- initialize 初始化 event loop
+- 执行 input script(处理要执行的js代码, 可能会在不同的循环阶段添加不同的待执行函数, 不同阶段执行的函数也可能产生其他函数. 当整个事件循环中没有任何函数需要执行, 则当前进程就会退出)
+- 开启event loop
+
+不同 Event-loop pharse 的结构和作用
+
+- timers 
+  - 执行 setTimout() setInterval() 设置的 callback
+- pending callbacks
+  - 执行上一轮loop被推迟的 i/o callback
+(- idle prepare) 内部使用
+- poll
+  - I/O callback
+- check 
+  - setImmedicate()
+- close callback
+  - 一些close callback
+
+pharse 的细节
+
+setTimout() Vs setImmediate()
+- 初始代码在 input scripts 处执行
+- 根据 input scripts 处代码到被 event loop 处理时的时间不同, 如果时间大于 setTimeout() 设置的时间, 则进入 event loop 时, 在 timers pharse 中 setTimeout 的 ** ** 会被执行, setImmediate 的 callback 会在之后执行; 如果小于 setTimeout 设置的时间, 则进入 event loop 时, 在 timers pharse 中, setTimeout 函数不会立刻执行
+
+process.nextTick(f)
+- f 的执行位置
+  - 在任意两个 pharse 之间被执行(包含在进入 event loop 后, 进入 timers pharse 之前时)
+
+顺序为
+- 4444 2333 2 1
+- 4444 2 1 2333
+- 4444 2 2333 1
+- FIXME 两次setTimeout之间为什么会有时间差?
+
+
+```js
+setTimeout(() => {
+  console.log(4444)
+}, 0)
+
+setImmediate(() => {
+  console.log(2)
+})
+
+
+setTimeout(() => {
+  console.log(2333) 
+}, 0)
+
+setImmediate(() => {
+  console.log(1)
+})
+```
+
+顺序为: 2 1
+- setImmediate 按顺序执行
+- FIXME 是一个队列, 还是两次event loop
+
+```js
+setImmediate(() => {
+  console.log(2)
+})
+setImmediate(() => {
+  console.log(1)
+})
+```
+
+顺序: 444 2333 2 1
+
+```js
+setTimeout(() => {
+  console.log(444)
+}, 0)
+
+setImmediate(() => {
+  console.log(2)
+})
+
+
+setTimeout(() => {
+  console.log(2333) 
+}, 0)
+
+var start = Date.now()
+// 使等待100ms后再继续执行
+while(Date.now() - start < 100){
+
+}
+
+setImmediate(() => {
+  console.log(1)
+})
+```
+
+
+
+
+
+
+进入事件循环的代码状态 ?
+
+不同函数进行事件循环的初始位置 ?
+
+对具体例子的事件循环过程分析 ?
+
+### 浏览器中的事件循环
+
+- micro task 微任务
+  - 后于宏任务执行
+  - 但当微任务执行中产生了新的微任务时, 会继续执行微任务. 阻碍宏任务的执行
+- macro task 宏任务
+  - 先于微任务执行
+  - 当宏任务执行过程中, 如果产生新的宏任务, 并不会阻碍之后的微任务执行
+
+```js
+setTimout(() => console.log(1))
+
+var start = Date.now()
+
+// ?
+promise.then(function f(){
+  if(Date.now() - start < 1000){
+    setTimeout(f)
+  }
+})
+```
+
+#### 微任务
+
+(promise.)then
+
+MutainObserver
+
+不同微任务会按照代码顺序执行
+
+## package.json
+
+```json
+{
+  "name": "vote",
+  "version": "0.0.1",
+  "description": "a voting website",
+  // 用于 npm search
+  "keywords": ["voting", "sqlite3"],
+  "homepage": "",
+  // ?
+  "bugs": {
+    "url": "",
+    "email": ""
+  },
+  // 使用的协议
+  "license": "MIT",
+  "files": "",
+  // 程序的入口文件
+  "main": "./libs/main.js",
+  "brower": "",
+  // 设置命令行命令
+  // -g 安装
+  "bin": {
+    "myapp": "app.js"
+  },
+
+// 项目仓库位置
+  "repository": {
+    "type": "git",
+    "url": "github url"
+  },
+
+// 为程序添加的脚本命令
+// node run foo => node run node foo.js
+// 优先尝试 node_modules/.bin/ 中的命令, 如果不存在, 则使用全局命令
+// start, test 两个命令运行时, 可以省略run
+  "script": {
+    "foo": "node foo.js",
+    "bar": "ls -ha"
+    "start": "",
+    // 构建上线的版本
+    "build": "",
+    // 开发版本
+    "dev": ""
+  },
+
+  // modules 的依赖module ^主版本号保持不变的情况下更新版本号 ~次要版本号不变的情况下, 使用较新的module
+  // package-lock.json 保持精确的module依赖的信息(防止module版本更新导致不兼容))
+  "dependencies": {
+    "colors": "^1.8.1"
+  },
+
+// 包含该项目的开发工具的module
+  "devDependencies": {
+  }
+
+  // 阻止module发布
+  "private": true
+
+}
+```
+
+npm init 创建package.json文件
+npm publish 发布npm包
+
+.npmrc 修改npm的源(不要淘宝)
+
+shebang `#!/usr/bin/env node` 将文件转换为可执行
+
+
+### some command
+
+linux command
+
+- mcedit file `显示格式化后的文档`
+- chmod +x file 为文件添加可执行权限
+- man 查询
+- which file 确认命令位置

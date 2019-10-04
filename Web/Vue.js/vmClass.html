@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<!-- 多个元素绑定同一id, 只有第一个元素生效 -->
+	<!-- <div id='vm-test' v-bind:class="{active: isActive}"></div> -->
+	<div id='vm-test' class="static" v-bind:class="{active: isActive, 'text-danger': hasError}"></div>
+	<!-- 可以直接调用对象(包含不同class属性),  -->
+	<div id='vm-test2' v-bind:class="classObject">可以直接调用对象(包含不同class属性)</div>
+
+
+	<!-- 添加内联样式 -->
+	<div id='style' v-bind:style="styleObject">添加内联样式</div>
+
+	<!-- 数组语法 [data属性名] -->
+	<div v-bind:style="[baseStyle, overridingStyles]"></div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+		var vm = new Vue({
+			el: '#vm-test',
+			data: {
+				isActive: true,
+				hasError: false,
+			}
+
+		})
+
+		var vm2 = new Vue({
+			el: '#vm-test2',
+			data: {
+				isActive: true,
+				error: null
+			},
+			computed: {
+				// 使用computed根据data的状态来动态响应
+				classObject: function(){
+					return {
+						active: this.isActive && !this.error,
+						'text-danger': this.error && this.error.type === 'fatal'
+					}
+				}
+			}
+		})
+
+		var vm3 = new Vue({
+			el: '#style',
+			data: {
+				styleObject: {
+					color: 'red',
+					fontSize: '13px'
+				}
+			}
+		})
+	</script>
+</body>
+</html>

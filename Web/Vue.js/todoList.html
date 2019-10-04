@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ToDo</title>
+	<style rel='stylesheet'>
+		.completed {
+			text-decoration: line-through;
+			color: #ccc;
+		}
+
+		li input:focus {
+			outline: none;
+		}
+	</style>
+</head>
+<body>
+	<h1>TODO-List</h1>
+	<div id="lists">
+		<input type="checkbox" :checked='listData.filter(list=>list.state).length===listData.length && listData.length > 0' @click="selectAll">
+		<input type="text" id="input" v-model='inputValue' @keyup='addnew' placeholder='What needs to be done?'>
+	<ul>
+		<li v-for='(list, index) of listData' v-if="(status==='all')||(Boolean(status) == list.state)">
+			<input type="checkbox" :checked ="list.state" v-model='list.state'>
+			<span v-bind:style="{display: 'inline-block'}">
+				<input v-bind:style="{display: 'none', height: '1.5rem', border: 'none', fontSize: '1rem'}" type="text" @keyup='modify(list)' @blur='modify(list)'>
+				<span v-bind:style="{display: 'inline-block', height: '1.5rem', backgroundColor: '#fff'}" :class="list.state ? 'completed' : 'active'" @dblclick="hide(list)">{{list.message}}</span>				
+			</span>
+			<button @click='relist(index)'>x</button>
+		</li>
+		<div v-show="listData.length>0">
+			{{listData.filter((list) => !list.state).length}}item{{listData.filter((list) => !list.state).length > 1 ? 's' : ''}} left
+			<div>
+				<label><input type="radio" value='all' v-model="status">All</label>
+				<label><input type="radio" value='' v-model="status">Active</label>
+				<label><input type="radio" value='true' v-model="status">Completed</label>
+			</div>
+			<button @click='clear' v-show="listData.filter(list => list.state).length > 0">clear completed</button>
+		</div>
+	</ul>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+		//以数据为中心 listData
+
+		// 向listData中添加内容
+		// var newContent = new Vue({
+		// 	el: '#input',
+		// 	data: {
+				
+		// 	},
+		// 	methods: {
+		// 	}
+		// })
+
+		// 显示listData中数据
+		var listContent = new Vue({
+			el: '#lists',
+			data: {
+				inputValue: '',
+				status: 'all',
+				listData: [],
+			},
+			methods: {
+				relist: function(index){
+					this.listData.splice(index, 1)
+				},
+				addnew: function(e){
+					var text = this.inputValue.trim()
+					if(e.key === 'Enter' && text.length > 0){
+						let newmsg = {
+							message: text,
+							state: false,
+						}
+						this.listData.push(newmsg)
+						this.inputValue = ''
+					}
+				},
+				selectAll: function(e){
+					this.listData.forEach(list => {list.state = e.target.checked})
+				},
+				clear: function(e){
+					this.listData = this.listData.filter(list => !list.state)
+				},
+				modify: function(list){
+					if(event.key === 'Enter' || event.type === 'blur' || event.key === 'Escape'){
+						var text = event.target.value.trim()
+						if(text.length > 0 && event.key !== 'Escape' && event.target.parentNode.lastElementChild.style.display === 'none'){
+							list.message = text
+						}
+						event.target.style.display = 'none'
+						event.target.value = ''
+						event.target.parentNode.lastElementChild.style.display = 'inline-block'
+					}
+				},
+				hide: function(list){
+					var inputEle = event.target.parentNode.firstElementChild
+					event.target.style.display = 'none'
+					inputEle.style.display = 'inline-block'
+					inputEle.focus()
+					inputEle.value = list.message
+				},
+
+			}
+
+		})
+
+	</script>
+</body>
+</html>
