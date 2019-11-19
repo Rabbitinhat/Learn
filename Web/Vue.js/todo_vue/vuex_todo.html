@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>todo</title>
+</head>
+
+<body>
+    <div id="todo">
+        <todo-app></todo-app>
+    </div>
+    <script src="./vue.js"></script>
+    <script src="./vuex.js"></script>
+    <script>
+    Vue.use(Vuex)
+
+
+    const store = new Vuex.Store({
+        state: {
+            // 保存数据
+            todos: [{ content: lunch, done: true }]
+        },
+        mutations: {
+            // 处理数据的方法
+            toggleTodoState(state, todo){
+              todo.done = !todo.done
+            }
+
+        }
+    })
+
+    Vue.component('todo-app', {
+        data: function() {
+            return {
+                todos: [{ content: lunch, done: true }]
+            }
+        },
+        template: `
+        <div>
+          <todo-input :todos="todos" @selectAll="selectAll" @addinput="addNew"></todo-input>  
+          <todo-list :todos="todos" @toggle="statechange", @deleteTodo="delete">
+          </todo-list>
+          <todo-footer :todos="todos"></todo-footer>
+        </div>
+
+      `,
+        methods: {
+            delete(item) {
+                this.todos = this.todos.filter(todo => todo !== item)
+            },
+            statechange(item) {
+                item.done = !item.done
+            },
+            selectAll() {
+                this.todos = this.todos.forEach(todo => todo.done = !todo.done)
+            },
+            addNew(content) {
+                if (content) {
+                    this.todos.push({
+                        content: content,
+                        done: false,
+                    })
+                }
+            }
+        }
+    })
+
+    Vue.component('todo-input', {
+        // data: function(){
+        //   return {
+        //     inputValue=""
+        //   }
+        // }
+        template: `
+        <div>
+          <input type="checkbox" :checked="todos.every(todo=>todo.done)" />
+          <input type="text" @keyup.enter="addTo" />
+        </div>
+      `,
+        computed: {
+            tods() {
+                return store.state.todos
+            },
+        }
+    })
+
+    Vue.component('todo-footer', {
+        props: ['todos']
+        template: `
+        <div>
+          {{}}item{{}} 
+          
+        </div>
+      `
+    })
+
+
+    Vue.component('todo-item', {
+        props: ['todo'],
+        template: `
+        <li >
+          <input type="checkbox" :checked="todo.done" @click="$emit("toggle-state")"/>
+          <span>
+            <span>{{todo.content}}</span>
+            <input type="text" @keyup="$emit("modify")"/>
+          </span>
+          <button @click="$emit("delete")">x</button>
+        </li>
+      `,
+      methods: {
+        toggleState(){
+          store.commit('toggleTodoState', this.todo)
+        }
+      }
+    })
+
+
+    Vue.component('todo-list', {
+        template: `
+        <ul>
+          <todo-item :key='idx' v-for="(todo, idx) of todos" :todo="todo" ></todo-item>
+        </ul>
+      `,
+      computed: {
+        todos(){
+          return store.state.todos
+        }
+      }
+    })
+
+    // Vuex.mapGetters
+    function mapGetters(obj){
+      var computed = {}
+      if(Array.isArray(obj)){
+        for(let val of obj){
+           computed[val] = (){
+            return this.$store.getters[val]
+          }
+        }
+        return computed
+      }
+    }
+
+    function mapState(obj){
+      var state = {}
+      for(let key in obj){
+        if(obj.hasOwnProperty(key)) 
+        let val = obj[key]
+        state[val] = function(){
+          return val.call(this, this.$store.state)
+        }
+      }
+    }    
+
+    getters: {
+      todoAt: state => idx => state.todos[idx]
+
+    }
+
+    f = (a) => {
+      return (b) => {
+        return a + b
+      }
+    }
+    </script>
+</body>
+
+</html>

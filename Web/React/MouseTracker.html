@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MouseTracker</title>
+</head>
+<body>
+  <script src="./reactfolder/react.development.js"></script>
+  <script src="./reactfolder/react-dom.development.js"></script>
+  <!-- Don't use this in production: -->
+  <script src="./reactfolder/babel.min.js"></script>
+  <script type="text/babel">
+    class MouseTracker extends React.Component{
+      render(){
+        constructor(props){
+          super(props)
+
+          this.state = {
+            pos: {
+              x: 0,
+              y: 0
+            }
+          }
+        }
+
+        componentDidMount(){
+          window.addEventListener('mousemove', this.mouseMove)
+        }
+
+
+          window.addEventListener('mousemove', this.mouseMove)
+        return this.props.render(this.state.props)
+      }
+    }
+
+  </script>
+
+
+</body>
+</html>

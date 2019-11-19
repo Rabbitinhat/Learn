@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>embed</title>
+</head>
+<body>
+  <div id='app'>
+    <nav>
+      <!-- a标签 用于导航 to="url" -->
+      <router-link to="/home">首页</router-link>
+      <router-link to="/orders">订单管理</router-link>
+      <router-link to="/stock">库存</router-link>
+    </nav>
+    <!-- 匹配的组件渲染位置 -->
+    <router-view></router-view>
+  </div>
+  <script src="./vuefloder/vue.js"></script>
+  <script src="./vuefloder/vue-router.js"></script>
+  <script>
+
+    var Home = Vue.component('home', {
+      template: `
+      <h1>首页</h1>
+      `
+    })
+
+    var Orders = Vue.component('order', {
+      template: `
+      <div style="display: flex">
+        <aside style="width: 200px;">
+          <router-link to="/orders/paid" style="display: block">已支付订单</router-link>
+          <router-link to="/orders/ordered" style="display: block">未支付订单</router-link>
+          <router-link to="/orders/completed" style="display: block">已完成订单</router-link>
+        </aside>
+        <main>
+        <router-view></router-view>
+        </main>
+      </div>
+      `
+    })
+
+
+
+    var Stock = Vue.component('stock', {
+      template: `
+      <div style="">
+        <aside>
+          <router-link to="/stocks/man">男装</router-link>
+          <router-link to="/stocks/woman">女装</router-link>
+        </aside>
+        <main>
+        <router-view></router-view>
+        </main>
+      </div>
+      `
+    })
+  // 挂载的vue？
+  // 组件内通过this.$router访问路由, this.$route访问当前路由
+
+// 全部的路由配置
+    var router = new VueRouter({
+      routes: [
+      {
+        path: '/',
+        redirect: 'home'
+      },
+      {
+        path: '/home',
+        component: Home
+      },
+      {
+        path: '/orders',
+        component: Orders,
+        // 
+        children: [
+          {
+            path: '',
+            redirect: 'paid'
+          },
+          {
+            path: 'paid',
+            // 
+            component: {
+              template: `
+              <div style="background-color: green">
+                <nav>
+                  <router-link to="/hasSent" style="display: block;">已发货</router-link>
+                  <router-link to="/notSent" style="display: block;">未发货</router-link>
+                </nav>
+              </div>
+              `
+            },
+            children: [{
+              path: '',
+              redirect: 'hasSent'
+            },
+            {
+              path: 'hasSent',
+              component: {
+                template: `<div>已发货</div>`
+              }
+            },
+            {
+              path: 'notSent',
+              component: {
+                template: `<div>未发货</div>`
+              }
+            }
+            
+            ]
+          },
+          {
+            path: 'ordered',
+            component: {
+              template: `<div>未支付订单</div>`
+            }
+          },
+          {
+            path: 'completed',
+            component: {
+              template: `<div>已完成订单</div>`
+            }
+          },
+          {
+            path: 'paid',
+            component: {
+              template: `<div>已付款订单</div>`
+            }
+          }
+        ]
+      },
+      {
+        path: '/stock',
+        component: Stock,
+        children: [
+          {
+            path: '',
+            redirect: 'man'
+          },
+          {
+            path: 'man',
+            component: {
+              template: `<div>男装</div>`
+            }
+          },
+          {
+            path: 'woman',
+            component: {
+              template: `<div>女装</div>`
+            }
+          }
+        ]
+      }
+      ]
+    })
+
+    var app = new Vue({
+      router
+    }).$mount('#app')
+  </script>
+</body>
+</html>

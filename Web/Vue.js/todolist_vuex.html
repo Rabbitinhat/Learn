@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>todoList_vuex</title>
+</head>
+<body>
+  <div id="container">
+    <todo-app></todo-app>
+  </div>
+  <script src='./vuefloder/vue.js'></script>
+  <script src="./vuefloder/vuex.js"></script>
+  <script>
+    // require时, 由于vuex无法访问到vue, 所以要声明该语句, script时, 不是必须行为
+  Vue.use(Vuex)
+  
+  const store = new Vuex.Store({
+    state: {
+      todoDatas: [{content: 'lunch', done: false}],
+      globalState: 'all',
+    },
+    // 由state中数据得出的getter函数
+    getters: {
+      isSelectedAll(state){
+        return state.todoDatas.every(todo => todo.done)
+      },
+      leftNum(state){
+        return state.todoDatas.filter(todo => !todo.done).length
+      },
+      hasCompleted(state){
+        return state.todoDatas.some(todo => todo.done)
+      }
+    },
+    // store.commit('mutations')
+    mutations: {
+      addNew(state, content){
+        if(content){
+          state.todoDatas.push(content)
+        }
+      },
+      selectAll(state, done){
+        state.todoDatas.forEach(todo => todo.done = done)
+      },
+      changeState(state, done){
+        state.globalState = done
+      },
+      select(state, data){
+        data.done = !data.done
+      },
+      deleteTodo(state, todo){
+        state.todoDatas = state.todoDatas.filter(it => it !== todo)
+      },
+      deleteAll(state){
+        state.todoDatas = state.todoDatas.filter(it => !it.done)
+      }
+    },
+  })
+
+
+  Vue.component("todoApp", {
+    store,
+    template: `
+    <div class='todo-app'>
+      <todo-input></todo-input>
+      <todo-list></todo-list>
+      <todo-footer></todo-footer>
+    </div>
+    `,
+  })
+  // 对象定义组件要在全局定义组件前声明
+  Vue.component("todo-input", {
+    template: `
+    <div class='todo-input'>
+      <input type="checkbox" :checked="isSelected" @click="selectAll"/>
+      <input type="text" @keyup.enter="addNew"/>
+    </div>
+    `,
+    computed: {
+      // REVIEW
+      isSelected(){
+        return this.$store.getters.isSelectedAll
+      }
+    },
+    methods: {
+      addNew(){
+        var content = event.target.value.trim()
+        if(content){
+          this.$store.commit('addNew', {
+            content: content,
+            done: false
+          })
+        }
+        event.target.value = ''
+      },
+      selectAll(){
+        this.$store.commit('selectAll', event.target.checked)
+      }
+    }
+  })
+
+  Vue.component("todo-list", {
+    template: `
+      <ul class='todo-list'>
+        <todo-item v-for="(data, index) of datas" :key="index" :data="data" v-if="state==='all' || data.done == Boolean(state)">
+        </todo-item>
+      </ul>
+    `,
+    computed: {
+      datas(){
+        return this.$store.state.todoDatas
+      },
+      state(){
+        return this.$store.state.globalState
+      }
+    }
+  })
+
+  Vue.component('todo-item', {
+    props: ['data'],
+    template: `
+    <li class='todo-item'>
+      <input type='checkbox' :checked="data.done" @click="select">
+      <span>
+        <span>{{data.content}}</span>
+      </span>
+      <button @click="deleteTodoItem">x</button>
+    </li>
+    `,
+    // REVIEW
+    computed: {
+      checked(){
+        // 是否会自动改变
+        return this.data.done
+      }
+    },
+    methods: {
+      select: function(){
+        this.$store.commit('select', this.data)
+      },
+      deleteTodoItem: function(){
+        this.$store.commit('deleteTodo', this.data)
+      }
+    }
+  })
+
+  Vue.component('todo-footer', {
+    template: `
+    <div class='todo-footer'>
+      <span>
+      {{leftNum}}item{{leftNum > 1 ? 's' : ''}}
+      </span>
+      <span>
+        <input type="radio" name="state" v-model="state" value="all"/>
+        <input type="radio" name="state" v-model="state" value=""/>
+        <input type="radio" name="state" v-model="state" value="completed"/>
+      </span>
+      <button @click="deleteAll" v-if="hasCompleted">clear completed</button>
+    </div>
+    `,
+    computed: {
+      datas(){
+        return this.$store.state.todoDatas
+      },
+      leftNum(){
+        return this.$store.getters.leftNum
+      },
+      hasCompleted(){
+        return this.$store.getters.hasCompleted
+      },
+      //REVIEW  使用v-model
+      state: {
+        get(){
+          return this.$store.state.globalState 
+        },
+        set(state){
+          this.$store.commit('changeState', state)
+        }
+      }
+    },
+    methods: {
+      deleteAll(){
+        this.$store.commit('deleteAll')
+      }
+    }
+  })
+
+
+// new Vue 应在component后定义
+  var todo = new Vue({
+    el: '#container',
+  })
+  </script>
+</body>
+</html>

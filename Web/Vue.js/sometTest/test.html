@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="container">
+      <my-todo-list></my-todo-list>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+    // 局部组件
+    // 输入框内容
+    // REVIEW 组件内如何修改传入组件的数据, 组件内原生事件, 事件处理函数位置
+    var inputMsg = {
+      data: function(){
+        return {
+          listData: this.datas,
+          inputValue: '',
+        }
+      },
+      props: [
+        'datas',
+      ],
+      methods: {
+        'addinput': function(){
+          var text = this.inputValue.trim()
+          console.log('text', text)
+          console.log('inputValue', this.inputValue)
+          if(event.key === 'Enter' && text.length > 0){
+            let newmsg = {
+              message: text,
+              state: false,
+            }
+            this.listData.push(newmsg)
+            this.inputValue = ''
+          }
+        }
+      },
+      template: `
+      <div class='inputMsg'>
+        <input type='checkbox' :checked='datas.filter(list=>list.state).length===datas.length && datas.length > 0'
+        >
+        <input type='text' v-model='inputValue' @keyup='addinput' placeholder='What needs to be done?'>
+      </div>
+      `
+    }
+
+
+            // 消息展示
+    var showMsg = {
+      data: function(){
+        return {
+          'all-message': this.message,
+          states: 'all'
+        }
+      },
+      props: [
+        'message',
+      ],
+      components: {
+        'msgs': msgs,
+        'stateBar': stateBar,
+      },
+      template: `
+      <div class='showMsg'>
+        <msgs :all-list='all-message' :msg-states = 'states'></msgs>
+        <stateBar :message='all-message' :state='states' v-show='all-message.length > 0'></stateBar>
+      </div>
+      `
+    }
+
+
+    var listData = []
+    Vue.component('myTodoList', {
+      data: function(){
+        return {
+          // 数据问题
+          listData: listData,
+        }
+      },
+      components: {
+        'inputMsg': inputMsg,
+      },
+      template: `
+      <div>
+        <inputMsg :datas='listData'></inputMsg>
+      </div>
+      `
+    })
+
+
+
+    var vm = new Vue({
+      el: '#container'
+    })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+      class Comp2 extends React.Component {
+        constructor(props){
+          super(props)
+          this.state = {
+            count: 0
+          }
+        }
+
+        inc = () => {
+          this.setState({
+            count: this.state.count+1
+          })
+        }
+
+        componentDidMount(){
+          console.log('Comp2 ComponentDidMount')
+        }
+
+        // 组件接收参数
+        componentWillReceiveProps(){
+          console.log('Comp2 componentWillReceiveProps')
+        }
+
+        // 组件更新
+        // return Boolean 判断组件是否进行更新
+        shouldComponentUpdate(nextprops, nextstate){
+          // 根据传入的props是否发生改变决定是否update组件
+          if(this.props === nextprops){
+            return false
+          }
+          return true
+        }
+
+        // 组件更新
+        componentDidUpdate(){
+          console.log('Comp2 componentDidUpdate')
+        }
+
+        // 卸载组件
+        componentWillUnmount(){
+          console.log('Comp2 componentWillUnmount')
+        }
+
+        
+        static getDerivedStateFromProps(props, state){
+          return null
+        }
+
+        render(){
+          return <h1 onClick={this.inc}>{this.props.count}-{this.state.count}</h1>
+        }
+      }
+
+      class Comp1 extends React.Component {
+        constructor(props){
+          super(props)
+          this.state = {
+            count: 0
+          }
+        }
+
+        inc = () => {
+          this.setState({
+            count: this.state.count+1
+          })
+        }
+
+        componentDidMount(){
+          console.log('Comp1 ComponentDidMount')
+        }
+
+        // 组件接收参数
+        componentWillReceiveProps(){
+          console.log('Comp1 componentWillReceiveProps')
+        }
+
+        // 组件更新
+        // return Boolean 判断组件是否进行更新
+        shouldComponentUpdate(){
+          console.log('Comp1 shouldComponentUpdate')
+          return true
+        }
+
+        // 组件更新
+        componentDidUpdate(){
+          console.log('Comp1 componentDidUpdate')
+        }
+
+        // 卸载组件
+        componentWillUnmount(){
+          console.log('Comp1 componentWillUnmount')
+        }
+
+
+        render(){
+          return (
+            <div>
+            <p onClick={this.inc}>{this.state.count}</p>
+            <Comp2 count={this.state.count} />
+            {
+              this.state.count % 2 === 0 ?
+              <Comp2 count={this.state.count} /> :
+              <p>Hello</p>
+
+            }
+            </div>
+          )
+        }
+      }
+
+      // ReactDOM.render(<Comp1 />, document.getElementById('root'))
+
+
+      class MouseTracker extends React.Component{
+        constructor(props){
+          super(props)
+
+          this.state = {
+            pos: {
+              x: 0,
+              y: 0
+            }
+          }
+        }
+
+        mouseMove = (e) => {
+          this.setState({
+            pos: {
+              x: e.clientX,
+              y: e.clientY
+            }
+          })
+        }
+
+        componentDidMount(){
+          window.addEventListener('mousemove', this.mouseMove)
+        }
+
+        componentWillUnmount(){
+          window.removeEventListener('mousemove', this.mouseMove)
+        }
+
+        render(){
+          return this.props.render(this.state.pos)
+        }
+      }
+
+      // ReactDOM.render(<MouseTracker render={(props => (<div>{props.x}-{props.y}</div>))}/>, document.getElementById('root'))
+
+      var myForwardRef = function(f){
+          return function(props){
+            return f(props, ref)
+          }
+      }
+
+      var Button = myForwardRef((props, ref) => {
+        return <div>
+          <button ref={ref}>Hello</button>
+        
+        </div>
+      })
+
+      class somePortal extends React.Component {
+
+        createPortalPanel(){
+          return ReacDOM.createPortal((
+            <div>
+            Hi  
+            </div>
+          ), document.body)
+        }
+        render(){
+          return (
+            <div>
+              {
+                this.state.deleting && this.createPortalPanel()
+              }
+              <button onClick={this.showingDeletePanel}></button>
+            </div>
+          )
+        }
+      }
+
+
+
+      const MyUserContext = React.createContext(null)
+
+
+      class App extends React.Component {
+        constructor(props){
+          super(props)
+          this.state = {
+            user: {
+              name: 'miao'
+            }
+          }}
+
+          render(){
+            return (
+              <MyUserContext.Provider value={this.state.user}>
+              <div>
+                I'm App
+                <Foo />
+                <Bar />
+                </div>
+                </MyUserContext.Provider>
+            )
+          }
+      }
+
+      function Foo(){
+        return (
+          <div>
+            <Bar />
+            </div>
+        )
+      }
+
+      function Bar(){
+        return (
+          <div>
+            <Baz />
+          </div>
+        )
+      }
+
+      class Baz extends React.Component {
+        
+        static contextType = MyUserContext
+
+        render(){
+          return <div>{this.context.name}</div>
+        }
+      }
+
+      ReactDOM.render(<App />, document.getElementById('root'))
+
+    </script>
+    <!--
+      Note: this page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      Read this section for a production-ready setup with JSX:
+      https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
+
+      In a larger project, you can use an integrated toolchain that includes JSX instead:
+      https://reactjs.org/docs/create-a-new-react-app.html
+
+      You can also use React without JSX, in which case you can remove Babel:
+      https://reactjs.org/docs/react-without-jsx.html
+    -->
+</body>
+
+</html>

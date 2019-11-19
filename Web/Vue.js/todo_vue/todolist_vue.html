@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>todo_vue</title>
+    <style rel='stylesheet'>
+    .completed {
+      text-decoration: line-through;
+      color: #ccc;
+    }
+
+    li input:focus {
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div id='container'>
+    <my-todo-list></my-todo-list>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    /**
+     * todo div
+     * - input
+     * - ul
+     *   - 整个选项部分
+     *     - 每条内容
+     *   - 底部状态栏
+     */
+    var inputMsg = {
+      data: function(){
+        return {
+          listData: this.datas,
+          inputValue: '',
+        }
+      },
+      props: [
+        'datas',
+      ],
+      methods: {
+        addinput: function(){
+          var text = this.inputValue.trim()
+          console.log('text', text)
+          console.log('inputValue', this.inputValue)
+          if(event.key === 'Enter' && text.length > 0){
+            let newmsg = {
+              message: text,
+              state: false,
+            }
+            this.listData.push(newmsg)
+            this.inputValue = ''
+          }
+        },
+
+        selectAll: function(){
+          this.listData.forEach(list => {list.state = event.target.checked})
+        }
+      },
+      template: `
+      <div class='inputMsg'>
+        <input type='checkbox' :checked='datas.filter(list=>list.state).length===datas.length && datas.length > 0' @click='selectAll'
+        >
+        <input type='text' v-model='inputValue' @keyup='addinput' placeholder='What needs to be done?'>
+      </div>
+      `
+    }
+    // 
+    var stateBar = {
+      data: function(){
+        return {
+          'msgstates': this.state,
+          'datas': this.message
+        }
+      },
+      props: [
+        'state',
+        'message'
+      ],
+      methods: {
+        clear: function(){
+        }
+      },
+      template: `
+      <div class='stateBar'>
+        {{datas.filter((data) => !data.state).length}}item{{datas.filter((data) => !data.state).length>0 ? 's' : ''}}
+        <div>
+          <label><input type="radio" value='all' v-model="msgstates.state">All</label>
+          <label><input type="radio" value='' v-model="msgstates.state">Active</label>
+          <label><input type="radio" value='true' v-model="msgstates.state">Completed</label>
+        </div>
+      <button @click='clear' v-show="datas.filter(data => data.state).length > 0">clear completed</button>
+      </div>
+      `
+    }
+
+        // 单行消息
+    // REVIEW
+    var msg = {
+      data: function(){
+        return {
+          list: this.msg,
+          index: this.idx
+        }
+      },
+      props: [
+        'msg',
+        'idx'
+      ],
+      methods: {
+        modify: function(){
+          if(event.key === 'Enter' || event.type === 'blur' || event.key === 'Esacpe'){
+            let text = event.target.value.trim()
+            if(text.length > 0 && event.key !== 'Escape' && event.target.parentNode.lastElementChild.style.display === 'none'){
+              this.list.message = text
+            }
+            event.target.style.display = 'none',
+            event.target.value = '',
+            event.target.parentNode.lastElementChild.style.display = 'inline-block'
+          }},
+        hide: function(){
+            var inputEle = event.target.parentNode.firstElementChild
+            event.target.style.display = 'none'
+            inputEle.style.display = 'inline-block'
+            inputEle.focus()
+            inputEle.value = this.list.message
+          }
+      },
+      template: `
+      <div>
+      <input type="checkbox" :checked='list.state' v-model='list.state'/>
+      <span v-bind:style='{display: "inline-block"}'>
+        <input v-bind:style="{display: 'none', height: '1.5rem', border: 'none', fontSize: '1rem'}" type='text' @keyup='modify' @blur='modify'>
+        <span v-bind:style="{display: 'inline-block', height: '1.5rem', backgroundColor: '#fff'}" :class="list.state? 'completed' : 'active'" @dblclick="hide">{{list.message}}</span>
+      </span>
+      <button @click='relist(index)'>x</button>
+      </div>
+      `
+    }
+
+        // 消息列表
+    var msgs = {
+      data: function(){
+        return {
+          'allmessage': this.alllist,
+          'states': this.msgstates
+        }
+      },
+      props: [
+        'alllist',
+        'msgstates'
+      ],
+      components: {
+        'msg': msg
+      },
+      template: `
+      <ul class='msgs'>
+        <li v-for='(message, index) of allmessage' v-if="(states.state==='all') || (Boolean(states.state) == message.state)">
+          <msg :msg='message' :idx='index'></msg>
+        </li>
+      </ul>
+
+      `
+    }
+
+        // 消息展示
+    var showMsg = {
+      data: function(){
+        return {
+          'allmessage': this.message,
+          states: {"state": 'all'}
+        }
+      },
+      props: [
+        'message',
+      ],
+      components: {
+        'msgs': msgs,
+        'stateBar': stateBar,
+      },
+      template: `
+      <div class='showMsg'>
+        <msgs :alllist='allmessage' :msgstates = 'states'></msgs>
+        <stateBar :message='allmessage' :state='states' v-if='allmessage.length > 0'></stateBar>
+      </div>
+      `
+    }
+
+    var listData = []
+    Vue.component('myTodoList', {
+      data: function(){
+        return {
+          // 数据问题
+          listData: listData,
+        }
+      },
+      components: {
+        'inputMsg': inputMsg,
+        'showMsg': showMsg,
+      },
+      template: `
+      <div>
+        <inputMsg :datas='listData'></inputMsg>
+        <showMsg :message='listData' v-if='listData.length>0'></showMsg>
+      </div>
+      `
+    })
+
+    var vm = new Vue({
+      el: '#container',
+      data: todoDatas,
+    })
+  </script>
+</body>
+</html>

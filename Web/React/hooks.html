@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<title>Hook</title>
+<script src="./reactfolder/react.development.js"></script>
+<script src="./reactfolder/react-dom.development.js"></script>
+<!-- Don't use this in production: -->
+<script src="./reactfolder/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+  var {useState, useEffect, useContent, } = React
+
+  var ColorContext = React.createContext()
+
+  function App(){
+    var [color, setColor] = useState('red')
+    return (
+
+      <ColorContent
+    )
+  }
+
+
+  function Counter(props){
+  var [count, setCount] = useState(0)
+
+  
+  return (
+
+  <div>
+
+    <button onClick={()=>setCount(count - 1)}>-</button>
+    <span>{count}</span>
+    <button onClick={()=>setCount(count + 1)}>+</button>
+  </div>
+  )
+} 
+ReactDOM.render(<div>
+  <Counter />
+  <Counter />
+  </div>
+  , document.getElementById('root'))
+
+</script>
+</body>
+</html>

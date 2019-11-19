@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Captcha</title>
+</head>
+
+<body>
+    <div id="captcha">
+      <!-- captcha_input=$event 将captchaInput保存在外部captcha_input中-->
+      <captcha-input @end='inputCompleted(captcha_input=$event)'></captcha-input>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+    Vue.component('captcha-input', {
+        template: `
+    <span>
+      <input type="text" @keydown="textChange" v-for="idx of 6" style="width: 1em; textAlign: center" maxlength='1'>
+    </span>
+  `,
+        data: function(){
+          return {
+            captchaInput: []
+          }
+        },
+        methods: {
+            textChange: function(e) {
+              let prev = e.target.previousElementSibling
+              let next = e.target.nextElementSibling
+              let captcha = e.target.value.trim()
+              if(e.key === 'Backspace'){
+                if(captcha.length === 0){
+                  if(prev){
+                    prev.value = ''
+                    this.captchaInput.pop()
+                    prev.focus()
+                  }
+                }else{
+                  this.captchaInput.pop()
+                }
+              }else if(captcha.length && this.captchaInput.length < 6){
+                this.captchaInput.push(captcha)
+                if(next){
+                  next.focus()
+                }else{
+                  this.$emit('end', this.captchaInput)
+                }
+              }
+            }
+        }
+    })
+
+    var vm = new Vue({
+      el: '#captcha',
+      data: {
+        'captcha_input': [],
+        'captcha_key': [1, 2, 3, 4, 5, 6],
+      },
+      methods: {
+        inputCompleted: function(val){
+          console.log(val)
+          console.log(this.captcha_input)
+          console.log(this.captcha_key)
+          if((val.join('')) === (this.captcha_key.join(''))){
+            console.log('Right')
+          }else{
+            console.log('Wrong')
+          }
+        }
+      }
+    })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Wechat</title>
+  <style rel="stylesheet">
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    .header {
+      background-color: #333;
+      color: #ddd;
+      font-size: 2rem;
+      padding: 1rem;
+      font-weight: bold;
+    }
+    a {
+      text-decoration: none;
+
+    }
+
+
+
+  </style>
+</head>
+<body>
+  <div id="app">
+    <router-view></router-view>
+  </div>
+  <script src="./vuefloder/vue-router.js"></script>
+  <script src="./vuefloder/vue.js"></script>
+  <script src="./vuefloder/vuex.js"></script>
+  <script>
+  var Index = {
+    
+  }
+
+
+
+  var router = new VueRouter({
+    routes: [
+    {
+      path: '/',
+      redirect: '/index',
+    },
+    {
+      path: '/index',
+      component: Index,
+      children[
+        {
+          path: 'chat',
+          component: RecentList,
+        },
+        {
+          path: 'contact',
+          component: Contact,
+        },
+        {
+          path: 'discover',
+          component: Discover,
+        },
+      ]
+    },
+    {
+      path: '/friend-circle',
+      component: FirendCircle,
+    },
+    {
+      path: '/searound'
+      component: Searound
+    },
+    {
+      path: '/chatting/:id',
+      component: Chatting,
+    },
+    {
+      path: '/profile/:id',
+      component: Profile,
+    },
+    
+    ]
+  })
+
+  var FirendCircle = {
+    template: ``
+  }
+
+  var Searound = {
+    template:  ``
+  }
+
+  var Chatting = {
+    tempalte: `
+    <div>
+      <button @click="router.go(-1)"></button>
+      聊天{{$route.params.id}}
+    </div>
+
+    `
+  }
+
+  var Index = {
+    template: `
+    <div id="app">
+      <h1 class="title">my-Wechat</h1>
+      <main :style="main">
+        <router-view></router-view>
+      </main>
+      <aside :style="navbar homenav">
+        <router-link to="/index/recent" :style="link">微信</router-link>
+        <router-link to="/index/commu" :style="link">通讯录</router-link>
+        <router-link to="/index/discovery" :style="link">发现</router-link>
+        <router-link to="/index/userpage" :style="link">我</router-link>
+      </aside>
+    </div>
+    ` 
+  }
+
+  var Profile = {
+    template: `
+    <div>
+      个人信息
+      {{$route.params.id}}
+      <router-link to=""></router-link>
+    </div>
+
+    `
+  }
+
+
+
+  var RecentList = {
+    template: `
+    <div>
+      <h1>微信</h1>
+      <ul>
+        <li><router-link to="/chat/zhangsan">张三</li>
+        <li><router-link to="/chat/lisi">李四</li>
+      </ul>
+    </div>
+    `
+  }
+
+  var Contacts = {
+    template: `
+    <h1>通讯录</h1>
+    <ul>
+      <li><router-link to="/chat/zhangsan">张三</li>
+      <li><router-link to="/chat/lisi">李四</li>
+    </ul>
+    `
+  }
+
+  var Discover = {
+    template: `
+    <div>
+      <h1>朋友圈</h1>
+      <ul>
+        <li><router-link to="/discover"></router-link></li>
+      </ul>
+    </div>
+    `
+  }
+  </script>
+</body>
+</html>

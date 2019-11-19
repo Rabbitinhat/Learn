@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>todo</title>
+</head>
+
+<body>
+  <div id="todo">
+    <todo-app></todo-app>
+  </div>
+  <script src="../vuefloder/vue.js"></script>
+  <script>
+    Vue.component('todo-footer', {
+      props: ['todos'],
+      template: `
+        <div>
+          {{todos.filter(todo => !todo.done).length}}
+          item{{todos.filter(todo =>!todo.done).length > 1 ? 's' : ''}}
+        </div>
+      `
+    })
+
+
+    Vue.component('todo-item', {
+      props: ['todo'],
+      template: `
+        <li >
+          <input type="checkbox" :checked="todo.done" @click="$emit('toggle-state')"/>
+          <span>
+            <span>{{todo.content}}</span>
+            <input type="text" @keyup="$emit('modify')"/>
+          </span>
+          <button @click="$emit('deleteTodoItem')">x</button>
+        </li>
+      `,
+    })
+
+
+    Vue.component('todo-list', {
+      props: ['todos'],
+      template: `
+        <ul>
+          <todo-item
+          :key='idx'
+          v-for="(todo, idx) of todos"
+          :todo="todo"
+          @toggle-state="$emit('toggle', todo)"
+          @deleteTodoItem="$emit('deleteTodo', todo)"
+          @modify=""
+          >
+          </todo-item>
+        </ul>
+      `
+    })
+
+    Vue.component('todo-input', {
+      props: ['todos'],
+      template: `
+        <div>
+          <input
+          type="checkbox"
+          :checked="todos.every(todo=>todo.done)"
+          @click="$emit('selectAll', $event.target.checked)"
+          />
+          <input
+          type="text"
+          @keyup.enter="add"
+          />
+        </div>
+      `,
+      methods: {
+        add: function(){
+          this.$emit('addinput', event.target.value.trim())
+          event.target.value = ''
+        }
+      }
+    })
+
+    Vue.component('todo-app', {
+      data: function () {
+        
+        return {
+          todos: [{ content: "lunch", done: true }]
+        }
+      },
+      template: `
+        <div>
+          <todo-input :todos="todos" @selectAll="selectAll" @addinput="addNew"></todo-input>  
+          <todo-list :todos="todos" @toggle="statechange" @deleteTodo="deleteItem">
+          </todo-list>
+          <todo-footer :todos="todos"></todo-footer>
+        </div>
+      `,
+      methods: {
+        deleteItem(item) {
+          this.todos = this.todos.filter(todo => todo !== item)
+        },
+        statechange(item) {
+          item.done = !item.done
+        },
+        selectAll(state) {
+          this.todos.forEach(todo => todo.done = state)
+        },
+        addNew(content) {
+          if (content) {
+            this.todos.push({
+              content: content,
+              done: false,
+            })
+          }
+        }
+      }
+    })
+
+
+
+    var todo = new Vue({
+      el: "#todo",
+
+    })
+  </script>
+</body>
+
+</html>

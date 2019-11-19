@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>v_Model</title>
+</head>
+<body>
+    <div id='inputReg'>
+      
+      <!-- 进行了双向绑定 :value='date' @input='date=$event' -->
+      <reg-picker v-model='reg'></reg-picker>
+    </div>
+
+   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+   <script>
+      Vue.component('reg-picker', {
+        data: function(){
+          return {
+            flags: this.getFlags(this.value),
+            in_reg: this.value.source
+          }
+        },
+        props: {
+          'value': {
+            type: RegExp,
+            required: true
+          },
+        },
+        template: `
+          <span>
+            <input type="text" @input="reTextChange" v-model='in_reg'/>
+            <span>
+              <input
+                type="checkbox"
+                @change="reTextChange"
+                v-for='flag of flags'
+                v-model='flag.value'
+                :title='flag.name'
+              />
+            </span>
+          </span>
+        `,
+        methods: {
+          reTextChange: function(e){
+            var reg = new RegExp(this.in_reg, this.flags.filter(flag=>flag.value).map(flag => flag.name).join(""))
+            // 触发input(v-model绑定)
+            this.$emit('input', reg)
+          },
+          getFlags: function(val){
+            let flags = [
+            {
+              name: 'i',
+              value: false
+            },
+            {
+              name: 'g',
+              value: false
+            },
+            {
+              name: 'm',
+              value: false
+            },
+            ]
+
+            flags.forEach(flag => {
+              if(val.flags.indexOf(flag.name) !== -1){
+                flag.value = true
+              }
+            })
+            return flags
+          }
+        },
+        watch: {
+          // 动态侦听props value的变化
+          value(val){
+          this.flags = this.getFlags(val)
+          this.in_reg = val.source 
+          }
+        }
+      })
+
+      var vm = new Vue({
+        el: '#inputReg',
+        data: {
+          reg: /foo/ig,
+        },
+        methods: {
+        }
+      })
+   </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<ul id="text">
+		<li v-for='item of items'>{{item}}</li>
+	</ul>
+
+	<ul id="filter">
+		<li v-for="n in evenNumbers">{{n}}</li>
+	</ul>
+
+	<ul id="method">
+		<li v-for="n in even(numbers)">{{n}}</li>
+	</ul>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+	Vue.component('json', {
+		props: ['value'],
+		template: `
+			<div v-if="Array.isArray(value)">
+			</div>
+			<div class='json' v-eles-if="typeof value == 'object'">
+				<div style='margin-left: 1em;' v-for='(val, key, idx) in value'>
+					{{key}} : {{val === null ? 'null' : val}}
+				</div>
+			</div>
+
+		`,
+		data(){
+			return {
+				obj = this.value
+
+			}
+		}
+	})
+	</script>
+</body>
+</html>

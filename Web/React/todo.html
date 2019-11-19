@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Todo_React</title>
+  <script src="./reactfolder/react.development.js"></script>
+  <script src="./reactfolder/react-dom.development.js"></script>
+  <!-- Don't use this in production: -->
+  <script src="./reactfolder/babel.min.js"></script>
+</head>
+<body>
+  <div id="my-app"></div>
+  <script type="text/babel">
+  class Todo extends React.Component{
+    constructor(props){
+      super(props)
+
+      this.state = {
+        todoDatas: [
+        {
+          content: 'lunch',
+          done: false,
+        },
+        {
+          content: 'learn',
+          done: false,
+        }
+        ],
+        showState: 'all'
+      }
+      // 作为参数传给其他对象时, 可能会发生this丢失, 使用bind进行硬绑定
+      this.selectAll = this.selectAll.bind(this)
+      this.addNew = this.addNew.bind(this)
+      this.changeShow = this.changeShow.bind(this)
+      this.deleteTodo = this.deleteTodo.bind(this)
+      this.deleteAll = this.deleteAll.bind(this)
+    }
+
+    selectAll(e){
+      this.setState(
+        {
+          todoDatas: this.state.todoDatas.map(todo=>{
+            todo.done=e.target.checked
+            return todo
+          }
+          )
+        }
+      )
+    }
+
+    selectTodo(todo){
+    this.setState({
+      todoDatas: this.state.todoDatas.map(item=>{
+        if(item === todo){
+          item.done = !todo.done
+        }
+        return item
+      })
+    })
+     console.log(todo.done)
+    }
+
+    addNew(e){
+      var text = e.target.value.trim()
+      if(e.key === 'Enter' && text.length>0){
+        let msg = {
+          content: text,
+          done: false
+        }
+
+        this.setState(
+          {
+            todoDatas: this.state.todoDatas.concat(msg)
+          }
+        )
+
+        e.target.value = ''
+        // 不是立即更新
+        // console.log(this.state.todoDatas)
+      }
+    }
+
+    deleteTodo(index){
+      // array + 不能拼接
+      this.setState({
+        todoDatas: this.state.todoDatas.slice(0, index).concat(this.state.todoDatas.slice(index+1))
+      })
+      
+    }
+
+    changeShow(e){
+      this.setState({
+        showState: e.target.className
+      })
+    }
+
+    deleteAll(e){
+      this.setState({
+        todoDatas: this.state.todoDatas.filter(todo => !todo.done)
+      })
+    }
+
+    render(){
+      let allselect = this.state.todoDatas.length>0 && this.state.todoDatas.every(todo=>todo.done)
+      let counted = this.state.todoDatas.filter(todo=>!todo.done).length
+      return (
+        <div className="todo">
+          <div className="input">
+          <input 
+          type="checkbox" 
+          checked={allselect}
+          onChange={this.selectAll}
+          />
+          <input
+          type="text"
+          onKeyDown={this.addNew}
+          />
+          </div>
+          <ul className="showList">
+          {this.state.todoDatas.filter(todo =>this.state.showState === 'all' || todo.done === (this.state.showState==='active'? false : true)).map((todo, index) => 
+          <li key={index}>
+            <input type="checkbox" checked={todo.done} onChange={this.selectTodo.bind(this, todo)}/>
+            <span>
+              {todo.content}
+            </span>
+            <button onClick={this.deleteTodo.bind(this, index)}>x</button>
+          </li>  
+          )}  
+          </ul>
+          <div className="stateBar">
+            {counted}item{counted>1? 's' : ''}
+            <input type="radio" className="all" checked={this.state.showState === 'all'}  onChange={this.changeShow}/>
+            <input type="radio" className="active" checked={this.state.showState === 'active'} onChange={this.changeShow}/>
+            <input type="radio" className="completed" checked={this.state.showState === 'completed'} onChange={this.changeShow}/>
+            <button type="button" onClick={this.deleteAll}>clearCompleted</button>
+          </div>
+        </div>
+      )
+    }
+  }
+  
+  ReactDOM.render(<Todo />, document.getElementById('my-app'))
+  </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DatePicker</title>
+  <script src="./reactfolder/react.development.js"></script>
+  <script src="./reactfolder/react-dom.development.js"></script>
+  <!-- Don't use this in production: -->
+  <script src="./reactfolder/babel.min.js"></script>
+  <script src="./reactfolder/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    function Welcome(){
+      let myRef = React.createRef()
+      return <div ref={myRef}>Welcome</div>
+    }
+
+
+    class DatePicker extends React.Component{
+      constructor(props){
+        super(props)
+        this.state={
+          counter: 0
+        }
+        this.inc = this.inc.bind(this)
+        this.boxRef = React.createRef()
+        this.boxRef = {
+          _current: null,
+          count: 0,
+          set current(el){
+            console.log(++this.count)
+            this._current = el
+          },
+          get current(){
+            return this._current
+          }
+        }
+      }
+
+      inc(){
+        this.setState({
+          counter: this.state.counter+1
+        })
+      }
+
+      componentDidMount(){
+        $(this.refs.box).datepicker
+      }
+      render(){
+        return(
+          // el 为 input 元素的 DOM 节点
+          // 每次重新渲染都会生成新的ref中的函数
+          <>
+          <p onClick={this.inc}>{this.state.counter}</p>
+          <input type="text" ref={this.boxRef}/>
+          </>
+        )
+      }
+  }
+
+  ReactDOM.render(<DatePicker />, document.getElementById('root'))
+
+  function FancyButton(props){
+    return (
+    <button className="FancyButton">
+      {props.children}  
+    </button>
+
+    )
+  }
+
+
+
+  class Comp2 extends React.Component{
+    constructor(props){
+      super(props)
+    }
+    componentDidMount(){
+
+    }
+    componentWillReceiveProps(){
+      
+    }
+    componentWillUpdate(){
+
+    }
+    componentDidUpdate(){
+
+    }
+    componentWillUnmount(){
+
+    }
+    render(){
+
+    }
+  }
+
+  class Counter extends React.Component{
+    constructor(props){
+      super(props)
+      this.state={
+        conter: this.props.start
+      }
+    }
+    inc = () => {
+      this.setState({
+        counter: this.state.counter+1
+      })
+    }
+    render(){
+      return (
+        <div>
+          <button onClikc={this.inc}>{this.state.counter}</button>
+        </div>
+      )
+    }
+  }
+  </script>
+</body>
+</html>

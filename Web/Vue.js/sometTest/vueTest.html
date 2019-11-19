@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id='count'>
+		<inscrease></inscrease>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+				
+
+
+		Vue.component('inscrease', {
+			template: `
+			<div>
+				<button @click='add'>+</button>
+				<span>{{count}}</span>
+				<button @click="inc">-</button>
+			</div>
+			`,
+			data(){
+				return {
+					count: 0
+				}
+			},
+			methods: {
+				add: function(){
+					this.count++
+				},
+				inc: function(){
+					this.count--
+				}
+			}
+		})
+		
+		new Vue({el: count})
+	</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>todoList_vue_b</title>
+</head>
+<body>
+  <div id="todo">
+    <input-msg @addnew='getData' :value='selectAll'></input-msg>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+
+    var inputMsg = {
+      data: function(){
+        return {
+          inputValue: '',
+        }
+      },
+      props: [
+        'value'
+      ],
+      methods: {
+        addinput: function(){
+          var text = this.inputValue.trim()
+          console.log('text', text)
+          console.log('inputValue', this.inputValue)
+          if(event.key === 'Enter' && text.length > 0){
+            let newmsg = {
+              message: text,
+              state: false,
+            }
+            this.$emit('addnew', newmsg)
+            this.inputValue = ''
+          }
+        }
+      }
+      ,
+      template: `
+      <div class='inputMsg'>
+        <input type='checkbox' :checked=''
+        >
+        <input type='text' v-model='inputValue' @keyup='addinput' placeholder='What needs to be done?'>
+      </div>
+      `
+    }
+
+    var todo = new Vue({
+      el: '#todo',
+      data: {
+        todoDatas: [],
+        selectAll: false,
+      },
+      components: {
+        inputMsg: inputMsg,
+      },
+      methods: {
+        getData: function(e){
+          console.log(e)
+          // 传入对象值的变化
+          this.todoDatas.push(e)
+          console.log(this.todoDatas)
+        }
+      }
+    })
+  </script>
+</body>
+</html>

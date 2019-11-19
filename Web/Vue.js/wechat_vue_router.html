@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Wechat</title>
+  <style rel="stylesheet">
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      background-color: #333;
+      color: #ddd;
+      font-size: 2rem;
+      padding: 1rem;
+      font-weight: bold;
+    }
+    a {
+      text-decoration: none;
+
+    }
+
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header class="header">my-Wechat</header>
+    <main :style="main">
+      <router-view></router-view>
+    </main>
+      <aside :style="navbar homenav">
+        <router-link to="/wechat" :style="link">微信</router-link>
+        <router-link to="/commu" :style="link">通讯录</router-link>
+        <router-link to="/discovery" :style="link">发现</router-link>
+        <router-link to="/userpage" :style="link">我</router-link>
+      </aside>
+  </div>
+  <script src="./vuefloder/vue-router.js"></script>
+  <script src="./vuefloder/vue.js"></script>
+  <script src="./vuefloder/vuex.js"></script>
+  <script>
+    Vue.use(Vuex)
+    Vue.use(VueRouter)
+
+    var store = new Vuex.Store({
+      state: {
+        
+      },
+
+    })
+
+    var wechat = {
+      template: `
+        <div class="wechat">
+          Hi 微信
+        </div>
+      `
+    }
+
+    var commu = {
+      template: `
+        <div class="commu">
+          Hi 通讯录
+        </div>
+      `
+    }
+
+    var discovery = {
+      template: `
+        <div class="discovery">
+          Hi 发现
+        </div>
+      `
+    }
+
+    var userpage = {
+      template: `
+      <div class="userpage">
+        Hi 我
+      </div>
+      `
+    }
+
+    const routes = [
+      {path: '/wechat', component: wechat},
+      {path: '/commu', component: commu},
+      {path: '/discovery', component: discovery},
+      {path: '/userpage', component: userpage}
+      ]
+
+    const router = new VueRouter({
+      routes 
+    })
+
+    const app = new Vue({
+      router,
+      data: {
+        navbar: {
+          display: 'flex',
+          width: '100%',
+          bottom: '0',
+          backgroundColor: '#ccc',
+          justifyContent: 'space-around',
+          textAlign: 'center',
+          position: 'absolute',
+        },
+        link: {
+          flex: '0 0 auto', 
+          width: '20%',
+          display: 'block',
+          marginLeft: '2rem',
+          color: '#333',
+
+        },
+        main: {
+          position: 'relative',
+          width: "80%",
+          height: "600px",
+          margin: "0 auto",
+          marginTop: '1rem',
+          backgroundColor: '#333',
+          color: "#ddd",
+          boxShadow: "0px 0px 3px 2px #999",
+        }
+      }
+    }).$mount('#app')
+  </script>
+</body>
+</html>

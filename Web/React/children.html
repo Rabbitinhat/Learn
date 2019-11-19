@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>React Children</title>
+  <script src="./reactfolder/react.development.js"></script>
+  <script src="./reactfolder/react-dom.development.js"></script>
+  <!-- Don't use this in production: -->
+  <script src="./reactfolder/babel.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/babel">
+    // class App extends React.Component {
+    //   constructor(props){
+    //     super(props)
+    //   }
+    //   render(){
+    //     console.log(this.props.children)
+    //     return <div>app</div>
+    //   }
+    // }
+
+    // ReactDOM.render(
+    //   <App>
+    //     <div></div>
+    //     <div></div>
+    //   </App>,
+    //   document.getElementById('app')
+    // )
+
+    // 支持ref转发(forwardRef)的lazy函数
+    function lazy(f){
+      class Lazy extends React.Component {
+        constructor(props){
+          super(props)
+          this.state = {
+            loading: true
+          }
+
+          f().then((Comp) => {
+            this.Comp = Comp
+            this.setState({
+              loading: false
+            })
+          })
+        }
+
+        render(){
+          if(this.state.loading){
+            return <div>Loading...</div>
+          }else{
+            let Comp = this.Comp
+            let {children, forwardRef, ...props} = this.props
+            return <Comp {...props} ref={forwardRef} >{children}</Comp>
+          }
+        }
+      }
+
+      return React.forwardRef((props, ref) => {
+        return (
+            <Lazy 
+              {...props}
+              forwardRef={ref}
+            >
+            </Lazy>
+          )
+      })
+    }
+ 
+    let SomeLazyComp = lazy(() => {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(class Foo extends React.Component {
+            render(){
+              return <div>FOo</div>
+            }
+          })
+        }, 5000)
+      })
+    })
+
+    class App extends React.Component {
+      constructor(props){
+        super(props)
+        this.state = {
+          show: false
+        }
+      }
+
+      showing = () => {
+        this.setState({
+          show: true
+        })
+      }
+
+      render(){
+        return (
+          <div onClick={this.showing}>
+            Lorem
+            {
+              this.state.show && <SomeLazyComp />
+            }
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<App />, document.getElementById('app'))
+  </script>
+</body>
+</html>
