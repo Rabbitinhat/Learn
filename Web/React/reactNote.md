@@ -50,9 +50,9 @@ source Map
    -  Arrow Function 中 this确定后, 无法被修改
 
 
-- render中, return返回的元素都会通过React.createElement()返回React Element, 在根据不同的环境渲染为不同内容
+- render中, return返回的元素都会通过`React.createElement()`返回React Element, 在根据不同的环境渲染为不同内容
 
-ReactDOM.render
+`ReactDOM.render`
 将虚拟DOM渲染至指定的元素内
 
 
@@ -128,16 +128,16 @@ render(){
 setState
 - 含有大量重复操作, 需要进行优化
 - 异步更新
-- 作为callback调用(或存在于callback中)时(事件处理...), 可能为同步操作
+- REVIEW 作为callback调用(或存在于callback中)时(事件处理...), 可能为同步操作
   - 异步原因
     - 避免连续的大量set state操作产生阻塞
     - 合并重复操作
   - 想要在修改后, 立即操作更改后的state, 可以使用setTimeout(fn)
 - 传入状态的子结构
-  - REVIEW 覆盖之前的state结构
+  - 覆盖之前的state结构
 - 触发视图更新
 - 想要重复操作时, setState可以传入一个function, 返回一个object
-- 使用Observe函数处理state更新
+- 使用`Observe函数`处理state更新
 
 ```js
 constructor(props){
@@ -198,7 +198,7 @@ key
 
 ## 表单
 
-react自定义的onChange事件在输入时就会触发
+react自定义的onChange事件在`输入时`就会触发
 
 受控
 `value={this.state.value} onChange = {this.handleChange}`

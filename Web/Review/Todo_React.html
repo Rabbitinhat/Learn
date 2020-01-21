@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Todo_React</title>
+  <!-- React -->
+  <script src="./reactfolder/react.development.js"></script>
+  <!-- 将JSX渲染为DOM -->
+  <script src="./reactfolder/react-dom.development.js"></script>
+  <!-- 编译, 转换JSX -->
+  <script src="./reactfolder/babel.min.js"></script>
+</head>
+<body>
+  <!-- Root Element -->
+  <div id="my_app"></div>
+  <script type="text/babel">
+    class Todo extends React.Component{
+      constructor(props){
+        super(props)
+        this.state = {
+          todoDatas: [
+            {
+              content: "lunch",
+              done: true,
+            },
+            {
+              content: "breakfast",
+              done: false,
+            }
+          ],
+          showState: 'all',
+        }
+      }
+
+      // REVIEW JS class语法
+      selectAll = (checked) => {
+        this.setState(
+          {
+            todoDatas: this.state.todoDatas.map(todo=>{
+              todo.done = checked
+              return todo
+            })
+          }
+        )
+      }
+
+      selectTodo = (todo) => {
+        this.setState(
+          {
+            todoDatas: this.state.todoDatas.map((item) => {
+              if(item === todo){
+                item.done = !item.done
+              }
+              return item
+            })
+          }
+        )
+      }
+
+      addNew = (text) => {
+        this.setState(
+          {
+            // concat
+            todoDatas: [
+              ...this.state.todoDatas,
+              {
+                content: text,
+                done: false
+              }
+            ]
+          }
+        )
+      }
+
+      deleteTodo = (index) => {
+        this.setState(
+          {
+            // REVIEW splice ?
+            todos: [
+              ...this.state.todoDatas.slice(0, index),
+              ...this.state.todoDatas.slice(index+1)
+            ]
+          }
+        )
+      }
+
+      changeShow = (status) => {
+        this.setState(
+          {
+            showState: status
+          }
+        )
+      }
+
+      deleteAll = () => {
+        this.setState(
+          {
+            todoDatas: this.state.todoDatas.filter(item => !item.done)
+          }
+        )
+      }
+
+      render(){
+        let selectAll = this.state.todoDatas.filter(it => it.done).length === this.state.todoDatas.length
+        let completedItems = this.state.todoDatas.filter(it => it.done).length
+        return (
+          <div className="todo">
+            <div className="input">
+              <input type="checkbox" checked={selectAll && this.state.todoDatas.length>0} onChange={(e) => {
+                this.selectAll(e.target.checked)
+              }} />
+              <input type="text" onKeyDown={
+                (e) => {
+                  let text = e.target.value.trim()
+                  if(text.length>0 && e.key === "Enter"){
+                    this.addNew(text)
+                    e.target.value = ""
+                  }
+                }
+              } />
+            </div>
+            <ul className="showList">
+              {
+                this.state.todoDatas.filter(item => this.state.showState === "all"
+                || (this.state.showState === "active" && item.done === false)
+                || (this.state.showState === "completed" && item.done === true)).map((item, idx) => {
+                  return ( 
+                  <li key={idx}>
+                    <input type="checkbox" checked={item.done} onChange={() => {this.selectTodo(item)}} />
+                    <span>{item.content}</span>
+                    <button onClick={() => {this.deleteTodo(idx)}}>x</button>
+                  </li>
+                  )
+                })
+              }
+            </ul>
+            <div className="statusBar">
+              <span>{completedItems} item{completedItems > 1 ? "" : "s"}</span>
+              <input type="radio" className="all" checked={this.state.showState === "all"} onChange={(e) => {this.changeShow(e.target.className)}} />
+              <input type="radio" className="active" checked={this.state.showState === "active"} onChange={(e) => {this.changeShow(e.target.className)}} />
+              <input type="radio" className="completed" checked={this.state.showState === "completed"} onChange={(e) => {this.changeShow(e.target.className)}} />
+              <button type="button" onClick={this.deleteAll}>Clear All Completed</button>
+            </div>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<Todo />, document.getElementById("my_app"))
+  </script>
+</body>
+</html> 

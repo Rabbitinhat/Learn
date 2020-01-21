@@ -2,7 +2,7 @@ function todoList(props){
   return (
     <ul onClick={props.foo}>
       {
-        props.todos.map((todo, idx) => {<TodoItem key={todo.content} todo={todo} idx={idx}})
+        props.todos.map((todo, idx) => {<TodoItem key={todo.content} todo={todo} idx={idx} />})
       }
     </ul>
   )
